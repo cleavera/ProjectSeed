@@ -1,15 +1,18 @@
 /// <reference path="../../typings/main.d.ts" />
+'use strict';
 
-var http = require('http');
+import * as http from 'http';
 
-const PORT = 8080;
+const PORT: number = 8080;
 
-function handleRequest(request, response){
-    response.end('It Works!! Path Hit: ' + request.url);
+function handleRequest(request: http.IncomingMessage, response: http.ServerResponse): void {
+    'use strict';
+
+    response.end('It Works! Path Hit: ' + request.url);
 }
 
-var server = http.createServer(handleRequest);
+let server: http.Server = http.createServer(handleRequest);
 
-server.listen(PORT, function(){
+server.listen(PORT, function(): void {
     console.log('Server listening on: http://localhost:%s', PORT);
 });
