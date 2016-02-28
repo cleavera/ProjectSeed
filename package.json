@@ -2,7 +2,6 @@
   "name": "radio",
   "version": "1.0.0",
   "description": "Allows streaming of music from hard drive and remote control features",
-  "main": "radio.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +12,7 @@
   "author": "Anthony Cleaver",
   "license": "ISC",
   "devDependencies": {
+    "tslint": "^3.5.0",
     "typescript": "^1.8.2"
   }
 }
