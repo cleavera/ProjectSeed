@@ -11,5 +11,8 @@
     "url": "file://z:\\\\Radio"
   },
   "author": "Anthony Cleaver",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^1.8.2"
+  }
 }
