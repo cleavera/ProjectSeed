@@ -1,7 +1,7 @@
 {
     "rules": {
         "member-access": [
-            true,
+            false,
             "check-accessor"
         ],
         "member-ordering": [
@@ -39,7 +39,7 @@
                 "variable-declaration": "onespace"
             }
         ],
-                
+
         "ban": [
             false
         ],
@@ -75,7 +75,7 @@
             "check-function",
             "check-module"
         ],
-        
+
         "eofline": true,
         "indent": [
             true,
@@ -95,7 +95,7 @@
                 "singleline": "never"
             }
         ],
-        
+
         "align": [
             true,
             "parameters",

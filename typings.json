@@ -1,5 +1,8 @@
 {
   "ambientDependencies": {
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#48c1e3c1d6baefa4f1a126f188c27c4fefd36bff"
+  },
+  "dependencies": {
+    "node-uuid": "registry:npm/node-uuid#1.4.0+20160224202522"
   }
 }

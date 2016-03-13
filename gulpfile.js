@@ -5,9 +5,10 @@ gulp.task('~compile:node', function() {
     return gulp.src('src/**/*.node.ts')
         .pipe(ts({
             module: "commonjs",
-            target: "es5"
+            target: "es5",
+            experimentalDecorators: true
         }))
-        .pipe(gulp.dest('build')); 
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('~compile', [
