@@ -3,7 +3,6 @@ var fs = require('fs');
 var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRoutingError.node');
 var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
 var DatabaseError_node_1 = require('../errors/DatabaseError.node');
-var Log_node_1 = require('../services/Log.node');
 var Json_node_1 = require('../classes/Json.node');
 var ModelBundle_node_1 = require('../models/ModelBundle.node');
 var Api = (function () {
@@ -16,7 +15,6 @@ var Api = (function () {
         });
         this._modelList = new ModelBundle_node_1.ModelBundle();
         this._resourceList = Object.keys(this._modelList);
-        Log_node_1.Log.debug(this._modelList, this._resourceList, this._modelList.person);
         this._resourceList.forEach(function (resourceName) {
             var tableName = _this._modelList[resourceName]._map.table;
             try {
@@ -38,7 +36,6 @@ var Api = (function () {
         if (resourceName) {
             var resource = void 0;
             try {
-                Log_node_1.Log.debug(Model, 1, resourceName);
                 resource = new Model.resource(resourceName);
             }
             catch (e) {

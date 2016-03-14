@@ -21,7 +21,7 @@ export class Json implements IResource {
     }
 
     read(): any {
-        return JSON.parse(fs.readFileSync(this._path).toJSON());
+        return JSON.parse(fs.readFileSync(this._path).toString());
     }
 
     remove(): void {

@@ -15,7 +15,7 @@ var Json = (function () {
         fs.writeFileSync(this._path, JSON.stringify(json));
     };
     Json.prototype.read = function () {
-        return JSON.parse(fs.readFileSync(this._path).toJSON());
+        return JSON.parse(fs.readFileSync(this._path).toString());
     };
     Json.prototype.remove = function () {
         fs.writeFileSync(this._path, '');

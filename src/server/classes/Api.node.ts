@@ -7,7 +7,6 @@ import {IRest} from '../interfaces/IRest';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
-import {Log} from '../services/Log.node';
 import {Json} from '../classes/Json.node';
 import {ModelBundle} from '../models/ModelBundle.node';
 
@@ -25,8 +24,6 @@ export class Api implements IRouter {
 
         this._modelList = new ModelBundle();
         this._resourceList = Object.keys(this._modelList);
-
-        Log.debug(this._modelList, this._resourceList, this._modelList.person);
 
         this._resourceList.forEach(resourceName => {
             let tableName: string = this._modelList[resourceName]._map.table;
@@ -55,7 +52,6 @@ export class Api implements IRouter {
             let resource: IRest;
 
             try {
-                Log.debug(Model, 1, resourceName);
                 resource = new Model.resource(resourceName);
             } catch (e) {
                 throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
