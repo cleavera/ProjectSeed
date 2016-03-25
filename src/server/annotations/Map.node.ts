@@ -21,8 +21,10 @@ export function Map(table: string, map: any): ClassDecorator {
             return new model(mappedData, id);
         };
 
-        model.deserialise = function(data: any): any {
-            return new model(data);
+        model.deserialise = function(data: string): any {
+            let deserialisedData: any = JSON.parse(data);
+
+            return new model(deserialisedData);
         };
 
         model.prototype.serialise = function(): any {

@@ -17,7 +17,8 @@ function Map(table, map) {
             return new model(mappedData, id);
         };
         model.deserialise = function (data) {
-            return new model(data);
+            var deserialisedData = JSON.parse(data);
+            return new model(deserialisedData);
         };
         model.prototype.serialise = function () {
             var _this = this;

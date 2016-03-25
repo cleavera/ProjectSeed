@@ -26,6 +26,8 @@ export function Required(target: any, key: string): void {
         if (!newValue && errorIndex === -1) {
             errorArray.push(validatorName);
 
+            this._errors[key] = errorArray;
+
             return target[key];
         }
 
