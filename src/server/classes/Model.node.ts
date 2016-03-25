@@ -28,7 +28,7 @@ export class Model implements IModel, ISerialisable {
         return !Object.keys(this._errors).length;
     }
 
-    static addValidator(model: IModel, validatorName: string, validator: (value: any) => boolean, field: string): void {
+    static addValidator(model: IModel, validatorName: string, validator: (value: any, oldValue?: any) => boolean, field: string): void {
         if (!model._errors) {
             model._errors = {};
         }
@@ -47,7 +47,7 @@ export class Model implements IModel, ISerialisable {
                 this._errors[field] = errorArray;
             }
 
-            if (!validator(newValue) && errorIndex === -1) {
+            if (!validator(newValue, model[field]) && errorIndex === -1) {
                 errorArray.push(validatorName);
 
                 this._errors[field] = errorArray;
@@ -55,7 +55,7 @@ export class Model implements IModel, ISerialisable {
                 return model[field];
             }
 
-            if (validator(newValue) && errorIndex !== -1) {
+            if (validator(newValue, model[field]) && errorIndex !== -1) {
                 errorArray.splice(errorIndex, 1);
             }
 

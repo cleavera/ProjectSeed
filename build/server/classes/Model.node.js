@@ -24,12 +24,12 @@ var Model = (function () {
             if (!errorArray) {
                 this._errors[field] = errorArray;
             }
-            if (!validator(newValue) && errorIndex === -1) {
+            if (!validator(newValue, model[field]) && errorIndex === -1) {
                 errorArray.push(validatorName);
                 this._errors[field] = errorArray;
                 return model[field];
             }
-            if (validator(newValue) && errorIndex !== -1) {
+            if (validator(newValue, model[field]) && errorIndex !== -1) {
                 errorArray.splice(errorIndex, 1);
             }
             if (!errorArray.length) {
