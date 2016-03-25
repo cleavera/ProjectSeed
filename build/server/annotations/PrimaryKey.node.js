@@ -2,10 +2,7 @@
 function PrimaryKey(field) {
     'use strict';
     return function (target) {
-        if (!target._meta) {
-            target._meta = {};
-        }
-        target._meta.primaryKey = field;
+        target.primaryKey = field;
     };
 }
 exports.PrimaryKey = PrimaryKey;

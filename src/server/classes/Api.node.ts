@@ -61,8 +61,8 @@ export class Api implements IRouter {
 
             let id: string = request.url.next().value;
 
-            if (Model._meta && Model._meta.description) {
-                response.addHeader('description', Model._meta.description);
+            if (Model.description) {
+                response.addHeader('description', Model.description);
             }
 
             if (request.isGet) {

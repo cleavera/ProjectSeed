@@ -44,8 +44,8 @@ var Api = (function () {
                 throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
             }
             var id = request.url.next().value;
-            if (Model._meta && Model._meta.description) {
-                response.addHeader('description', Model._meta.description);
+            if (Model.description) {
+                response.addHeader('description', Model.description);
             }
             if (request.isGet) {
                 var data = void 0, out = void 0;

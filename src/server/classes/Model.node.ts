@@ -9,7 +9,9 @@ export class Model implements IModel, ISerialisable {
 
     static _map: any;
 
-    static _meta: any;
+    static primaryKey: any;
+
+    static description: string;
 
     static mapFrom: Function;
 
