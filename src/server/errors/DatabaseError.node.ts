@@ -1,7 +1,6 @@
-import {IRoutingError} from '../interfaces/IRoutingError';
 import {ServerError} from './ServerError.node';
 
-export class DatabaseError extends ServerError implements IRoutingError {
+export class DatabaseError extends ServerError {
     name: string = 'DatabaseError';
 
     message: string;

@@ -1,7 +1,6 @@
-import {IRoutingError} from '../interfaces/IRoutingError';
 import {ServerError} from './ServerError.node';
 
-export class InvalidJsonError extends ServerError implements IRoutingError {
+export class InvalidJsonError extends ServerError {
     name: string = 'InvalidJsonError';
 
     message: string = 'An invalid json string was passed';

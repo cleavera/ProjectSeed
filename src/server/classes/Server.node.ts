@@ -2,6 +2,7 @@ import * as http from 'http';
 import {IRouter} from '../interfaces/IRouter';
 import {IResponse} from '../interfaces/IResponse';
 import {IRequest} from '../interfaces/IRequest';
+import {IServerError} from '../interfaces/IServerError';
 import {Api} from './Api.node';
 import {Log} from '../services/Log.node';
 import {Request} from './Request.node';
@@ -10,6 +11,7 @@ import {DatabaseError} from '../errors/DatabaseError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
+import {InternalServerError} from '../errors/InternalServerError.node';
 
 export class Server implements IRouter {
     private _api: IRouter;
@@ -32,22 +34,20 @@ export class Server implements IRouter {
                 try {
                     this.route(request, response);
                 } catch (e) {
-                    if (e instanceof ResourceNotFoundRoutingError) {
-                        Log.warn(e, e.name + ' - The resource ' + e.resource + ' at ' + request.url + ' could not be found.');
-                        response.status(404);
-                        response.text('The resource at ' + request.url + ' could not be found.');
-                    } else if (e instanceof ResourceValidationError) {
+                    if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
                         Log.info(e.name + ' at ' + request.url);
                         response.status(e.statusCode);
-                        response.json(e.errorObject);
-                    } else if (e instanceof InvalidJsonError) {
-                        Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
-                        response.status(e.statusCode);
-                        response.text('Invalid json provided');
+                        response.json(e.serialise());
                     } else {
+                        let error: IServerError = new InternalServerError(e.stackTrace);
+
                         Log.warn(e, e.name + ' at ' + request.url);
-                        response.status(500);
-                        response.text('Something went wrong. \n' + e.stack);
+                        response.status(error.statusCode);
+                        response.json(error.serialise());
+                    }
+
+                    if (e instanceof InvalidJsonError) {
+                        Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
                     }
                 }
 

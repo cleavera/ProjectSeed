@@ -5,9 +5,8 @@ var Log_node_1 = require('../services/Log.node');
 var Request_node_1 = require('./Request.node');
 var Response_node_1 = require('./Response.node');
 var DatabaseError_node_1 = require('../errors/DatabaseError.node');
-var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
-var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRoutingError.node');
 var InvalidJsonError_node_1 = require('../errors/InvalidJsonError.node');
+var InternalServerError_node_1 = require('../errors/InternalServerError.node');
 var Server = (function () {
     function Server(serverPort) {
         var _this = this;
@@ -27,25 +26,19 @@ var Server = (function () {
                     _this.route(request, response);
                 }
                 catch (e) {
-                    if (e instanceof ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError) {
-                        Log_node_1.Log.warn(e, e.name + ' - The resource ' + e.resource + ' at ' + request.url + ' could not be found.');
-                        response.status(404);
-                        response.text('The resource at ' + request.url + ' could not be found.');
-                    }
-                    else if (e instanceof ResourceValidationError_node_1.ResourceValidationError) {
+                    if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
                         Log_node_1.Log.info(e.name + ' at ' + request.url);
                         response.status(e.statusCode);
-                        response.json(e.errorObject);
-                    }
-                    else if (e instanceof InvalidJsonError_node_1.InvalidJsonError) {
-                        Log_node_1.Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
-                        response.status(e.statusCode);
-                        response.text('Invalid json provided');
+                        response.json(e.serialise());
                     }
                     else {
+                        var error = new InternalServerError_node_1.InternalServerError(e.stackTrace);
                         Log_node_1.Log.warn(e, e.name + ' at ' + request.url);
-                        response.status(500);
-                        response.text('Something went wrong. \n' + e.stack);
+                        response.status(error.statusCode);
+                        response.json(error.serialise());
+                    }
+                    if (e instanceof InvalidJsonError_node_1.InvalidJsonError) {
+                        Log_node_1.Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
                     }
                 }
                 res.end();

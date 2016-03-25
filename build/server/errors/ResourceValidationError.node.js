@@ -14,6 +14,13 @@ var ResourceValidationError = (function (_super) {
         this.statusCode = 400;
         this.errorObject = errorObject;
     }
+    ResourceValidationError.prototype.serialise = function () {
+        return {
+            error: this.errorObject,
+            message: this.message,
+            name: this.name
+        };
+    };
     return ResourceValidationError;
 }(ServerError_node_1.ServerError));
 exports.ResourceValidationError = ResourceValidationError;

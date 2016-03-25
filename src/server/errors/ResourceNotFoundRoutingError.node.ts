@@ -1,7 +1,6 @@
-import {IRoutingError} from '../interfaces/IRoutingError';
 import {ServerError} from './ServerError.node';
 
-export class ResourceNotFoundRoutingError extends ServerError implements IRoutingError {
+export class ResourceNotFoundRoutingError extends ServerError {
     name: string = 'ResourceNotFoundRoutingError';
 
     message: string = 'The resource could not be found';

@@ -1,8 +1,7 @@
-import {IRoutingError} from '../interfaces/IRoutingError';
 import {ServerError} from './ServerError.node';
 
-export class InternalServerRoutingError extends ServerError implements IRoutingError {
-    name: string = 'InternalServerRoutingError';
+export class InternalServerError extends ServerError {
+    name: string = 'InternalServerError';
 
     message: string = 'Uncaught exception';
 

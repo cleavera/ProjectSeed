@@ -1,7 +1,8 @@
 import {IModel} from '../interfaces/IModel';
+import {ISerialisable} from '../interfaces/ISerialisable';
 import {Resource} from './Resource.node';
 
-export class Model implements IModel{
+export class Model implements IModel, ISerialisable {
     static resource: typeof Resource = Resource;
 
     static _fields: Array<string>;
@@ -18,7 +19,7 @@ export class Model implements IModel{
 
     mapTo: Function;
 
-    serialise: Function;
+    serialise: () => any;
 
     get isValid(): boolean {
         return !Object.keys(this._errors).length;

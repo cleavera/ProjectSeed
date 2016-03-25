@@ -1,7 +1,6 @@
-import {IRoutingError} from '../interfaces/IRoutingError';
 import {ServerError} from './ServerError.node';
 
-export class ResourceValidationError extends ServerError implements IRoutingError {
+export class ResourceValidationError extends ServerError {
     name: string = 'ResourceValidationError';
 
     message: string = 'There are validation errors on the request';
@@ -13,5 +12,13 @@ export class ResourceValidationError extends ServerError implements IRoutingErro
     constructor(errorObject: any) {
         super();
         this.errorObject = errorObject;
+    }
+
+    serialise(): any {
+        return {
+            error: this.errorObject,
+            message: this.message,
+            name: this.name
+        };
     }
 }
