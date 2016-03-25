@@ -7,6 +7,7 @@ var Response_node_1 = require('./Response.node');
 var DatabaseError_node_1 = require('../errors/DatabaseError.node');
 var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
 var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRoutingError.node');
+var InvalidJsonError_node_1 = require('../errors/InvalidJsonError.node');
 var Server = (function () {
     function Server(serverPort) {
         var _this = this;
@@ -35,6 +36,11 @@ var Server = (function () {
                         Log_node_1.Log.info(e.name + ' at ' + request.url);
                         response.status(e.statusCode);
                         response.json(e.errorObject);
+                    }
+                    else if (e instanceof InvalidJsonError_node_1.InvalidJsonError) {
+                        Log_node_1.Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
+                        response.status(e.statusCode);
+                        response.text('Invalid json provided');
                     }
                     else {
                         Log_node_1.Log.warn(e, e.name + ' at ' + request.url);

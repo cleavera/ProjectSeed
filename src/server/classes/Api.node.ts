@@ -6,6 +6,7 @@ import {IModel} from '../interfaces/IModel';
 import {IRest} from '../interfaces/IRest';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
+import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {Json} from '../classes/Json.node';
 import {ModelBundle} from '../models/ModelBundle.node';
@@ -83,11 +84,17 @@ export class Api implements IRouter {
 
                 return response.json(out);
             } else if (request.isPut) {
+                let model: IModel;
+
                 if (!id) {
                     throw new Error();
                 }
 
-                let model: IModel = Model.deserialise(request.body);
+                try {
+                    model = Model.deserialise(request.body);
+                } catch (e) {
+                    throw new InvalidJsonError(request.body);
+                }
 
                 if (!model.isValid) {
                     throw new ResourceValidationError(model._errors);
@@ -97,7 +104,13 @@ export class Api implements IRouter {
             } else if (request.isDelete) {
                 return response.json(resource.delete(id));
             } else if (request.isPost) {
-                let model: IModel = Model.deserialise(request.body);
+                let model: IModel;
+
+                try {
+                    model = Model.deserialise(request.body);
+                } catch (e) {
+                    throw new InvalidJsonError(request.body);
+                }
 
                 if (!model.isValid) {
                     throw new ResourceValidationError(model._errors);

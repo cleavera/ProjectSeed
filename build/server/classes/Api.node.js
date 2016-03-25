@@ -2,6 +2,7 @@
 var fs = require('fs');
 var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRoutingError.node');
 var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
+var InvalidJsonError_node_1 = require('../errors/InvalidJsonError.node');
 var DatabaseError_node_1 = require('../errors/DatabaseError.node');
 var Json_node_1 = require('../classes/Json.node');
 var ModelBundle_node_1 = require('../models/ModelBundle.node');
@@ -64,10 +65,16 @@ var Api = (function () {
                 return response.json(out);
             }
             else if (request.isPut) {
+                var model = void 0;
                 if (!id) {
                     throw new Error();
                 }
-                var model = Model.deserialise(request.body);
+                try {
+                    model = Model.deserialise(request.body);
+                }
+                catch (e) {
+                    throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
+                }
                 if (!model.isValid) {
                     throw new ResourceValidationError_node_1.ResourceValidationError(model._errors);
                 }
@@ -77,7 +84,13 @@ var Api = (function () {
                 return response.json(resource.delete(id));
             }
             else if (request.isPost) {
-                var model = Model.deserialise(request.body);
+                var model = void 0;
+                try {
+                    model = Model.deserialise(request.body);
+                }
+                catch (e) {
+                    throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
+                }
                 if (!model.isValid) {
                     throw new ResourceValidationError_node_1.ResourceValidationError(model._errors);
                 }

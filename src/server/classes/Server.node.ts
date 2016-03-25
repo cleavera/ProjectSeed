@@ -9,6 +9,7 @@ import {Response} from './Response.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
+import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 
 export class Server implements IRouter {
     private _api: IRouter;
@@ -39,6 +40,10 @@ export class Server implements IRouter {
                         Log.info(e.name + ' at ' + request.url);
                         response.status(e.statusCode);
                         response.json(e.errorObject);
+                    } else if (e instanceof InvalidJsonError) {
+                        Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
+                        response.status(e.statusCode);
+                        response.text('Invalid json provided');
                     } else {
                         Log.warn(e, e.name + ' at ' + request.url);
                         response.status(500);
