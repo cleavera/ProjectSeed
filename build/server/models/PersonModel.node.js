@@ -14,6 +14,7 @@ var Model_node_1 = require('../classes/Model.node');
 var Map_node_1 = require('../annotations/Map.node');
 var PrimaryKey_node_1 = require('../annotations/PrimaryKey.node');
 var Required_node_1 = require('../annotations/Required.node');
+var Description_node_1 = require('../annotations/Description.node');
 var PersonModel = (function (_super) {
     __extends(PersonModel, _super);
     function PersonModel(data, id) {
@@ -26,6 +27,7 @@ var PersonModel = (function (_super) {
         Required_node_1.Required
     ], PersonModel.prototype, "name", void 0);
     PersonModel = __decorate([
+        Description_node_1.Description('People'),
         PrimaryKey_node_1.PrimaryKey('id'),
         Map_node_1.Map('Person', {
             age: 'age',

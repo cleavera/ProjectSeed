@@ -4,6 +4,7 @@ var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRou
 var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
 var InvalidJsonError_node_1 = require('../errors/InvalidJsonError.node');
 var DatabaseError_node_1 = require('../errors/DatabaseError.node');
+var MethodNotImplementedError_node_1 = require('../errors/MethodNotImplementedError.node');
 var Json_node_1 = require('../classes/Json.node');
 var ModelBundle_node_1 = require('../models/ModelBundle.node');
 var Api = (function () {
@@ -43,6 +44,9 @@ var Api = (function () {
                 throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
             }
             var id = request.url.next().value;
+            if (Model._meta && Model._meta.description) {
+                response.addHeader('description', Model._meta.description);
+            }
             if (request.isGet) {
                 var data = void 0, out = void 0;
                 try {
@@ -97,7 +101,7 @@ var Api = (function () {
                 return response.json(resource.post(model.mapTo()));
             }
             else {
-                throw new Error();
+                throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
             }
         }
         throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);

@@ -46,7 +46,7 @@ export function Map(table: string, map: any): ClassDecorator {
                 }
             });
 
-            delete data[model._primaryKey];
+            delete data[model._meta.primaryKey];
 
             return data;
         };

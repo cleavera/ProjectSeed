@@ -17,6 +17,9 @@ var Response = (function () {
         this._baseResponse.setHeader('content-type', 'application/json');
         this._baseResponse.write(JSON.stringify(json));
     };
+    Response.prototype.addHeader = function (name, value) {
+        this._baseResponse.setHeader(name, value);
+    };
     return Response;
 }());
 exports.Response = Response;

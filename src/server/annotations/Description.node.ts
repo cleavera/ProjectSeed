@@ -1,4 +1,4 @@
-export function PrimaryKey(field: string): ClassDecorator {
+export function Description(description: string): ClassDecorator {
     'use strict';
 
     return function(target: any): void {
@@ -6,6 +6,6 @@ export function PrimaryKey(field: string): ClassDecorator {
             target._meta = {};
         }
 
-        target._meta.primaryKey = field;
+        target._meta.description = description;
     };
 }

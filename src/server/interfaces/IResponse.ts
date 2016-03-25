@@ -6,4 +6,6 @@ export interface IResponse {
     serve(filePath: string): void;
 
     json(json: any): void;
+
+    addHeader(name: string, value: string): void;
 }

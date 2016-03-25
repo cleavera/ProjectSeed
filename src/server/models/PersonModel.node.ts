@@ -2,7 +2,9 @@ import {Model} from '../classes/Model.node';
 import {Map} from '../annotations/Map.node';
 import {PrimaryKey} from '../annotations/PrimaryKey.node';
 import {Required} from '../annotations/Required.node';
+import {Description} from '../annotations/Description.node';
 
+@Description('People')
 @PrimaryKey('id')
 @Map('Person', {
     age: 'age',

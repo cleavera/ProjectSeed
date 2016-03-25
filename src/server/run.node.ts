@@ -14,7 +14,7 @@ new Server(1337);
     process.stdin.setEncoding('utf8');
 
     process.stdin.on('data', (text) => {
-        if (text === 'quit\r\n' || text === 'quit\n') {
+        if (text === 'quit\r\n' || text === 'quit\n' || text === 'q\r\n' || text === 'q\n') {
             done();
         }
     });

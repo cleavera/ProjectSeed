@@ -36,7 +36,7 @@ function Map(table, map) {
                     data[map[field]] = _this[field];
                 }
             });
-            delete data[model._primaryKey];
+            delete data[model._meta.primaryKey];
             return data;
         };
     };

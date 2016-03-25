@@ -26,4 +26,8 @@ export class Response implements IResponse {
 
         this._baseResponse.write(JSON.stringify(json));
     }
+
+    addHeader(name: string, value: string): void {
+        this._baseResponse.setHeader(name, value);
+    }
 }

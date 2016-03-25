@@ -10,7 +10,7 @@ new Server_node_1.Server(1337);
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
     process.stdin.on('data', function (text) {
-        if (text === 'quit\r\n' || text === 'quit\n') {
+        if (text === 'quit\r\n' || text === 'quit\n' || text === 'q\r\n' || text === 'q\n') {
             done();
         }
     });

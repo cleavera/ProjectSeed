@@ -1,11 +1,11 @@
 "use strict";
-function PrimaryKey(field) {
+function Description(description) {
     'use strict';
     return function (target) {
         if (!target._meta) {
             target._meta = {};
         }
-        target._meta.primaryKey = field;
+        target._meta.description = description;
     };
 }
-exports.PrimaryKey = PrimaryKey;
+exports.Description = Description;

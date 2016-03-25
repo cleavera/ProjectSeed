@@ -8,6 +8,7 @@ import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingErr
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
+import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
 import {Json} from '../classes/Json.node';
 import {ModelBundle} from '../models/ModelBundle.node';
 
@@ -59,6 +60,10 @@ export class Api implements IRouter {
             }
 
             let id: string = request.url.next().value;
+
+            if (Model._meta && Model._meta.description) {
+                response.addHeader('description', Model._meta.description);
+            }
 
             if (request.isGet) {
                 let data: any,
@@ -118,7 +123,7 @@ export class Api implements IRouter {
 
                 return response.json(resource.post(model.mapTo()));
             } else {
-                throw new Error();
+                throw new MethodNotImplementedError();
             }
         }
 
