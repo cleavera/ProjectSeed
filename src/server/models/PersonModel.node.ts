@@ -3,6 +3,9 @@ import {Map} from '../annotations/Map.node';
 import {PrimaryKey} from '../annotations/PrimaryKey.node';
 import {Required} from '../annotations/Required.node';
 import {Description} from '../annotations/Description.node';
+import {String} from '../annotations/String.node';
+import {Integer} from '../annotations/Integer.node';
+import {Guid} from '../annotations/Guid.node';
 
 @Description('People')
 @PrimaryKey('id')
@@ -12,11 +15,14 @@ import {Description} from '../annotations/Description.node';
     name: 'fullName'
 })
 export class PersonModel extends Model {
+    @Guid
     id: string;
 
     @Required
+    @String
     name: string;
 
+    @Integer
     age: number;
 
     constructor(data: any, id: string) {
