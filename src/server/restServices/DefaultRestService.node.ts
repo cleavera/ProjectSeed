@@ -57,7 +57,8 @@ export class DefaultRestService implements IRest {
     }
     
     delete(id: string): void {
-        this._response.json(this._resource.delete(id));
+        this._resource.delete(id)
+        this._response.status(204);
     }
     
     post(item: any): void {
@@ -65,7 +66,11 @@ export class DefaultRestService implements IRest {
             throw new ResourceValidationError(item._errors);
         }
 
-        this._response.json(this._resource.post(item.mapTo()));
+        let id = this._resource.post(item.mapTo()),
+            record = this._resource.get(id);
+
+        this._response.status(201);
+        this._response.json(this._Model.mapFrom(record, id).serialise());
     }
     
     put(id: string, item: any): void {
@@ -77,6 +82,8 @@ export class DefaultRestService implements IRest {
             throw new ResourceValidationError(item._errors);
         }
 
-        this._response.json(this._resource.put(id, item.mapTo()));
+        let record = this._resource.put(id, item.mapTo());
+
+        this._response.json(this._Model.mapFrom(record, id).serialise());
     }
 }

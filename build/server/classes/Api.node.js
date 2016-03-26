@@ -64,7 +64,7 @@ var Api = (function () {
                 return restService.put(id, model);
             }
             else if (request.isDelete) {
-                return response.json(resource.delete(id));
+                return restService.delete(id);
             }
             else if (request.isPost) {
                 var model = void 0;

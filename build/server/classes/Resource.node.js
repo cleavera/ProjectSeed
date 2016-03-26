@@ -30,7 +30,7 @@ var Resource = (function () {
         var id = Guid_node_1.Guid.generate();
         this._data[id] = item;
         this._resource.save(this._data);
-        return this._data[id];
+        return id;
     };
     Resource.prototype.put = function (id, item) {
         this._data[id] = item;

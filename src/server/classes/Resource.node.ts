@@ -35,13 +35,13 @@ export class Resource implements IRest {
         }
     }
 
-    post(item: any): any {
+    post(item: any): string {
         let id: string = Guid.generate();
 
         this._data[id] = item;
         this._resource.save(this._data);
 
-        return this._data[id];
+        return id;
     }
 
     put(id: string, item: any): any {

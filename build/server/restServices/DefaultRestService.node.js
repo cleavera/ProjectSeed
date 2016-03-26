@@ -36,13 +36,16 @@ var DefaultRestService = (function () {
         this._response.json(out);
     };
     DefaultRestService.prototype.delete = function (id) {
-        this._response.json(this._resource.delete(id));
+        this._resource.delete(id);
+        this._response.status(204);
     };
     DefaultRestService.prototype.post = function (item) {
         if (!item.isValid) {
             throw new ResourceValidationError_node_1.ResourceValidationError(item._errors);
         }
-        this._response.json(this._resource.post(item.mapTo()));
+        var id = this._resource.post(item.mapTo()), record = this._resource.get(id);
+        this._response.status(201);
+        this._response.json(this._Model.mapFrom(record, id).serialise());
     };
     DefaultRestService.prototype.put = function (id, item) {
         if (!id) {
@@ -51,7 +54,8 @@ var DefaultRestService = (function () {
         if (!item.isValid) {
             throw new ResourceValidationError_node_1.ResourceValidationError(item._errors);
         }
-        this._response.json(this._resource.put(id, item.mapTo()));
+        var record = this._resource.put(id, item.mapTo());
+        this._response.json(this._Model.mapFrom(record, id).serialise());
     };
     return DefaultRestService;
 }());
