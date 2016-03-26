@@ -18,11 +18,7 @@ var Api = (function () {
         this._resourceList = Object.keys(this._modelList);
         this._resourceList.forEach(function (resourceName) {
             var tableName = _this._modelList[resourceName]._map.table;
-            try {
-                /* tslint:disable:no-unused-expression */
-                new Json_node_1.Json('./data/' + tableName + '.json');
-            }
-            catch (e) {
+            if (!Json_node_1.Json.tableExists('./data/' + tableName + '.json')) {
                 Json_node_1.Json.create('./data/' + tableName + '.json');
             }
         });
@@ -75,6 +71,9 @@ var Api = (function () {
                     throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
                 }
                 return restService.post(model);
+            }
+            else if (request.isOptions) {
+                return restService.options();
             }
             else {
                 if (restService[request.type]) {

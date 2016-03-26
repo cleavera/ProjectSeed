@@ -14,4 +14,6 @@ export interface IRequest {
     isGet: boolean;
 
     isDelete: boolean;
+    
+    isOptions: boolean;
 }

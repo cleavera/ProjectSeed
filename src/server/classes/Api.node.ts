@@ -90,6 +90,8 @@ export class Api implements IRouter {
                 }
 
                 return restService.post(model);
+            } else if (request.isOptions) {
+                return restService.options();
             } else {
                 if(restService[request.type]) {
                     return restService[request.type]();

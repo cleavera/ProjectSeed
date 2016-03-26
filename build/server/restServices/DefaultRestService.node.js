@@ -57,6 +57,9 @@ var DefaultRestService = (function () {
         var record = this._resource.put(id, item.mapTo());
         this._response.json(this._Model.mapFrom(record, id).serialise());
     };
+    DefaultRestService.prototype.options = function () {
+        this._response.json(this._Model._fields);
+    };
     return DefaultRestService;
 }());
 exports.DefaultRestService = DefaultRestService;

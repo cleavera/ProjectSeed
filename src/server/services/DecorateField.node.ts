@@ -1,5 +1,5 @@
 export class DecorateField {
-    static addType(instance: any, field: string, type: string): void {
+    static addDescriptor(instance: any, field: string, descriptorName: string, value: any): void {
         let staticClass: any = instance.constructor;
 
         if(!staticClass._fields) {
@@ -10,7 +10,11 @@ export class DecorateField {
             staticClass._fields[field] = {};
         }
         
-        staticClass._fields[field].type = type;
+        staticClass._fields[field][descriptorName] = value;
+    }
+    
+    static addType(instance: any, field: string, type: string): void {
+        this.addDescriptor(instance, field, 'type', type);
     }
     
     static getterSetter(object: any, key: string, onGet?: (value: any) => any, onSet?: (newValue: any) => any): void {

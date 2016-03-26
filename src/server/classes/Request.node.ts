@@ -35,6 +35,10 @@ export class Request implements IRequest {
     get isDelete(): boolean {
         return this._baseRequest.method.toLowerCase() === 'delete';
     }
+    
+    get isOptions(): boolean {
+        return this._baseRequest.method.toLowerCase() === 'options';
+    }
 
     static fromRequest(request: http.IncomingMessage): Promise<Request> {
         let body: string = '';

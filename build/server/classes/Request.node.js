@@ -36,6 +36,13 @@ var Request = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Request.prototype, "isOptions", {
+        get: function () {
+            return this._baseRequest.method.toLowerCase() === 'options';
+        },
+        enumerable: true,
+        configurable: true
+    });
     Request.fromRequest = function (request) {
         var body = '';
         request.on('data', function (chunk) {

@@ -86,4 +86,8 @@ export class DefaultRestService implements IRest {
 
         this._response.json(this._Model.mapFrom(record, id).serialise());
     }
+    
+    options(): void {
+        this._response.json(this._Model._fields);
+    }
 }

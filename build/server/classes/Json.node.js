@@ -6,6 +6,15 @@ var Json = (function () {
         this._path = path;
         fs.accessSync(path);
     }
+    Json.tableExists = function (path) {
+        try {
+            fs.accessSync(path);
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
+    };
     Json.create = function (path) {
         fs.writeFile(path, '{}', function (err) {
             throw new DatabaseError_node_1.DatabaseError(path, 'Error creating table', err);

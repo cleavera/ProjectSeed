@@ -2,7 +2,7 @@
 var DecorateField = (function () {
     function DecorateField() {
     }
-    DecorateField.addType = function (instance, field, type) {
+    DecorateField.addDescriptor = function (instance, field, descriptorName, value) {
         var staticClass = instance.constructor;
         if (!staticClass._fields) {
             staticClass._fields = {};
@@ -10,7 +10,10 @@ var DecorateField = (function () {
         if (!staticClass._fields[field]) {
             staticClass._fields[field] = {};
         }
-        staticClass._fields[field].type = type;
+        staticClass._fields[field][descriptorName] = value;
+    };
+    DecorateField.addType = function (instance, field, type) {
+        this.addDescriptor(instance, field, 'type', type);
     };
     DecorateField.getterSetter = function (object, key, onGet, onSet) {
         var descriptor = Object.getOwnPropertyDescriptor(object, key);
