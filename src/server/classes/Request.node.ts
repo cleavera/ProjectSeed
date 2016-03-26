@@ -8,6 +8,8 @@ export class Request implements IRequest {
     url: IUrl;
 
     body: any;
+    
+    type: string;
 
     private _baseRequest: any;
 
@@ -15,6 +17,7 @@ export class Request implements IRequest {
         this.url = new Url(request.url);
         this.body = body;
         this._baseRequest = request;
+        this.type = this._baseRequest.method.toLowerCase();
     }
 
     get isGet(): boolean {

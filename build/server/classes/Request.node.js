@@ -6,6 +6,7 @@ var Request = (function () {
         this.url = new Url_node_1.Url(request.url);
         this.body = body;
         this._baseRequest = request;
+        this.type = this._baseRequest.method.toLowerCase();
     }
     Object.defineProperty(Request.prototype, "isGet", {
         get: function () {

@@ -1,7 +1,6 @@
 "use strict";
 var fs = require('fs');
 var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRoutingError.node');
-var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
 var InvalidJsonError_node_1 = require('../errors/InvalidJsonError.node');
 var DatabaseError_node_1 = require('../errors/DatabaseError.node');
 var MethodNotImplementedError_node_1 = require('../errors/MethodNotImplementedError.node');
@@ -36,9 +35,10 @@ var Api = (function () {
             throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
         if (resourceName) {
-            var resource = void 0;
+            var resource = void 0, restService = void 0;
             try {
                 resource = new Model.resource(resourceName);
+                restService = new Model.restService(request, response, Model, resourceName);
             }
             catch (e) {
                 throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
@@ -48,41 +48,20 @@ var Api = (function () {
                 response.addHeader('description', Model.description);
             }
             if (request.isGet) {
-                var data = void 0, out = void 0;
-                try {
-                    data = resource.get(id);
+                if (!restService.get) {
+                    throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
                 }
-                catch (e) {
-                    throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
-                }
-                if (id) {
-                    out = Model.mapFrom(data, id).serialise();
-                }
-                else {
-                    out = [];
-                    for (var id_1 in data) {
-                        if (data.hasOwnProperty(id_1)) {
-                            out.push(Model.mapFrom(data[id_1], id_1).serialise());
-                        }
-                    }
-                }
-                return response.json(out);
+                return restService.get(id);
             }
             else if (request.isPut) {
                 var model = void 0;
-                if (!id) {
-                    throw new Error();
-                }
                 try {
                     model = Model.deserialise(request.body);
                 }
                 catch (e) {
                     throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
                 }
-                if (!model.isValid) {
-                    throw new ResourceValidationError_node_1.ResourceValidationError(model._errors);
-                }
-                return response.json(resource.put(id, model.mapTo()));
+                return restService.put(id, model);
             }
             else if (request.isDelete) {
                 return response.json(resource.delete(id));
@@ -95,12 +74,12 @@ var Api = (function () {
                 catch (e) {
                     throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
                 }
-                if (!model.isValid) {
-                    throw new ResourceValidationError_node_1.ResourceValidationError(model._errors);
-                }
-                return response.json(resource.post(model.mapTo()));
+                return restService.post(model);
             }
             else {
+                if (restService[request.type]) {
+                    return restService[request.type]();
+                }
                 throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
             }
         }

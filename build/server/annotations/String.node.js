@@ -1,12 +1,11 @@
 "use strict";
 var Model_node_1 = require('../classes/Model.node');
-function Required(target, key) {
+function String(target, key) {
     'use strict';
-    var validatorName = 'required';
+    var validatorName = 'invalidString';
     var validator = function (newValue) {
-        return !!newValue;
+        return newValue === undefined || typeof newValue === 'string';
     };
     Model_node_1.Model.addValidator(target, validatorName, validator, key);
-    target._errors[key].push(validatorName);
 }
-exports.Required = Required;
+exports.String = String;

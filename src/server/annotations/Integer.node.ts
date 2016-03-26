@@ -7,7 +7,7 @@ export function Integer(target: IModel, key: string): void {
     const validatorName: string = 'invalidInteger';
 
     let validator: (newValue: any) => boolean = function(newValue: any): boolean {
-        return typeof newValue === 'number' && Math.ceil(newValue) === newValue;
+        return newValue === undefined || (typeof newValue === 'number' && Math.ceil(newValue) === newValue);
     };
 
     Model.addValidator(target, validatorName, validator, key);

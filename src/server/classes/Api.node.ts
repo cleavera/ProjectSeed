@@ -51,10 +51,12 @@ export class Api implements IRouter {
         }
 
         if (resourceName) {
-            let resource: IRest;
+            let resource: IRest,
+                restService: IRest;
 
             try {
                 resource = new Model.resource(resourceName);
+                restService = new Model.restService(request, response, Model, resourceName);
             } catch (e) {
                 throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
             }
@@ -66,34 +68,13 @@ export class Api implements IRouter {
             }
 
             if (request.isGet) {
-                let data: any,
-                    out: any;
-
-                try {
-                    data = resource.get(id);
-                } catch (e) {
-                    throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+                if(!restService.get) {
+                    throw new MethodNotImplementedError();
                 }
-
-                if (id) {
-                    out = Model.mapFrom(data, id).serialise();
-                } else {
-                    out = [];
-
-                    for (let id in data) {
-                        if (data.hasOwnProperty(id)) {
-                            out.push(Model.mapFrom(data[id], id).serialise());
-                        }
-                    }
-                }
-
-                return response.json(out);
+                
+                return restService.get(id);
             } else if (request.isPut) {
                 let model: IModel;
-
-                if (!id) {
-                    throw new Error();
-                }
 
                 try {
                     model = Model.deserialise(request.body);
@@ -101,11 +82,7 @@ export class Api implements IRouter {
                     throw new InvalidJsonError(request.body);
                 }
 
-                if (!model.isValid) {
-                    throw new ResourceValidationError(model._errors);
-                }
-
-                return response.json(resource.put(id, model.mapTo()));
+                return restService.put(id, model);
             } else if (request.isDelete) {
                 return response.json(resource.delete(id));
             } else if (request.isPost) {
@@ -117,12 +94,12 @@ export class Api implements IRouter {
                     throw new InvalidJsonError(request.body);
                 }
 
-                if (!model.isValid) {
-                    throw new ResourceValidationError(model._errors);
-                }
-
-                return response.json(resource.post(model.mapTo()));
+                return restService.post(model);
             } else {
+                if(restService[request.type]) {
+                    return restService[request.type]();
+                }
+                
                 throw new MethodNotImplementedError();
             }
         }

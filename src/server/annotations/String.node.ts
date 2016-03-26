@@ -7,7 +7,7 @@ export function String(target: IModel, key: string): void {
     const validatorName: string = 'invalidString';
 
     let validator: (newValue: any) => boolean = function(newValue: any): boolean {
-        return typeof newValue === 'string';
+        return newValue === undefined || typeof newValue === 'string';
     };
 
     Model.addValidator(target, validatorName, validator, key);

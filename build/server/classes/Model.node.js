@@ -1,5 +1,6 @@
 "use strict";
 var Resource_node_1 = require('./Resource.node');
+var DefaultRestService_node_1 = require('../restServices/DefaultRestService.node');
 var DecorateField_node_1 = require('./DecorateField.node');
 var Model = (function () {
     function Model() {
@@ -18,7 +19,6 @@ var Model = (function () {
         if (!model._errors[field]) {
             model._errors[field] = [];
         }
-        model._errors[field].push(validatorName);
         var setter = function (newValue) {
             var errorArray = this._errors[field] || [], errorIndex = errorArray ? errorArray.indexOf(validatorName) : -1;
             if (!errorArray) {
@@ -40,6 +40,7 @@ var Model = (function () {
         DecorateField_node_1.DecorateField.getterSetter(model, field, null, setter);
     };
     Model.resource = Resource_node_1.Resource;
+    Model.restService = DefaultRestService_node_1.DefaultRestService;
     return Model;
 }());
 exports.Model = Model;

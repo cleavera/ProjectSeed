@@ -1,10 +1,13 @@
 import {IModel} from '../interfaces/IModel';
 import {ISerialisable} from '../interfaces/ISerialisable';
 import {Resource} from './Resource.node';
+import {DefaultRestService} from '../restServices/DefaultRestService.node';
 import {DecorateField} from './DecorateField.node';
 
 export class Model implements IModel, ISerialisable {
     static resource: typeof Resource = Resource;
+    
+    static restService: typeof DefaultRestService = DefaultRestService;
 
     static _fields: Array<string>;
 
@@ -36,8 +39,6 @@ export class Model implements IModel, ISerialisable {
         if (!model._errors[field]) {
             model._errors[field] = [];
         }
-
-        model._errors[field].push(validatorName);
 
         let setter: (newValue: any) => void = function (newValue: any): void {
             let errorArray: Array<string> = this._errors[field] || [],

@@ -8,7 +8,7 @@ export function Guid(target: IModel, key: string): void {
     const validatorName: string = 'invalidGuid';
 
     let validator: (newValue: any) => boolean = function(newValue: any): boolean {
-        return typeof newValue === 'string' && !!uuid.parse(newValue);
+        return newValue === undefined || (typeof newValue === 'string' && !!uuid.parse(newValue));
     };
 
     Model.addValidator(target, validatorName, validator, key);

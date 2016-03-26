@@ -4,6 +4,8 @@ export interface IRequest {
     url: IUrl;
 
     body: any;
+    
+    type: string;
 
     isPost: boolean;
 

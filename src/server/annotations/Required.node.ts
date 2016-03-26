@@ -11,4 +11,6 @@ export function Required(target: IModel, key: string): void {
     };
 
     Model.addValidator(target, validatorName, validator, key);
+    
+    target._errors[key].push(validatorName);
 }

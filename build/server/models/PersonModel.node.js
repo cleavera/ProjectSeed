@@ -15,6 +15,9 @@ var Map_node_1 = require('../annotations/Map.node');
 var PrimaryKey_node_1 = require('../annotations/PrimaryKey.node');
 var Required_node_1 = require('../annotations/Required.node');
 var Description_node_1 = require('../annotations/Description.node');
+var String_node_1 = require('../annotations/String.node');
+var Integer_node_1 = require('../annotations/Integer.node');
+var Guid_node_1 = require('../annotations/Guid.node');
 var PersonModel = (function (_super) {
     __extends(PersonModel, _super);
     function PersonModel(data, id) {
@@ -24,8 +27,15 @@ var PersonModel = (function (_super) {
         this.age = data.age;
     }
     __decorate([
-        Required_node_1.Required
+        Guid_node_1.Guid
+    ], PersonModel.prototype, "id", void 0);
+    __decorate([
+        Required_node_1.Required,
+        String_node_1.String
     ], PersonModel.prototype, "name", void 0);
+    __decorate([
+        Integer_node_1.Integer
+    ], PersonModel.prototype, "age", void 0);
     PersonModel = __decorate([
         Description_node_1.Description('People'),
         PrimaryKey_node_1.PrimaryKey('id'),
