@@ -5,6 +5,15 @@ import {DatabaseError} from '../errors/DatabaseError.node';
 export class Json implements IResource {
     private _path: string;
 
+    static tableExists(path: string): boolean {
+        try {
+            fs.accessSync(path);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
     static create(path: string): void {
         fs.writeFile(path, '{}', (err) => {
             throw new DatabaseError(path, 'Error creating table', err);

@@ -5,7 +5,6 @@ import {IResponse} from '../interfaces/IResponse';
 import {IModel} from '../interfaces/IModel';
 import {IRest} from '../interfaces/IRest';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
-import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
@@ -30,11 +29,7 @@ export class Api implements IRouter {
         this._resourceList.forEach(resourceName => {
             let tableName: string = this._modelList[resourceName]._map.table;
 
-            try {
-                /* tslint:disable:no-unused-expression */
-                new Json('./data/' + tableName + '.json');
-                /* tslint:enable */
-            } catch (e) {
+            if (!Json.tableExists('./data/' + tableName + '.json')) {
                 Json.create('./data/' + tableName + '.json');
             }
         });
