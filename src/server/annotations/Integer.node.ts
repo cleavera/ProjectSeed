@@ -1,10 +1,14 @@
-import {Model} from '../classes/Model.node';
 import {IModel} from '../interfaces/IModel';
+import {Model} from '../classes/Model.node';
+import {DecorateField} from '../services/DecorateField.node';
 
 export function Integer(target: IModel, key: string): void {
     'use strict';
 
+    const typeName: string = 'integer';
     const validatorName: string = 'invalidInteger';
+
+    DecorateField.addType(target, key, typeName);
 
     let validator: (newValue: any) => boolean = function(newValue: any): boolean {
         return newValue === undefined || (typeof newValue === 'number' && Math.ceil(newValue) === newValue);

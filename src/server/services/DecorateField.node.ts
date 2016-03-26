@@ -1,4 +1,18 @@
 export class DecorateField {
+    static addType(instance: any, field: string, type: string): void {
+        let staticClass: any = instance.constructor;
+
+        if(!staticClass._fields) {
+            staticClass._fields = {};
+        }
+        
+        if(!staticClass._fields[field]) {
+            staticClass._fields[field] = {};
+        }
+        
+        staticClass._fields[field].type = type;
+    }
+    
     static getterSetter(object: any, key: string, onGet?: (value: any) => any, onSet?: (newValue: any) => any): void {
         let descriptor: PropertyDescriptor = Object.getOwnPropertyDescriptor(object, key);
 

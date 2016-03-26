@@ -1,7 +1,7 @@
 "use strict";
 var Resource_node_1 = require('./Resource.node');
 var DefaultRestService_node_1 = require('../restServices/DefaultRestService.node');
-var DecorateField_node_1 = require('./DecorateField.node');
+var DecorateField_node_1 = require('../services/DecorateField.node');
 var Model = (function () {
     function Model() {
     }

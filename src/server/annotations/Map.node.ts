@@ -6,13 +6,21 @@ export function Map(table: string, map: any): ClassDecorator {
             properties: map,
             table: table
         };
+        
+        if(!model._fields) {
+            model._fields = {};
+        }
 
-        model._fields = Object.keys(map);
+        Object.keys(map).forEach((field) => {
+            if(!model._fields[field]) {
+                model._fields[field] = {};
+            }
+        });
 
         model.mapFrom = function(data: any, id: string): any {
             let mappedData: any = {};
 
-            model._fields.forEach(field => {
+            Object.keys(model._fields).forEach(field => {
                 if (field in map && map[field] in data) {
                     mappedData[field] = data[map[field]];
                 }
@@ -30,7 +38,7 @@ export function Map(table: string, map: any): ClassDecorator {
         model.prototype.serialise = function(): any {
             let data: any = {};
 
-            model._fields.forEach(field => {
+            Object.keys(model._fields).forEach(field => {
                 data[field] = this[field];
             });
 
@@ -40,7 +48,7 @@ export function Map(table: string, map: any): ClassDecorator {
         model.prototype.mapTo = function(): any {
             let data: any = {};
 
-            model._fields.forEach(field => {
+            Object.keys(model._fields).forEach(field => {
                 if (field in map && field in this) {
                     data[map[field]] = this[field];
                 }

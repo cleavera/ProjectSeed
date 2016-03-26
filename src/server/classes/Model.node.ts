@@ -2,14 +2,14 @@ import {IModel} from '../interfaces/IModel';
 import {ISerialisable} from '../interfaces/ISerialisable';
 import {Resource} from './Resource.node';
 import {DefaultRestService} from '../restServices/DefaultRestService.node';
-import {DecorateField} from './DecorateField.node';
+import {DecorateField} from '../services/DecorateField.node';
 
 export class Model implements IModel, ISerialisable {
     static resource: typeof Resource = Resource;
     
     static restService: typeof DefaultRestService = DefaultRestService;
 
-    static _fields: Array<string>;
+    static _fields: any;
 
     static _map: any;
 

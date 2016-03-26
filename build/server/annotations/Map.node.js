@@ -6,10 +6,17 @@ function Map(table, map) {
             properties: map,
             table: table
         };
-        model._fields = Object.keys(map);
+        if (!model._fields) {
+            model._fields = {};
+        }
+        Object.keys(map).forEach(function (field) {
+            if (!model._fields[field]) {
+                model._fields[field] = {};
+            }
+        });
         model.mapFrom = function (data, id) {
             var mappedData = {};
-            model._fields.forEach(function (field) {
+            Object.keys(model._fields).forEach(function (field) {
                 if (field in map && map[field] in data) {
                     mappedData[field] = data[map[field]];
                 }
@@ -23,7 +30,7 @@ function Map(table, map) {
         model.prototype.serialise = function () {
             var _this = this;
             var data = {};
-            model._fields.forEach(function (field) {
+            Object.keys(model._fields).forEach(function (field) {
                 data[field] = _this[field];
             });
             return data;
@@ -31,7 +38,7 @@ function Map(table, map) {
         model.prototype.mapTo = function () {
             var _this = this;
             var data = {};
-            model._fields.forEach(function (field) {
+            Object.keys(model._fields).forEach(function (field) {
                 if (field in map && field in _this) {
                     data[map[field]] = _this[field];
                 }
