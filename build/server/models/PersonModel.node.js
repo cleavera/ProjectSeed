@@ -18,6 +18,8 @@ var Description_node_1 = require('../annotations/Description.node');
 var String_node_1 = require('../annotations/String.node');
 var Integer_node_1 = require('../annotations/Integer.node');
 var Guid_node_1 = require('../annotations/Guid.node');
+var Options_node_1 = require('../annotations/Options.node');
+var gender_node_1 = require('../constants/gender.node');
 var PersonModel = (function (_super) {
     __extends(PersonModel, _super);
     function PersonModel(data, id) {
@@ -37,6 +39,10 @@ var PersonModel = (function (_super) {
     __decorate([
         Integer_node_1.Integer
     ], PersonModel.prototype, "age", void 0);
+    __decorate([
+        Options_node_1.Options(gender_node_1.Gender),
+        String_node_1.String
+    ], PersonModel.prototype, "gender", void 0);
     PersonModel = __decorate([
         Description_node_1.Description('People'),
         Map_node_1.Map('Person', {

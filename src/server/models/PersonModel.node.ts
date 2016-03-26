@@ -6,6 +6,8 @@ import {Description} from '../annotations/Description.node';
 import {String} from '../annotations/String.node';
 import {Integer} from '../annotations/Integer.node';
 import {Guid} from '../annotations/Guid.node';
+import {Options} from '../annotations/Options.node';
+import {Gender} from '../constants/gender.node';
 
 @Description('People')
 @Map('Person', {
@@ -24,6 +26,10 @@ export class PersonModel extends Model {
 
     @Integer
     age: number;
+
+    @Options(Gender)
+    @String
+    gender: string;
 
     constructor(data: any, id: string) {
         super();
