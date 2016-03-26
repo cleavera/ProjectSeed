@@ -15,6 +15,11 @@ var DecorateField = (function () {
     DecorateField.addType = function (instance, field, type) {
         this.addDescriptor(instance, field, 'type', type);
     };
+    DecorateField.setPrimaryKey = function (instance, field) {
+        var staticClass = instance.constructor;
+        staticClass.primaryKey = field;
+        this.addDescriptor(instance, field, 'primaryKey', true);
+    };
     DecorateField.getterSetter = function (object, key, onGet, onSet) {
         var descriptor = Object.getOwnPropertyDescriptor(object, key);
         if (!descriptor) {

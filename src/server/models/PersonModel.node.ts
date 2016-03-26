@@ -8,7 +8,6 @@ import {Integer} from '../annotations/Integer.node';
 import {Guid} from '../annotations/Guid.node';
 
 @Description('People')
-@PrimaryKey('id')
 @Map('Person', {
     age: 'age',
     id: 'id',
@@ -16,6 +15,7 @@ import {Guid} from '../annotations/Guid.node';
 })
 export class PersonModel extends Model {
     @Guid
+    @PrimaryKey
     id: string;
 
     @Required

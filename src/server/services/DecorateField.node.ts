@@ -17,6 +17,14 @@ export class DecorateField {
         this.addDescriptor(instance, field, 'type', type);
     }
     
+    static setPrimaryKey(instance: any, field: string): void {
+        let staticClass: any = instance.constructor;
+        
+        staticClass.primaryKey = field;
+        
+        this.addDescriptor(instance, field, 'primaryKey', true);
+    }
+    
     static getterSetter(object: any, key: string, onGet?: (value: any) => any, onSet?: (newValue: any) => any): void {
         let descriptor: PropertyDescriptor = Object.getOwnPropertyDescriptor(object, key);
 

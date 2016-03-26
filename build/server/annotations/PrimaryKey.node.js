@@ -1,8 +1,7 @@
 "use strict";
-function PrimaryKey(field) {
+var DecorateField_node_1 = require('../services/DecorateField.node');
+function PrimaryKey(target, key) {
     'use strict';
-    return function (target) {
-        target.primaryKey = field;
-    };
+    DecorateField_node_1.DecorateField.setPrimaryKey(target, key);
 }
 exports.PrimaryKey = PrimaryKey;

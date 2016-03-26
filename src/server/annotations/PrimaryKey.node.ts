@@ -1,7 +1,9 @@
-export function PrimaryKey(field: string): ClassDecorator {
-    'use strict';
+import {IModel} from '../interfaces/IModel';
+import {Model} from '../classes/Model.node';
+import {DecorateField} from '../services/DecorateField.node';
 
-    return function(target: any): void {
-        target.primaryKey = field;
-    };
+export function PrimaryKey(target: IModel, key: string): void {
+    'use strict';
+  
+    DecorateField.setPrimaryKey(target, key);
 }

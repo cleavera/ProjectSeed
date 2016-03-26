@@ -10,10 +10,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var PrimaryKey_node_1 = require('../annotations/PrimaryKey.node');
 var Map_node_1 = require('../annotations/Map.node');
 var Model_node_1 = require('../classes/Model.node');
 var UserResource_node_1 = require('../resources/UserResource.node');
+var PrimaryKey_node_1 = require('../annotations/PrimaryKey.node');
+var Required_node_1 = require('../annotations/Required.node');
+var String_node_1 = require('../annotations/String.node');
+var Guid_node_1 = require('../annotations/Guid.node');
 var UserModel = (function (_super) {
     __extends(UserModel, _super);
     function UserModel(data, id) {
@@ -24,8 +27,23 @@ var UserModel = (function (_super) {
         this.email = data.email;
     }
     UserModel.resource = UserResource_node_1.UserResource;
+    __decorate([
+        PrimaryKey_node_1.PrimaryKey,
+        Guid_node_1.Guid
+    ], UserModel.prototype, "id", void 0);
+    __decorate([
+        Required_node_1.Required,
+        String_node_1.String
+    ], UserModel.prototype, "username", void 0);
+    __decorate([
+        Required_node_1.Required,
+        String_node_1.String
+    ], UserModel.prototype, "password", void 0);
+    __decorate([
+        Required_node_1.Required,
+        String_node_1.String
+    ], UserModel.prototype, "email", void 0);
     UserModel = __decorate([
-        PrimaryKey_node_1.PrimaryKey('id'),
         Map_node_1.Map('User', {
             email: 'email',
             id: 'id',

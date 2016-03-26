@@ -27,7 +27,8 @@ var PersonModel = (function (_super) {
         this.age = data.age;
     }
     __decorate([
-        Guid_node_1.Guid
+        Guid_node_1.Guid,
+        PrimaryKey_node_1.PrimaryKey
     ], PersonModel.prototype, "id", void 0);
     __decorate([
         Required_node_1.Required,
@@ -38,7 +39,6 @@ var PersonModel = (function (_super) {
     ], PersonModel.prototype, "age", void 0);
     PersonModel = __decorate([
         Description_node_1.Description('People'),
-        PrimaryKey_node_1.PrimaryKey('id'),
         Map_node_1.Map('Person', {
             age: 'age',
             id: 'id',
