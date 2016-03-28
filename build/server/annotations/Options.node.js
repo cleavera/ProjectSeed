@@ -1,4 +1,5 @@
 "use strict";
+var Model_node_1 = require('../classes/Model.node');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 function Options(options) {
     'use strict';
@@ -13,7 +14,7 @@ function Options(options) {
         var validator = function (newValue) {
             return newValue === undefined || validValues.indexOf(newValue) > -1;
         };
-        //Model.addValidator(target, validatorName, validator, key);
+        Model_node_1.Model.addValidator(target, validatorName, validator, key);
     };
 }
 exports.Options = Options;

@@ -22,6 +22,6 @@ export function Options(options: any): PropertyDecorator {
             return newValue === undefined || validValues.indexOf(newValue) > -1;
         };
 
-        //Model.addValidator(target, validatorName, validator, key);
+        Model.addValidator(target, validatorName, validator, key);
     };
 }

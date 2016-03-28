@@ -27,6 +27,7 @@ var PersonModel = (function (_super) {
         this.id = id;
         this.name = data.name;
         this.age = data.age;
+        this.gender = data.gender;
     }
     __decorate([
         Guid_node_1.Guid,
