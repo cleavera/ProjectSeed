@@ -1,4 +1,5 @@
 import {IModel} from '../interfaces/IModel';
+import {IValidator} from '../interfaces/IValidator';
 import {Model} from '../classes/Model.node';
 import {DecorateField} from '../services/DecorateField.node';
 
@@ -10,7 +11,7 @@ export function Integer(target: IModel, key: string): void {
 
     DecorateField.addType(target, key, typeName);
 
-    let validator: (newValue: any) => boolean = function(newValue: any): boolean {
+    let validator: IValidator = function(newValue: any): boolean {
         return newValue === undefined || (typeof newValue === 'number' && Math.ceil(newValue) === newValue);
     };
 

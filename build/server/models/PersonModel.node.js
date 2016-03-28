@@ -19,6 +19,7 @@ var String_node_1 = require('../annotations/String.node');
 var Integer_node_1 = require('../annotations/Integer.node');
 var Guid_node_1 = require('../annotations/Guid.node');
 var Options_node_1 = require('../annotations/Options.node');
+var MaxLength_node_1 = require('../annotations/MaxLength.node');
 var gender_node_1 = require('../constants/gender.node');
 var PersonModel = (function (_super) {
     __extends(PersonModel, _super);
@@ -34,8 +35,9 @@ var PersonModel = (function (_super) {
         PrimaryKey_node_1.PrimaryKey
     ], PersonModel.prototype, "id", void 0);
     __decorate([
-        Required_node_1.Required,
         String_node_1.String,
+        Required_node_1.Required,
+        MaxLength_node_1.MaxLength(20),
         Description_node_1.Description('The name of the person')
     ], PersonModel.prototype, "name", void 0);
     __decorate([

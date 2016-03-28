@@ -1,4 +1,5 @@
 import {IModel} from '../interfaces/IModel';
+import {IValidator} from '../interfaces/IValidator';
 import {Model} from '../classes/Model.node';
 import {DecorateField} from '../services/DecorateField.node';
 
@@ -18,7 +19,7 @@ export function Options(options: any): PropertyDecorator {
         
         DecorateField.addDescriptor(target, key, 'options', parsedOptions);
 
-        let validator: (newValue: any) => boolean = function(newValue: any): boolean {
+        let validator: IValidator = function(newValue: any): boolean {
             return newValue === undefined || validValues.indexOf(newValue) > -1;
         };
 

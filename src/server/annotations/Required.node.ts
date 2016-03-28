@@ -1,4 +1,5 @@
 import {IModel} from '../interfaces/IModel';
+import {IValidator} from '../interfaces/IValidator';
 import {Model} from '../classes/Model.node';
 import {DecorateField} from '../services/DecorateField.node';
 
@@ -9,7 +10,7 @@ export function Required(target: IModel, key: string): void {
     
     DecorateField.addDescriptor(target, key, validatorName, true);
 
-    let validator: (newValue: any) => boolean = function(newValue: any): boolean {
+    let validator: IValidator = function(newValue: any): boolean {
         return !!newValue;
     };
 

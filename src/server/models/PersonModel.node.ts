@@ -7,6 +7,7 @@ import {String} from '../annotations/String.node';
 import {Integer} from '../annotations/Integer.node';
 import {Guid} from '../annotations/Guid.node';
 import {Options} from '../annotations/Options.node';
+import {MaxLength} from '../annotations/MaxLength.node';
 import {Gender} from '../constants/gender.node';
 
 @Description('People')
@@ -20,8 +21,9 @@ export class PersonModel extends Model {
     @PrimaryKey
     id: string;
 
-    @Required
     @String
+    @Required
+    @MaxLength(20)
     @Description('The name of the person')
     name: string;
 

@@ -1,4 +1,5 @@
 import {IModel} from '../interfaces/IModel';
+import {IValidator} from '../interfaces/IValidator';
 import {Model} from '../classes/Model.node';
 import {DecorateField} from '../services/DecorateField.node';
 
@@ -9,7 +10,7 @@ export function Readonly(target: IModel, key: string): void {
     
     DecorateField.addDescriptor(target, key, validatorName, true);
 
-    let validator: (newValue: any, oldValue: any) => boolean = function(newValue: any, oldValue: any): boolean {
+    let validator: IValidator = function(newValue: any, oldValue: any): boolean {
         return newValue === oldValue;
     };
 
