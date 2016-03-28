@@ -9,6 +9,7 @@ import {Guid} from '../annotations/Guid.node';
 import {Options} from '../annotations/Options.node';
 import {MaxLength} from '../annotations/MaxLength.node';
 import {NumberRange} from '../annotations/NumberRange.node';
+import {Decimal} from '../annotations/Decimal.node';
 import {Gender} from '../constants/gender.node';
 
 @Description('People')
@@ -37,6 +38,10 @@ export class PersonModel extends Model {
     @String
     @Description('The gender of the person')
     gender: string;
+    
+    @Decimal(2)
+    @Description('The height of the person in meters')
+    height: number;
 
     constructor(data: any, id: string) {
         super();
@@ -45,5 +50,6 @@ export class PersonModel extends Model {
         this.name = data.name;
         this.age = data.age;
         this.gender = data.gender;
+        this.height = data.height;
     }
 }

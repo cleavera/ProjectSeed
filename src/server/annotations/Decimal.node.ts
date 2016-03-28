@@ -3,17 +3,41 @@ import {IValidator} from '../interfaces/IValidator';
 import {Model} from '../classes/Model.node';
 import {DecorateField} from '../services/DecorateField.node';
 
-export function Decimal(target: IModel, key: string): void {
+export function Decimal(decimalPlaces?: number): PropertyDecorator {
     'use strict';
+    
+    return function(target: IModel, key: string): void {
+        const typeName: string = 'decimal';
+        const validatorName: string = 'invalidDecimal';
 
-    const typeName: string = 'decimal';
-    const validatorName: string = 'invalidDecimal';
+        DecorateField.addType(target, key, typeName);
+        
+        if (decimalPlaces !== undefined && decimalPlaces !== null && decimalPlaces >= 1) {
+            const decimalPlacesValidatorName: string = 'decimalPlaces';
+            
+            DecorateField.addDescriptor(target, key, decimalPlacesValidatorName, decimalPlaces);
+            
+            let validator: IValidator = function(newValue: any): boolean {
+                if(!(newValue && newValue.toString)) {
+                    return true
+                }
+                
+                let splitNumber = newValue.toString().split('.');
+                
+                return newValue === undefined
+                    || (
+                           splitNumber.length === 2
+                        && splitNumber[1].length === decimalPlaces
+                       );
+            };
+            
+            Model.addValidator(target, decimalPlacesValidatorName, validator, key);
+        }
 
-    DecorateField.addType(target, key, typeName);
+        let validator: IValidator = function(newValue: any): boolean {
+            return newValue === undefined || typeof newValue === 'number';
+        };
 
-    let validator: IValidator = function(newValue: any): boolean {
-        return newValue === undefined || typeof newValue === 'number';
-    };
-
-    Model.addValidator(target, validatorName, validator, key);
-}
+        Model.addValidator(target, validatorName, validator, key);
+    }
+};
