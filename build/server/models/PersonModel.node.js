@@ -35,14 +35,17 @@ var PersonModel = (function (_super) {
     ], PersonModel.prototype, "id", void 0);
     __decorate([
         Required_node_1.Required,
-        String_node_1.String
+        String_node_1.String,
+        Description_node_1.Description('The name of the person')
     ], PersonModel.prototype, "name", void 0);
     __decorate([
-        Integer_node_1.Integer
+        Integer_node_1.Integer,
+        Description_node_1.Description('The age of the person')
     ], PersonModel.prototype, "age", void 0);
     __decorate([
         Options_node_1.Options(gender_node_1.Gender),
-        String_node_1.String
+        String_node_1.String,
+        Description_node_1.Description('The gender of the person')
     ], PersonModel.prototype, "gender", void 0);
     PersonModel = __decorate([
         Description_node_1.Description('People'),

@@ -22,13 +22,16 @@ export class PersonModel extends Model {
 
     @Required
     @String
+    @Description('The name of the person')
     name: string;
 
     @Integer
+    @Description('The age of the person')
     age: number;
 
     @Options(Gender)
     @String
+    @Description('The gender of the person')
     gender: string;
 
     constructor(data: any, id: string) {

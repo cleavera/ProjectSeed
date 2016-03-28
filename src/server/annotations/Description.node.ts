@@ -1,7 +1,17 @@
-export function Description(description: string): ClassDecorator {
+import {IModel} from '../interfaces/IModel';
+import {Model} from '../classes/Model.node';
+import {DecorateField} from '../services/DecorateField.node';
+
+export function Description(description: string): any {
     'use strict';
 
-    return function(target: any): void {
-        target.description = description;
+    return function(target: any, key?: string): void {
+        if(!key) {
+            target.description = description;
+            
+            return;
+        }
+        
+        DecorateField.addDescriptor(target, key, 'description', description);
     };
 }
