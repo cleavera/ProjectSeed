@@ -8,6 +8,7 @@ import {Integer} from '../annotations/Integer.node';
 import {Guid} from '../annotations/Guid.node';
 import {Options} from '../annotations/Options.node';
 import {MaxLength} from '../annotations/MaxLength.node';
+import {NumberRange} from '../annotations/NumberRange.node';
 import {Gender} from '../constants/gender.node';
 
 @Description('People')
@@ -28,6 +29,7 @@ export class PersonModel extends Model {
     name: string;
 
     @Integer
+    @NumberRange(0, 99)
     @Description('The age of the person')
     age: number;
 

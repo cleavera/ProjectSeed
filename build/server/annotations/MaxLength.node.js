@@ -5,7 +5,7 @@ function MaxLength(length) {
     'use strict';
     return function (target, key) {
         var validatorName = 'maxLength';
-        DecorateField_node_1.DecorateField.addDescriptor(target, key, 'maxLength', length);
+        DecorateField_node_1.DecorateField.addDescriptor(target, key, validatorName, length);
         var validator = function (newValue) {
             return newValue === undefined || newValue.length <= length;
         };
