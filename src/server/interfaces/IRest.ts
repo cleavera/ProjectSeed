@@ -6,6 +6,6 @@ export interface IRest {
     put(id: string, item: any): any;
 
     delete(id: string): void;
-    
+
     options?(): void;
 }

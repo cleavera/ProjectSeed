@@ -8,7 +8,7 @@ export class Request implements IRequest {
     url: IUrl;
 
     body: any;
-    
+
     type: string;
 
     private _baseRequest: any;
@@ -35,7 +35,7 @@ export class Request implements IRequest {
     get isDelete(): boolean {
         return this._baseRequest.method.toLowerCase() === 'delete';
     }
-    
+
     get isOptions(): boolean {
         return this._baseRequest.method.toLowerCase() === 'options';
     }

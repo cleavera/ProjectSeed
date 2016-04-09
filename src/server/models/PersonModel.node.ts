@@ -10,7 +10,7 @@ import {Options} from '../annotations/Options.node';
 import {MaxLength} from '../annotations/MaxLength.node';
 import {NumberRange} from '../annotations/NumberRange.node';
 import {Decimal} from '../annotations/Decimal.node';
-import {Gender} from '../constants/gender.node';
+import {GENDER} from '../constants/gender.node';
 
 @Description('People')
 @Map('Person', {
@@ -34,11 +34,11 @@ export class PersonModel extends Model {
     @Description('The age of the person')
     age: number;
 
-    @Options(Gender)
+    @Options(GENDER)
     @String
     @Description('The gender of the person')
     gender: string;
-    
+
     @Decimal(2)
     @Description('The height of the person in meters')
     height: number;

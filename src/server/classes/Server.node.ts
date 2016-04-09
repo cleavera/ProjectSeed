@@ -8,8 +8,6 @@ import {Log} from '../services/Log.node';
 import {Request} from './Request.node';
 import {Response} from './Response.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
-import {ResourceValidationError} from '../errors/ResourceValidationError.node';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {InternalServerError} from '../errors/InternalServerError.node';
 

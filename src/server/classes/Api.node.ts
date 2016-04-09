@@ -63,10 +63,10 @@ export class Api implements IRouter {
             }
 
             if (request.isGet) {
-                if(!restService.get) {
+                if (!restService.get) {
                     throw new MethodNotImplementedError();
                 }
-                
+
                 return restService.get(id);
             } else if (request.isPut) {
                 let model: IModel;
@@ -93,10 +93,10 @@ export class Api implements IRouter {
             } else if (request.isOptions) {
                 return restService.options();
             } else {
-                if(restService[request.type]) {
+                if (restService[request.type]) {
                     return restService[request.type]();
                 }
-                
+
                 throw new MethodNotImplementedError();
             }
         }

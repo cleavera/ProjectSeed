@@ -6,9 +6,9 @@ import {DecorateField} from '../services/DecorateField.node';
 export function MaxLength(length: number): PropertyDecorator {
     'use strict';
 
-    return function(target: IModel, key: string) {
+    return function(target: IModel, key: string): void {
         const validatorName: string = 'maxLength';
-        
+
         DecorateField.addDescriptor(target, key, validatorName, length);
 
         let validator: IValidator = function(newValue: any): boolean {

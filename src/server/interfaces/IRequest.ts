@@ -4,7 +4,7 @@ export interface IRequest {
     url: IUrl;
 
     body: any;
-    
+
     type: string;
 
     isPost: boolean;
@@ -14,6 +14,6 @@ export interface IRequest {
     isGet: boolean;
 
     isDelete: boolean;
-    
+
     isOptions: boolean;
 }

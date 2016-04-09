@@ -8,7 +8,7 @@ export function Boolean(target: IModel, key: string): void {
 
     const typeName: string = 'boolean';
     const validatorName: string = 'invalidBoolean';
-    
+
     DecorateField.addType(target, key, typeName);
 
     let validator: IValidator = function(newValue: any): boolean {

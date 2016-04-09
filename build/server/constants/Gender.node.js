@@ -1,5 +1,5 @@
 "use strict";
-exports.Gender = {
-    Male: 'male',
-    Female: 'female'
+exports.GENDER = {
+    Female: 'female',
+    Male: 'male'
 };

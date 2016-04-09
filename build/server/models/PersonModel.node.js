@@ -49,7 +49,7 @@ var PersonModel = (function (_super) {
         Description_node_1.Description('The age of the person')
     ], PersonModel.prototype, "age", void 0);
     __decorate([
-        Options_node_1.Options(gender_node_1.Gender),
+        Options_node_1.Options(gender_node_1.GENDER),
         String_node_1.String,
         Description_node_1.Description('The gender of the person')
     ], PersonModel.prototype, "gender", void 0);

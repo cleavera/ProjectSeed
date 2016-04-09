@@ -1,4 +1,4 @@
-export const Gender = {
-    Male: 'male',
-    Female: 'female'
+export const GENDER: Object = {
+    Female: 'female',
+    Male: 'male'
 };

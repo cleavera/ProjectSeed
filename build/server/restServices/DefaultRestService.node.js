@@ -27,9 +27,9 @@ var DefaultRestService = (function () {
         }
         else {
             out = [];
-            for (var id_1 in data) {
-                if (data.hasOwnProperty(id_1)) {
-                    out.push(this._Model.mapFrom(data[id_1], id_1).serialise());
+            for (var dataId in data) {
+                if (data.hasOwnProperty(dataId)) {
+                    out.push(this._Model.mapFrom(data[dataId], dataId).serialise());
                 }
             }
         }

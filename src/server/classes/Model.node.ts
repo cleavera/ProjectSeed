@@ -6,7 +6,7 @@ import {DecorateField} from '../services/DecorateField.node';
 
 export class Model implements IModel, ISerialisable {
     static resource: typeof Resource = Resource;
-    
+
     static restService: typeof DefaultRestService = DefaultRestService;
 
     static _fields: any;

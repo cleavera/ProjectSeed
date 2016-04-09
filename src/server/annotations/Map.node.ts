@@ -6,13 +6,13 @@ export function Map(table: string, map: any): ClassDecorator {
             properties: map,
             table: table
         };
-        
-        if(!model._fields) {
+
+        if (!model._fields) {
             model._fields = {};
         }
 
         Object.keys(map).forEach((field) => {
-            if(!model._fields[field]) {
+            if (!model._fields[field]) {
                 model._fields[field] = {};
             }
         });

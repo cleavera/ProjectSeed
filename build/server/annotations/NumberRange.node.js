@@ -5,8 +5,8 @@ function NumberRange(min, max) {
     'use strict';
     return function (target, key) {
         var validatorName = {
-            min: 'minValue',
-            max: 'maxValue'
+            max: 'maxValue',
+            min: 'minValue'
         };
         var minValidator = function (newValue) {
             return newValue === undefined || newValue >= min;
