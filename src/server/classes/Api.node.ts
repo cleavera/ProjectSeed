@@ -63,35 +63,15 @@ export class Api implements IRouter {
             }
 
             if (request.isGet) {
-                if (!restService.get) {
-                    throw new MethodNotImplementedError();
-                }
-
-                return restService.get(id);
+                return this.get(restService, id);
             } else if (request.isPut) {
-                let model: IModel;
-
-                try {
-                    model = Model.deserialise(request.body);
-                } catch (e) {
-                    throw new InvalidJsonError(request.body);
-                }
-
-                return restService.put(id, model);
+                return this.put(restService, Model, request.body, id);
             } else if (request.isDelete) {
-                return restService.delete(id);
+                return this.delete(restService, id);
             } else if (request.isPost) {
-                let model: IModel;
-
-                try {
-                    model = Model.deserialise(request.body);
-                } catch (e) {
-                    throw new InvalidJsonError(request.body);
-                }
-
-                return restService.post(model);
+                return this.post(restService, Model, request.body);
             } else if (request.isOptions) {
-                return restService.options();
+                return this.options(restService);
             } else {
                 if (restService[request.type]) {
                     return restService[request.type]();
@@ -102,5 +82,45 @@ export class Api implements IRouter {
         }
 
         throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+    }
+    
+    private get(restService: IRest, id: string): any {
+        if (!restService.get) {
+            throw new MethodNotImplementedError();
+        }
+
+        return restService.get(id);
+    }
+    
+    private put(restService: IRest, Model: any, body: string, id: string): any {
+        let model: IModel;
+
+        try {
+            model = Model.deserialise(body);
+        } catch (e) {
+            throw new InvalidJsonError(body);
+        }
+
+        return restService.put(id, model);
+    }
+    
+    private delete(restService: IRest, id: string): any {
+        return restService.delete(id);
+    }
+    
+    private post(restService: IRest, Model: any, body: string): any {
+        let model: IModel;
+
+        try {
+            model = Model.deserialise(body);
+        } catch (e) {
+            throw new InvalidJsonError(body);
+        }
+
+        return restService.post(model);
+    }
+    
+    private options(restService: IRest) {
+        return restService.options();
     }
 }

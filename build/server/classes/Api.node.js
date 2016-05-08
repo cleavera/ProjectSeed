@@ -44,36 +44,19 @@ var Api = (function () {
                 response.addHeader('description', Model.description);
             }
             if (request.isGet) {
-                if (!restService.get) {
-                    throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
-                }
-                return restService.get(id);
+                return this.get(restService, id);
             }
             else if (request.isPut) {
-                var model = void 0;
-                try {
-                    model = Model.deserialise(request.body);
-                }
-                catch (e) {
-                    throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
-                }
-                return restService.put(id, model);
+                return this.put(restService, Model, request.body, id);
             }
             else if (request.isDelete) {
-                return restService.delete(id);
+                return this.delete(restService, id);
             }
             else if (request.isPost) {
-                var model = void 0;
-                try {
-                    model = Model.deserialise(request.body);
-                }
-                catch (e) {
-                    throw new InvalidJsonError_node_1.InvalidJsonError(request.body);
-                }
-                return restService.post(model);
+                return this.post(restService, Model, request.body);
             }
             else if (request.isOptions) {
-                return restService.options();
+                return this.options(restService);
             }
             else {
                 if (restService[request.type]) {
@@ -83,6 +66,38 @@ var Api = (function () {
             }
         }
         throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+    };
+    Api.prototype.get = function (restService, id) {
+        if (!restService.get) {
+            throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
+        }
+        return restService.get(id);
+    };
+    Api.prototype.put = function (restService, Model, body, id) {
+        var model;
+        try {
+            model = Model.deserialise(body);
+        }
+        catch (e) {
+            throw new InvalidJsonError_node_1.InvalidJsonError(body);
+        }
+        return restService.put(id, model);
+    };
+    Api.prototype.delete = function (restService, id) {
+        return restService.delete(id);
+    };
+    Api.prototype.post = function (restService, Model, body) {
+        var model;
+        try {
+            model = Model.deserialise(body);
+        }
+        catch (e) {
+            throw new InvalidJsonError_node_1.InvalidJsonError(body);
+        }
+        return restService.post(model);
+    };
+    Api.prototype.options = function (restService) {
+        return restService.options();
     };
     return Api;
 }());
