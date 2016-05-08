@@ -39,9 +39,7 @@ var Api = (function () {
             throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
         var id = request.url.next().value;
-        if (Model.description) {
-            response.addHeader('description', Model.description);
-        }
+        this.appendHeaders(response, Model);
         if (request.isGet) {
             return this.get(restService, id);
         }
@@ -62,6 +60,11 @@ var Api = (function () {
                 return restService[request.type]();
             }
             throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
+        }
+    };
+    Api.prototype.appendHeaders = function (response, Model) {
+        if (Model.description) {
+            response.addHeader('description', Model.description);
         }
     };
     Api.prototype.get = function (restService, id) {

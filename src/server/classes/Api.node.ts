@@ -57,9 +57,7 @@ export class Api implements IRouter {
 
         let id: string = request.url.next().value;
 
-        if (Model.description) {
-            response.addHeader('description', Model.description);
-        }
+        this.appendHeaders(response, Model)
 
         if (request.isGet) {
             return this.get(restService, id);
@@ -77,6 +75,12 @@ export class Api implements IRouter {
             }
 
             throw new MethodNotImplementedError();
+        }
+    }
+    
+    private appendHeaders(response: IResponse, Model: any): void {
+        if (Model.description) {
+            response.addHeader('description', Model.description);
         }
     }
     
