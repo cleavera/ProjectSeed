@@ -44,44 +44,40 @@ export class Api implements IRouter {
         if (!resourceName || this._resourceList.indexOf(resourceName.toLowerCase()) === -1 || !Model) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
+        
+        let resource: IRest,
+            restService: IRest;
 
-        if (resourceName) {
-            let resource: IRest,
-                restService: IRest;
-
-            try {
-                resource = new Model.resource(resourceName);
-                restService = new Model.restService(request, response, Model, resourceName);
-            } catch (e) {
-                throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
-            }
-
-            let id: string = request.url.next().value;
-
-            if (Model.description) {
-                response.addHeader('description', Model.description);
-            }
-
-            if (request.isGet) {
-                return this.get(restService, id);
-            } else if (request.isPut) {
-                return this.put(restService, Model, request.body, id);
-            } else if (request.isDelete) {
-                return this.delete(restService, id);
-            } else if (request.isPost) {
-                return this.post(restService, Model, request.body);
-            } else if (request.isOptions) {
-                return this.options(restService);
-            } else {
-                if (restService[request.type]) {
-                    return restService[request.type]();
-                }
-
-                throw new MethodNotImplementedError();
-            }
+        try {
+            resource = new Model.resource(resourceName);
+            restService = new Model.restService(request, response, Model, resourceName);
+        } catch (e) {
+            throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
 
-        throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+        let id: string = request.url.next().value;
+
+        if (Model.description) {
+            response.addHeader('description', Model.description);
+        }
+
+        if (request.isGet) {
+            return this.get(restService, id);
+        } else if (request.isPut) {
+            return this.put(restService, Model, request.body, id);
+        } else if (request.isDelete) {
+            return this.delete(restService, id);
+        } else if (request.isPost) {
+            return this.post(restService, Model, request.body);
+        } else if (request.isOptions) {
+            return this.options(restService);
+        } else {
+            if (restService[request.type]) {
+                return restService[request.type]();
+            }
+
+            throw new MethodNotImplementedError();
+        }
     }
     
     private get(restService: IRest, id: string): any {

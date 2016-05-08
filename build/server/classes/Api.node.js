@@ -30,42 +30,39 @@ var Api = (function () {
         if (!resourceName || this._resourceList.indexOf(resourceName.toLowerCase()) === -1 || !Model) {
             throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
-        if (resourceName) {
-            var resource = void 0, restService = void 0;
-            try {
-                resource = new Model.resource(resourceName);
-                restService = new Model.restService(request, response, Model, resourceName);
-            }
-            catch (e) {
-                throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
-            }
-            var id = request.url.next().value;
-            if (Model.description) {
-                response.addHeader('description', Model.description);
-            }
-            if (request.isGet) {
-                return this.get(restService, id);
-            }
-            else if (request.isPut) {
-                return this.put(restService, Model, request.body, id);
-            }
-            else if (request.isDelete) {
-                return this.delete(restService, id);
-            }
-            else if (request.isPost) {
-                return this.post(restService, Model, request.body);
-            }
-            else if (request.isOptions) {
-                return this.options(restService);
-            }
-            else {
-                if (restService[request.type]) {
-                    return restService[request.type]();
-                }
-                throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
-            }
+        var resource, restService;
+        try {
+            resource = new Model.resource(resourceName);
+            restService = new Model.restService(request, response, Model, resourceName);
         }
-        throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+        catch (e) {
+            throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+        }
+        var id = request.url.next().value;
+        if (Model.description) {
+            response.addHeader('description', Model.description);
+        }
+        if (request.isGet) {
+            return this.get(restService, id);
+        }
+        else if (request.isPut) {
+            return this.put(restService, Model, request.body, id);
+        }
+        else if (request.isDelete) {
+            return this.delete(restService, id);
+        }
+        else if (request.isPost) {
+            return this.post(restService, Model, request.body);
+        }
+        else if (request.isOptions) {
+            return this.options(restService);
+        }
+        else {
+            if (restService[request.type]) {
+                return restService[request.type]();
+            }
+            throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
+        }
     };
     Api.prototype.get = function (restService, id) {
         if (!restService.get) {
