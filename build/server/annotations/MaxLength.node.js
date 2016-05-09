@@ -1,5 +1,5 @@
 "use strict";
-var Model_node_1 = require('../classes/Model.node');
+var DefaultModel_node_ts_1 = require('../models/DefaultModel.node.ts');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 function MaxLength(length) {
     'use strict';
@@ -9,7 +9,7 @@ function MaxLength(length) {
         var validator = function (newValue) {
             return newValue === undefined || newValue.length <= length;
         };
-        Model_node_1.Model.addValidator(target, validatorName, validator, key);
+        DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName, validator, key);
     };
 }
 exports.MaxLength = MaxLength;

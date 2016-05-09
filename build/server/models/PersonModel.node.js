@@ -10,7 +10,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var Model_node_1 = require('../classes/Model.node');
+var DefaultModel_node_1 = require('./DefaultModel.node');
 var Map_node_1 = require('../annotations/Map.node');
 var PrimaryKey_node_1 = require('../annotations/PrimaryKey.node');
 var Required_node_1 = require('../annotations/Required.node');
@@ -66,5 +66,5 @@ var PersonModel = (function (_super) {
         })
     ], PersonModel);
     return PersonModel;
-}(Model_node_1.Model));
+}(DefaultModel_node_1.DefaultModel));
 exports.PersonModel = PersonModel;

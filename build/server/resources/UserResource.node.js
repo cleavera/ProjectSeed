@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Resource_node_1 = require('../classes/Resource.node');
+var DefaultResource_node_1 = require('./DefaultResource.node');
 var UserResource = (function (_super) {
     __extends(UserResource, _super);
     function UserResource() {
@@ -30,5 +30,5 @@ var UserResource = (function (_super) {
         return data;
     };
     return UserResource;
-}(Resource_node_1.Resource));
+}(DefaultResource_node_1.DefaultResource));
 exports.UserResource = UserResource;

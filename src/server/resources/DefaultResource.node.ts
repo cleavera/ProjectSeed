@@ -1,10 +1,10 @@
 import {IRest} from '../interfaces/IRest';
 import {IResource} from '../interfaces/IResource';
-import {Json} from './Json.node';
-import {Guid} from '../services/Guid.node';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
+import {Json} from '../classes/Json.node.ts';
+import {Guid} from '../services/Guid.node.ts';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node.ts';
 
-export class Resource implements IRest {
+export class DefaultResource implements IRest {
     private _data: any;
 
     private _resource: IResource;

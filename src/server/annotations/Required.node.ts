@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node.ts';
 import {DecorateField} from '../services/DecorateField.node';
 
 export function Required(target: IModel, key: string): void {
@@ -14,7 +14,7 @@ export function Required(target: IModel, key: string): void {
         return !!newValue;
     };
 
-    Model.addValidator(target, validatorName, validator, key);
+    DefaultModel.addValidator(target, validatorName, validator, key);
 
     target._errors[key].push(validatorName);
 }

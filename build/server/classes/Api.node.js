@@ -24,45 +24,55 @@ var Api = (function () {
         });
     }
     Api.prototype.route = function (request, response) {
+        var context = this.getContext(request, response);
+        this.appendHeaders(response, context.Model);
+        if (request.isGet) {
+            return this.get(context.restService, context.id);
+        }
+        else if (request.isPut) {
+            return this.put(context.restService, context.Model, request.body, context.id);
+        }
+        else if (request.isDelete) {
+            return this.delete(context.restService, context.id);
+        }
+        else if (request.isPost) {
+            return this.post(context.restService, context.Model, request.body);
+        }
+        else if (request.isOptions) {
+            return this.options(context.restService);
+        }
+        else {
+            if (context.restService[request.type]) {
+                return context.restService[request.type]();
+            }
+            throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
+        }
+    };
+    Api.prototype.getContext = function (request, response) {
         /* tslint:disable:variable-name */
         var resourceName = request.url.next().value || '', Model = this._modelList[resourceName.toLowerCase()];
         /* tslint:enable */
         if (!resourceName || this._resourceList.indexOf(resourceName.toLowerCase()) === -1 || !Model) {
             throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
-        var resource, restService;
+        var restService;
         try {
-            resource = new Model.resource(resourceName);
             restService = new Model.restService(request, response, Model, resourceName);
         }
         catch (e) {
             throw new ResourceNotFoundRoutingError_node_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
         var id = request.url.next().value;
-        this.appendHeaders(response, Model);
-        if (request.isGet) {
-            return this.get(restService, id);
-        }
-        else if (request.isPut) {
-            return this.put(restService, Model, request.body, id);
-        }
-        else if (request.isDelete) {
-            return this.delete(restService, id);
-        }
-        else if (request.isPost) {
-            return this.post(restService, Model, request.body);
-        }
-        else if (request.isOptions) {
-            return this.options(restService);
-        }
-        else {
-            if (restService[request.type]) {
-                return restService[request.type]();
-            }
-            throw new MethodNotImplementedError_node_1.MethodNotImplementedError();
-        }
+        return {
+            Model: Model,
+            id: id,
+            resourceName: resourceName,
+            restService: restService
+        };
     };
+    /* tslint:disable variable-name */
     Api.prototype.appendHeaders = function (response, Model) {
+        /* tslint:enable */
         if (Model.description) {
             response.addHeader('description', Model.description);
         }
@@ -73,7 +83,9 @@ var Api = (function () {
         }
         return restService.get(id);
     };
+    /* tslint:disable variable-name */
     Api.prototype.put = function (restService, Model, body, id) {
+        /* tslint:enable */
         var model;
         try {
             model = Model.deserialise(body);
@@ -86,7 +98,9 @@ var Api = (function () {
     Api.prototype.delete = function (restService, id) {
         return restService.delete(id);
     };
+    /* tslint:disable variable-name */
     Api.prototype.post = function (restService, Model, body) {
+        /* tslint:enable */
         var model;
         try {
             model = Model.deserialise(body);

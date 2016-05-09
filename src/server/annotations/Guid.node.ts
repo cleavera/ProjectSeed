@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node.ts';
 import {DecorateField} from '../services/DecorateField.node';
 import * as uuid from 'node-uuid';
 
@@ -16,5 +16,5 @@ export function Guid(target: IModel, key: string): void {
         return newValue === undefined || (typeof newValue === 'string' && !!uuid.parse(newValue));
     };
 
-    Model.addValidator(target, validatorName, validator, key);
+    DefaultModel.addValidator(target, validatorName, validator, key);
 }

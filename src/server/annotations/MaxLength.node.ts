@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node.ts';
 import {DecorateField} from '../services/DecorateField.node';
 
 export function MaxLength(length: number): PropertyDecorator {
@@ -15,6 +15,6 @@ export function MaxLength(length: number): PropertyDecorator {
             return newValue === undefined || newValue.length <= length;
         };
 
-        Model.addValidator(target, validatorName, validator, key);
+        DefaultModel.addValidator(target, validatorName, validator, key);
     };
 }

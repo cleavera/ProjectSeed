@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node.ts';
 import {DecorateField} from '../services/DecorateField.node';
 
 export function Integer(target: IModel, key: string): void {
@@ -15,5 +15,5 @@ export function Integer(target: IModel, key: string): void {
         return newValue === undefined || (typeof newValue === 'number' && Math.ceil(newValue) === newValue);
     };
 
-    Model.addValidator(target, validatorName, validator, key);
+    DefaultModel.addValidator(target, validatorName, validator, key);
 }

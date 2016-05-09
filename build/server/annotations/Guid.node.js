@@ -1,5 +1,5 @@
 "use strict";
-var Model_node_1 = require('../classes/Model.node');
+var DefaultModel_node_ts_1 = require('../models/DefaultModel.node.ts');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 var uuid = require('node-uuid');
 function Guid(target, key) {
@@ -10,6 +10,6 @@ function Guid(target, key) {
     var validator = function (newValue) {
         return newValue === undefined || (typeof newValue === 'string' && !!uuid.parse(newValue));
     };
-    Model_node_1.Model.addValidator(target, validatorName, validator, key);
+    DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName, validator, key);
 }
 exports.Guid = Guid;

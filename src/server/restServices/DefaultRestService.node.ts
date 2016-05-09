@@ -3,21 +3,21 @@ import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node';
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;
 
     private _response: IResponse;
 
-    private _Model: typeof Model;
+    private _Model: typeof DefaultModel;
 
     private _resource: IRest;
 
     private _resourceName: string;
 
     /* tslint:disable variable-name */
-    constructor(request: IRequest, response: IResponse, ModelClass: typeof Model, resourceName: string) {
+    constructor(request: IRequest, response: IResponse, ModelClass: typeof DefaultModel, resourceName: string) {
         /* tslint:enable */
         this._request = request;
         this._response = response;

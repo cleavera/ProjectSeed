@@ -1,10 +1,11 @@
 import {Map} from '../annotations/Map.node';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from './DefaultModel.node';
 import {UserResource} from '../resources/UserResource.node';
 import {PrimaryKey} from '../annotations/PrimaryKey.node';
 import {Required} from '../annotations/Required.node';
 import {String} from '../annotations/String.node';
 import {Guid} from '../annotations/Guid.node';
+import {DefaultResource} from '../resources/DefaultResource.node';
 
 @Map('User', {
     email: 'email',
@@ -12,8 +13,8 @@ import {Guid} from '../annotations/Guid.node';
     password: 'password',
     username: 'username'
 })
-export class UserModel extends Model {
-    static resource: typeof UserResource = UserResource;
+export class UserModel extends DefaultModel {
+    static resource: typeof DefaultResource = UserResource;
 
     @PrimaryKey
     @Guid

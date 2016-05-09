@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node.ts';
 import {DecorateField} from '../services/DecorateField.node';
 
 export function Options(options: any): PropertyDecorator {
@@ -23,6 +23,6 @@ export function Options(options: any): PropertyDecorator {
             return newValue === undefined || validValues.indexOf(newValue) > -1;
         };
 
-        Model.addValidator(target, validatorName, validator, key);
+        DefaultModel.addValidator(target, validatorName, validator, key);
     };
 }

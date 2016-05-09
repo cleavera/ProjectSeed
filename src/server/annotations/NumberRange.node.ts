@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from '../models/DefaultModel.node.ts';
 import {DecorateField} from '../services/DecorateField.node';
 
 export function NumberRange(min?: number, max?: number): PropertyDecorator {
@@ -22,12 +22,12 @@ export function NumberRange(min?: number, max?: number): PropertyDecorator {
 
         if (min !== undefined && min !== null) {
            DecorateField.addDescriptor(target, key, validatorName.min, min);
-           Model.addValidator(target, validatorName.min, minValidator, key);
+           DefaultModel.addValidator(target, validatorName.min, minValidator, key);
         }
 
         if (max !== undefined && max !== null) {
            DecorateField.addDescriptor(target, key, validatorName.max, max);
-           Model.addValidator(target, validatorName.max, maxValidator, key);
+           DefaultModel.addValidator(target, validatorName.max, maxValidator, key);
         }
     };
 }

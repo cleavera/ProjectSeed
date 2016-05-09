@@ -11,7 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var Map_node_1 = require('../annotations/Map.node');
-var Model_node_1 = require('../classes/Model.node');
+var DefaultModel_node_1 = require('./DefaultModel.node');
 var UserResource_node_1 = require('../resources/UserResource.node');
 var PrimaryKey_node_1 = require('../annotations/PrimaryKey.node');
 var Required_node_1 = require('../annotations/Required.node');
@@ -52,5 +52,5 @@ var UserModel = (function (_super) {
         })
     ], UserModel);
     return UserModel;
-}(Model_node_1.Model));
+}(DefaultModel_node_1.DefaultModel));
 exports.UserModel = UserModel;

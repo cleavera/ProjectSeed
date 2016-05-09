@@ -1,4 +1,4 @@
-import {Model} from '../classes/Model.node';
+import {DefaultModel} from './DefaultModel.node';
 import {Map} from '../annotations/Map.node';
 import {PrimaryKey} from '../annotations/PrimaryKey.node';
 import {Required} from '../annotations/Required.node';
@@ -18,7 +18,7 @@ import {GENDER} from '../constants/gender.node';
     id: 'id',
     name: 'fullName'
 })
-export class PersonModel extends Model {
+export class PersonModel extends DefaultModel {
     @Guid
     @PrimaryKey
     id: string;

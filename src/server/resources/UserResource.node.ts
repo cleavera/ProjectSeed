@@ -1,6 +1,6 @@
-import {Resource} from '../classes/Resource.node';
+import {DefaultResource} from './DefaultResource.node';
 
-export class UserResource extends Resource {
+export class UserResource extends DefaultResource {
     private static _stripPasswordField(item: any): void {
         if (item.hasOwnProperty('password')) {
             delete item.password;

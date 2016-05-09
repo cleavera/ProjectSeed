@@ -2,7 +2,9 @@
 var ResourceNotFoundRoutingError_node_1 = require('../errors/ResourceNotFoundRoutingError.node');
 var ResourceValidationError_node_1 = require('../errors/ResourceValidationError.node');
 var DefaultRestService = (function () {
+    /* tslint:disable variable-name */
     function DefaultRestService(request, response, ModelClass, resourceName) {
+        /* tslint:enable */
         this._request = request;
         this._response = response;
         this._Model = ModelClass;

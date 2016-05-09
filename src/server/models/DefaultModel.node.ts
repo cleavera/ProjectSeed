@@ -1,11 +1,11 @@
 import {IModel} from '../interfaces/IModel';
 import {ISerialisable} from '../interfaces/ISerialisable';
-import {Resource} from './Resource.node';
+import {DefaultResource} from '../resources/DefaultResource.node';
 import {DefaultRestService} from '../restServices/DefaultRestService.node';
 import {DecorateField} from '../services/DecorateField.node';
 
-export class Model implements IModel, ISerialisable {
-    static resource: typeof Resource = Resource;
+export class DefaultModel implements IModel, ISerialisable {
+    static resource: typeof DefaultResource = DefaultResource;
 
     static restService: typeof DefaultRestService = DefaultRestService;
 
