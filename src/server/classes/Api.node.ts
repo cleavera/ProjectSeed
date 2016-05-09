@@ -4,6 +4,7 @@ import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
 import {IModel} from '../interfaces/IModel';
 import {IRest} from '../interfaces/IRest';
+import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
@@ -36,20 +37,42 @@ export class Api implements IRouter {
     }
 
     route(request: IRequest, response: IResponse): void {
+        let context: IRoutingContext = this.getContext(request, response);
+
+        this.appendHeaders(response, context.Model);
+
+        if (request.isGet) {
+            return this.get(context.restService, context.id);
+        } else if (request.isPut) {
+            return this.put(context.restService, context.Model, request.body, context.id);
+        } else if (request.isDelete) {
+            return this.delete(context.restService, context.id);
+        } else if (request.isPost) {
+            return this.post(context.restService, context.Model, request.body);
+        } else if (request.isOptions) {
+            return this.options(context.restService);
+        } else {
+            if (context.restService[request.type]) {
+                return context.restService[request.type]();
+            }
+
+            throw new MethodNotImplementedError();
+        }
+    }
+
+    private getContext(request: IRequest, response: IResponse): IRoutingContext {
         /* tslint:disable:variable-name */
         let resourceName: string = request.url.next().value || '',
-            Model: any = this._modelList[resourceName.toLowerCase()];
+            Model: typeof IModel = this._modelList[resourceName.toLowerCase()];
         /* tslint:enable */
 
         if (!resourceName || this._resourceList.indexOf(resourceName.toLowerCase()) === -1 || !Model) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
 
-        let resource: IRest,
-            restService: IRest;
+        let restService: IRest;
 
         try {
-            resource = new Model.resource(resourceName);
             restService = new Model.restService(request, response, Model, resourceName);
         } catch (e) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
@@ -57,30 +80,17 @@ export class Api implements IRouter {
 
         let id: string = request.url.next().value;
 
-        this.appendHeaders(response, Model);
-
-        if (request.isGet) {
-            return this.get(restService, id);
-        } else if (request.isPut) {
-            return this.put(restService, Model, request.body, id);
-        } else if (request.isDelete) {
-            return this.delete(restService, id);
-        } else if (request.isPost) {
-            return this.post(restService, Model, request.body);
-        } else if (request.isOptions) {
-            return this.options(restService);
-        } else {
-            if (restService[request.type]) {
-                return restService[request.type]();
-            }
-
-            throw new MethodNotImplementedError();
-        }
+        return {
+            Model: Model,
+            id: id,
+            resourceName: resourceName,
+            restService: restService
+        };
     }
 
     /* tslint:disable variable-name */
     private appendHeaders(response: IResponse, Model: any): void {
-        /* tslint:enable variable-name */
+        /* tslint:enable */
         if (Model.description) {
             response.addHeader('description', Model.description);
         }
@@ -96,7 +106,7 @@ export class Api implements IRouter {
 
     /* tslint:disable variable-name */
     private put(restService: IRest, Model: any, body: string, id: string): any {
-        /* tslint:enable variable-name */
+        /* tslint:enable */
         let model: IModel;
 
         try {
@@ -114,7 +124,7 @@ export class Api implements IRouter {
 
     /* tslint:disable variable-name */
     private post(restService: IRest, Model: any, body: string): void {
-        /* tslint:enable variable-name */
+        /* tslint:enable */
         let model: IModel;
 
         try {
