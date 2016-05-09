@@ -16,7 +16,9 @@ export class DefaultRestService implements IRest {
 
     private _resourceName: string;
 
+    /* tslint:disable variable-name */
     constructor(request: IRequest, response: IResponse, ModelClass: typeof Model, resourceName: string) {
+        /* tslint:enable variable-name */
         this._request = request;
         this._response = response;
         this._Model = ModelClass;
