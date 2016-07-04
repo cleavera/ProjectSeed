@@ -25,6 +25,12 @@ export class Api implements IRouter {
             }
         });
 
+        fs.mkdir('./data/private/', (err) => {
+            if (err && err.code !== 'EEXIST') {
+                throw new DatabaseError('', 'Error creating directory: ./data/private/', err);
+            }
+        });
+
         this._modelList = new ModelBundle();
         this._resourceList = Object.keys(this._modelList);
 
@@ -78,7 +84,10 @@ export class Api implements IRouter {
         let restService: IRest;
 
         try {
+            /* tslint:disable:comment-format */
+            //noinspection TypeScriptValidateTypes
             restService = new Model.restService(request, response, Model, resourceName);
+            /* tslint:enable */
         } catch (e) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
         }
