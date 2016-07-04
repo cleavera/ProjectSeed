@@ -1,8 +1,10 @@
 import {IRest} from '../interfaces/IRest';
 import {IResource} from '../interfaces/IResource';
-import {Json} from '../classes/Json.node.ts';
-import {Guid} from '../services/Guid.node.ts';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node.ts';
+import {IRoutingContext} from '../interfaces/IRoutingContext';
+import {Json} from '../classes/Json.node';
+import {Guid} from '../services/Guid.node';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
+import {Association} from '../classes/Association.node';
 
 export class DefaultResource implements IRest {
     private _data: any;
@@ -23,30 +25,46 @@ export class DefaultResource implements IRest {
         this._data = this._resource.read();
     }
 
-    get(id?: string): any {
+    get(id?: string, parentContext?: IRoutingContext): any {
+        let data: any;
+
+        if (parentContext) {
+            data = Association.filter({ id: id, resourceName: this._resourceName }, parentContext, this._data);
+        } else {
+            data = this._data;
+        }
+
         if (id) {
-            if (this._data[id]) {
-                return this._data[id];
+            if (data[id]) {
+                return data[id];
             } else {
                 throw new ResourceNotFoundRoutingError(id, this._resourceName);
             }
         } else {
-            return this._data;
+            return data;
         }
     }
 
-    post(item: any): string {
+    post(item: any, parentContext?: IRoutingContext): string {
         let id: string = Guid.generate();
 
         this._data[id] = item;
         this._resource.save(this._data);
 
+        if (parentContext) {
+            Association.addAssociation({ id: id, resourceName: this._resourceName }, parentContext);
+        }
+
         return id;
     }
 
-    put(id: string, item: any): any {
+    put(id: string, item: any, parentContext?: IRoutingContext): any {
         this._data[id] = item;
         this._resource.save(this._data);
+
+        if (parentContext) {
+            Association.addAssociation({id: id, resourceName: this._resourceName}, parentContext);
+        }
 
         return this._data[id];
     }
@@ -54,6 +72,8 @@ export class DefaultResource implements IRest {
     delete(id: string): any {
         delete this._data[id];
         this._resource.save(this._data);
+
+        Association.removeAssociation({ id: id, resourceName: this._resourceName });
 
         return {};
     }

@@ -11,6 +11,7 @@ import {DatabaseError} from '../errors/DatabaseError.node';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
 import {Json} from '../classes/Json.node';
 import {ModelBundle} from '../models/ModelBundle.node';
+import {DefaultModel} from '../models/DefaultModel.node';
 
 export class Api implements IRouter {
     private _resourceList: Array<string>;
@@ -34,6 +35,10 @@ export class Api implements IRouter {
                 Json.create('./data/' + tableName + '.json');
             }
         });
+
+        if (!Json.tableExists('./data/private/association.json')) {
+            Json.create('./data/private/association.json');
+        }
     }
 
     route(request: IRequest, response: IResponse): void {
@@ -63,7 +68,7 @@ export class Api implements IRouter {
     private getContext(request: IRequest, response: IResponse): IRoutingContext {
         /* tslint:disable:variable-name */
         let resourceName: string = request.url.next().value || '',
-            Model: typeof IModel = this._modelList[resourceName.toLowerCase()];
+            Model: typeof DefaultModel = this._modelList[resourceName.toLowerCase()];
         /* tslint:enable */
 
         if (!resourceName || this._resourceList.indexOf(resourceName.toLowerCase()) === -1 || !Model) {

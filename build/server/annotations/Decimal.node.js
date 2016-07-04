@@ -1,5 +1,5 @@
 "use strict";
-var DefaultModel_node_ts_1 = require('../models/DefaultModel.node.ts');
+var DefaultModel_node_1 = require('../models/DefaultModel.node');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 function Decimal(decimalPlaces) {
     'use strict';
@@ -19,12 +19,12 @@ function Decimal(decimalPlaces) {
                     || (splitNumber.length === 2
                         && splitNumber[1].length === decimalPlaces);
             };
-            DefaultModel_node_ts_1.DefaultModel.addValidator(target, decimalPlacesValidatorName, validator_1, key);
+            DefaultModel_node_1.DefaultModel.addValidator(target, decimalPlacesValidatorName, validator_1, key);
         }
         var validator = function (newValue) {
             return newValue === undefined || typeof newValue === 'number';
         };
-        DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName, validator, key);
+        DefaultModel_node_1.DefaultModel.addValidator(target, validatorName, validator, key);
     };
 }
 exports.Decimal = Decimal;

@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {DefaultModel} from '../models/DefaultModel.node.ts';
+import {DefaultModel} from '../models/DefaultModel.node';
 import {DecorateField} from '../services/DecorateField.node';
 
 export function String(target: IModel, key: string): void {

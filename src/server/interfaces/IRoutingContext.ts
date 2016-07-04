@@ -1,12 +1,12 @@
-import {IModel} from './IModel';
 import {IRest} from './IRest';
+import {DefaultModel} from '../models/DefaultModel.node';
 
 export interface IRoutingContext {
-    Model: typeof IModel;
+    Model?: typeof DefaultModel;
 
     id: string;
 
     resourceName: string;
 
-    restService: IRest;
+    restService?: IRest;
 }

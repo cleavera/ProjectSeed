@@ -1,5 +1,5 @@
 "use strict";
-var DefaultModel_node_ts_1 = require('../models/DefaultModel.node.ts');
+var DefaultModel_node_1 = require('../models/DefaultModel.node');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 function Required(target, key) {
     'use strict';
@@ -8,7 +8,7 @@ function Required(target, key) {
     var validator = function (newValue) {
         return !!newValue;
     };
-    DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName, validator, key);
+    DefaultModel_node_1.DefaultModel.addValidator(target, validatorName, validator, key);
     target._errors[key].push(validatorName);
 }
 exports.Required = Required;

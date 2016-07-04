@@ -22,6 +22,9 @@ var Api = (function () {
                 Json_node_1.Json.create('./data/' + tableName + '.json');
             }
         });
+        if (!Json_node_1.Json.tableExists('./data/private/association.json')) {
+            Json_node_1.Json.create('./data/private/association.json');
+        }
     }
     Api.prototype.route = function (request, response) {
         var context = this.getContext(request, response);

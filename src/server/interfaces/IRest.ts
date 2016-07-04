@@ -1,5 +1,6 @@
+import {IRoutingContext} from './IRoutingContext';
 export interface IRest {
-    get(id?: string): any;
+    get(id?: string, context?: IRoutingContext): any;
 
     post(item: any): any;
 

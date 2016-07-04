@@ -1,5 +1,5 @@
 "use strict";
-var DefaultModel_node_ts_1 = require('../models/DefaultModel.node.ts');
+var DefaultModel_node_1 = require('../models/DefaultModel.node');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 function Readonly(target, key) {
     'use strict';
@@ -8,6 +8,6 @@ function Readonly(target, key) {
     var validator = function (newValue, oldValue) {
         return newValue === oldValue;
     };
-    DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName, validator, key);
+    DefaultModel_node_1.DefaultModel.addValidator(target, validatorName, validator, key);
 }
 exports.Readonly = Readonly;

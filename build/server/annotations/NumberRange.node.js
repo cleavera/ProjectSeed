@@ -1,5 +1,5 @@
 "use strict";
-var DefaultModel_node_ts_1 = require('../models/DefaultModel.node.ts');
+var DefaultModel_node_1 = require('../models/DefaultModel.node');
 var DecorateField_node_1 = require('../services/DecorateField.node');
 function NumberRange(min, max) {
     'use strict';
@@ -16,11 +16,11 @@ function NumberRange(min, max) {
         };
         if (min !== undefined && min !== null) {
             DecorateField_node_1.DecorateField.addDescriptor(target, key, validatorName.min, min);
-            DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName.min, minValidator, key);
+            DefaultModel_node_1.DefaultModel.addValidator(target, validatorName.min, minValidator, key);
         }
         if (max !== undefined && max !== null) {
             DecorateField_node_1.DecorateField.addDescriptor(target, key, validatorName.max, max);
-            DefaultModel_node_ts_1.DefaultModel.addValidator(target, validatorName.max, maxValidator, key);
+            DefaultModel_node_1.DefaultModel.addValidator(target, validatorName.max, maxValidator, key);
         }
     };
 }

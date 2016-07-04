@@ -1,6 +1,7 @@
 import {IRest} from '../interfaces/IRest';
 import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
+import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {DefaultModel} from '../models/DefaultModel.node';
@@ -16,13 +17,16 @@ export class DefaultRestService implements IRest {
 
     private _resourceName: string;
 
+    private _context: IRoutingContext;
+
     /* tslint:disable variable-name */
-    constructor(request: IRequest, response: IResponse, ModelClass: typeof DefaultModel, resourceName: string) {
+    constructor(request: IRequest, response: IResponse, ModelClass: typeof DefaultModel, resourceName: string, context: IRoutingContext) {
         /* tslint:enable */
         this._request = request;
         this._response = response;
         this._Model = ModelClass;
         this._resourceName = resourceName;
+        this._context = context;
 
         try {
             this._resource = new ModelClass.resource(resourceName);
@@ -36,7 +40,7 @@ export class DefaultRestService implements IRest {
             out: any;
 
         try {
-            data = this._resource.get(id);
+            data = this._resource.get(id, this._context);
         } catch (e) {
             throw new ResourceNotFoundRoutingError(this._request.url.toString(), this._resourceName);
         }
