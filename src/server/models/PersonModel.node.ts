@@ -11,7 +11,9 @@ import {MaxLength} from '../annotations/MaxLength.node';
 import {NumberRange} from '../annotations/NumberRange.node';
 import {Decimal} from '../annotations/Decimal.node';
 import {GENDER} from '../constants/gender.node';
+import {Child} from '../annotations/Child.node';
 
+@Child(PersonModel)
 @Description('People')
 @Map('Person', {
     age: 'age',
