@@ -36,6 +36,8 @@ export class Association {
         currentAssociations.forEach(association => {
             associations.splice(associations.indexOf(association));
         });
+
+        new Json('./data/private/association.json').save(associations);
     }
 
     static addAssociation(context: IRoutingContext, parentContext: IRoutingContext): void {
@@ -52,6 +54,8 @@ export class Association {
         }
 
         associations.push({ child: context.resourceName, childId: context.id, parent: parentContext.resourceName, parentId: parentContext.id });
+
+        new Json('./data/private/association.json').save(associations);
     }
 
     static filter(context: IRoutingContext, parentContext: IRoutingContext, data: any): any {
