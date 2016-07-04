@@ -11,6 +11,8 @@ export class Request implements IRequest {
 
     type: string;
 
+    method: string;
+
     private _baseRequest: any;
 
     constructor(request: http.IncomingMessage, body: string) {
@@ -18,6 +20,7 @@ export class Request implements IRequest {
         this.body = body;
         this._baseRequest = request;
         this.type = this._baseRequest.method.toLowerCase();
+        this.method = this._baseRequest.method;
     }
 
     get isGet(): boolean {

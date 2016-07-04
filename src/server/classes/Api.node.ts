@@ -59,16 +59,18 @@ export class Api implements IRouter {
         } else if (request.isDelete) {
             return this.delete(context.restService, context.id);
         } else if (request.isPost) {
+            if (context.id) {
+                throw new MethodNotImplementedError();
+            }
+
             return this.post(context.restService, context.Model, request.body);
         } else if (request.isOptions) {
             return this.options(context.restService);
-        } else {
-            if (context.restService[request.type]) {
-                return context.restService[request.type]();
-            }
-
-            throw new MethodNotImplementedError();
+        } else if (context.restService[request.type]) {
+            return context.restService[request.type]();
         }
+
+        throw new MethodNotImplementedError();
     }
 
     private getContext(request: IRequest, response: IResponse): IRoutingContext {

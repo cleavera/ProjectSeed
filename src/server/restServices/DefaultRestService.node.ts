@@ -5,6 +5,7 @@ import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {DefaultModel} from '../models/DefaultModel.node';
+import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;
@@ -61,6 +62,10 @@ export class DefaultRestService implements IRest {
     }
 
     delete(id: string): void {
+        if (!id) {
+            throw new MethodNotImplementedError();
+        }
+
         this._resource.delete(id);
         this._response.status(204);
     }
@@ -79,7 +84,7 @@ export class DefaultRestService implements IRest {
 
     put(id: string, item: any): void {
         if (!id) {
-            throw new Error();
+            throw new MethodNotImplementedError();
         }
 
         if (!item.isValid) {
