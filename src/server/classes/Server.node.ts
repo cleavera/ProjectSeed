@@ -14,21 +14,21 @@ import {InternalServerError} from '../errors/InternalServerError.node';
 export class Server implements IRouter {
     private _api: IRouter;
 
-    private static handleError(e: any, response: IResponse, request: { url: string }): void {
+    private static handleError(e: any, response: IResponse, url: string): void {
         if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
-            Log.info(e.name + ' at ' + request.url);
+            Log.info(e.name + ' at ' + url);
             response.status(e.statusCode);
             response.json(e.serialise());
         } else {
             let error: IServerError = new InternalServerError(e.stackTrace);
 
-            Log.warn(e, e.name + ' at ' + request.url);
+            Log.warn(e, e.name + ' at ' + url);
             response.status(error.statusCode);
             response.json(error.serialise());
         }
 
         if (e instanceof InvalidJsonError) {
-            Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
+            Log.info(e.name + ' at ' + url + ':\n' + e.json);
         }
     }
 
@@ -51,13 +51,13 @@ export class Server implements IRouter {
                     try {
                         this.route(request, response);
                     } catch (e) {
-                        Server.handleError(e, response, req);
+                        Server.handleError(e, response, req.url);
                     }
 
                     res.end();
                 },
                 e => {
-                    Server.handleError(e, response, req);
+                    Server.handleError(e, response, req.url);
 
                     res.end();
                 }

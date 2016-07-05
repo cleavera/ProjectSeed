@@ -40,4 +40,4 @@ export function Decimal(decimalPlaces?: number): PropertyDecorator {
 
         DefaultModel.addValidator(target, validatorName, validator, key);
     };
-};
+}

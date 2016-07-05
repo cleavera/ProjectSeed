@@ -72,7 +72,7 @@ export class DefaultResource implements IRest {
         return this._data[id];
     }
 
-    delete(id: string): any {
+    remove(id: string): any {
         delete this._data[id];
         this._resource.save(this._data);
 

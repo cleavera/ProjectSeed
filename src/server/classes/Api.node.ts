@@ -56,22 +56,22 @@ export class Api implements IRouter {
 
         let context: IRoutingContext = this.getContext(request, response);
 
-        this.appendHeaders(response, context.Model);
+        Api.appendHeaders(response, context.Model);
 
         if (request.isGet) {
-            return this.get(context.restService, context.id);
+            return Api.get(context.restService, context.id);
         } else if (request.isPut) {
-            return this.put(context.restService, context.Model, request.body, context.id);
+            return Api.put(context.restService, context.Model, request.body, context.id);
         } else if (request.isDelete) {
-            return this.delete(context.restService, context.id);
+            return Api.remove(context.restService, context.id);
         } else if (request.isPost) {
             if (context.id) {
                 throw new MethodNotImplementedError();
             }
 
-            return this.post(context.restService, context.Model, request.body);
+            return Api.post(context.restService, context.Model, request.body);
         } else if (request.isOptions) {
-            return this.options(context.restService);
+            return Api.options(context.restService);
         } else if (context.restService[request.method.toLowerCase()]) {
             return context.restService[request.method.toLowerCase()]();
         }
@@ -132,14 +132,14 @@ export class Api implements IRouter {
     }
 
     /* tslint:disable variable-name */
-    private appendHeaders(response: IResponse, Model: any): void {
+    private static appendHeaders(response: IResponse, Model: any): void {
         /* tslint:enable */
         if (Model.description) {
             response.addHeader('description', Model.description);
         }
     }
 
-    private get(restService: IRest, id: string): any {
+    private static get(restService: IRest, id: string): any {
         if (!restService.get) {
             throw new MethodNotImplementedError();
         }
@@ -148,7 +148,7 @@ export class Api implements IRouter {
     }
 
     /* tslint:disable variable-name */
-    private put(restService: IRest, Model: any, body: string, id: string): any {
+    private static put(restService: IRest, Model: any, body: string, id: string): any {
         /* tslint:enable */
         let model: IModel;
 
@@ -161,12 +161,12 @@ export class Api implements IRouter {
         return restService.put(id, model);
     }
 
-    private delete(restService: IRest, id: string): any {
-        return restService.delete(id);
+    private static remove(restService: IRest, id: string): any {
+        return restService.remove(id);
     }
 
     /* tslint:disable variable-name */
-    private post(restService: IRest, Model: any, body: string): void {
+    private static post(restService: IRest, Model: any, body: string): void {
         /* tslint:enable */
         let model: IModel;
 
@@ -179,7 +179,7 @@ export class Api implements IRouter {
         return restService.post(model);
     }
 
-    private options(restService: IRest): void {
+    private static options(restService: IRest): void {
         return restService.options();
     }
 }

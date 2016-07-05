@@ -61,12 +61,12 @@ export class DefaultRestService implements IRest {
         this._response.json(out);
     }
 
-    delete(id: string): void {
+    remove(id: string): void {
         if (!id) {
             throw new MethodNotImplementedError();
         }
 
-        this._resource.delete(id);
+        this._resource.remove(id);
         this._response.status(204);
     }
 
