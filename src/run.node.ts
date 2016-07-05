@@ -1,5 +1,5 @@
-/// <reference path="../../typings/main.d.ts" />
-import {Server} from './classes/Server.node';
+/// <reference path="../typings/main.d.ts" />
+import {Server} from './domain/classes/Server.node';
 
 /* tslint:disable:no-unused-expression */
 new Server(1337);
