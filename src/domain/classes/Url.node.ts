@@ -16,12 +16,16 @@ export class Url implements IUrl {
 
     constructor(url: string) {
         let urlParts: Array<string> = url.split('?'),
-            pathParts: Array<string> = urlParts[0].split('/');
+            pathParts: Array<string> = urlParts[0].substring(1).split('/');
+
+        if (urlParts[0].substring(1) === '') {
+            pathParts = [];
+        }
 
         this.url = url;
         this.path = urlParts[0];
         this.queryString = urlParts[1];
-        this.parts = pathParts.slice(1, pathParts.length);
+        this.parts = pathParts;
         this.params = {};
 
         if (urlParts[1]) {

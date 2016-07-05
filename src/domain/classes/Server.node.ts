@@ -10,6 +10,7 @@ import {Response} from './Response.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {InternalServerError} from '../errors/InternalServerError.node';
+import {IRoot} from '../interfaces/IRoot';
 
 export class Server implements IRouter {
     private _api: IRouter;
@@ -32,9 +33,9 @@ export class Server implements IRouter {
         }
     }
 
-    constructor(serverPort: number) {
+    constructor(serverPort: number, root: IRoot) {
         try {
-            this._api = new Api();
+            this._api = new Api(root);
         } catch (e) {
             if (e instanceof DatabaseError) {
                 Log.error(e, 'There was a ' + e.name + ' whilst instantiating.', 'Table: ' + e.table, e.message, e.underlyingError);

@@ -14,13 +14,16 @@ import {ModelBundle} from '../models/ModelBundle.node';
 import {DefaultModel} from '../models/DefaultModel.node';
 import {IIteratorResult} from '../interfaces/IIteratorResult';
 import {RequestNotJSON} from '../errors/RequestNotJSON.node';
+import {IRoot} from '../interfaces/IRoot';
 
 export class Api implements IRouter {
     private _resourceList: Array<string>;
 
     private _modelList: any;
 
-    constructor() {
+    private _root: IRoot;
+
+    constructor(root: IRoot) {
         fs.mkdir('./data/', (err) => {
             if (err && err.code !== 'EEXIST') {
                 throw new DatabaseError('', 'Error creating directory: ./data/', err);
@@ -35,6 +38,7 @@ export class Api implements IRouter {
 
         this._modelList = new ModelBundle();
         this._resourceList = Object.keys(this._modelList);
+        this._root = root;
 
         this._resourceList.forEach(resourceName => {
             let tableName: string = this._modelList[resourceName]._map.table;
@@ -55,6 +59,10 @@ export class Api implements IRouter {
         }
 
         let context: IRoutingContext = this.getContext(request, response);
+
+        if (!context) {
+            return response.json(this._root);
+        }
 
         Api.appendHeaders(response, context.Model);
 
