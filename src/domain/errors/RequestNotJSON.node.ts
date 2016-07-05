@@ -5,7 +5,7 @@ export class RequestNotJSON extends ServerError {
 
     message: string = `The request must have the 'content-type' header set to 'application/json'`;
 
-    statusCode: number = 400;
+    statusCode: number = 415;
 
     constructor() {
         super();
