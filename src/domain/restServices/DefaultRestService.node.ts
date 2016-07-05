@@ -36,6 +36,32 @@ export class DefaultRestService implements IRest {
         }
     }
 
+    private static _appendAllowHeader(response: IResponse, get: boolean, post: boolean, put: boolean, remove: boolean, options: boolean): void {
+        let allow: string[] = [];
+
+        if (get) {
+            allow.push('GET');
+        }
+
+        if (post) {
+            allow.push('POST');
+        }
+
+        if (put) {
+            allow.push('PUT');
+        }
+
+        if (remove) {
+            allow.push('DELETE');
+        }
+
+        if (options) {
+            allow.push('OPTIONS');
+        }
+
+        response.addHeader('Allow', allow.join(', '));
+    }
+
     get(id?: string): void {
         let data: any,
             out: any;
@@ -48,6 +74,8 @@ export class DefaultRestService implements IRest {
 
         if (id) {
             out = this._Model.mapFrom(data, id).serialise();
+
+            DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
         } else {
             out = [];
 
@@ -56,6 +84,8 @@ export class DefaultRestService implements IRest {
                     out.push(this._Model.mapFrom(data[dataId], dataId).serialise());
                 }
             }
+
+            DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
         }
 
         this._response.json(out);
@@ -93,10 +123,18 @@ export class DefaultRestService implements IRest {
 
         let record: any = this._resource.put(id, item.mapTo());
 
+        DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
+
         this._response.json(this._Model.mapFrom(record, id).serialise());
     }
 
-    options(): void {
+    options(id?: string): void {
+        if (id) {
+            DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
+        } else {
+            DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
+        }
+
         this._response.json(this._Model._fields);
     }
 }

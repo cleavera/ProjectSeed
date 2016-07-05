@@ -8,5 +8,5 @@ export interface IRest {
 
     remove(id: string): void;
 
-    options?(): void;
+    options?(id?: string): void;
 }

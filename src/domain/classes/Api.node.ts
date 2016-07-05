@@ -70,7 +70,7 @@ export class Api implements IRouter {
 
             return Api.post(context.restService, context.Model, request.body);
         } else if (request.isOptions) {
-            return Api.options(context.restService);
+            return Api.options(context.restService, context.id);
         } else if (context.restService[request.method.toLowerCase()]) {
             return context.restService[request.method.toLowerCase()]();
         }
@@ -208,7 +208,7 @@ export class Api implements IRouter {
         return restService.post(model);
     }
 
-    private static options(restService: IRest): void {
-        return restService.options();
+    private static options(restService: IRest, id?: string): void {
+        return restService.options(id);
     }
 }
