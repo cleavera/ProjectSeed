@@ -9,3 +9,4 @@
     * Probably achieved with a custom rest service which only implements a get all and a post
     * Will it also need a custom resource?
 * Authentication
+* Implement JSON api standard
