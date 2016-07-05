@@ -6,6 +6,7 @@ import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingErr
 import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {DefaultModel} from '../models/DefaultModel.node';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
+import {Transformer} from '../services/Transformer.node';
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;
@@ -73,7 +74,11 @@ export class DefaultRestService implements IRest {
         }
 
         if (id) {
-            out = this._Model.mapFrom(data, id).serialise();
+            out = Transformer.to({
+                data: this._Model.mapFrom(data, id).serialise(),
+                id: id,
+                resourceName: this._resourceName
+            });
 
             DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
         } else {
@@ -81,7 +86,11 @@ export class DefaultRestService implements IRest {
 
             for (let dataId in data) {
                 if (data.hasOwnProperty(dataId)) {
-                    out.push(this._Model.mapFrom(data[dataId], dataId).serialise());
+                    out.push(Transformer.to({
+                        data: this._Model.mapFrom(data[dataId], dataId).serialise(),
+                        id: dataId,
+                        resourceName: this._resourceName
+                    }));
                 }
             }
 
@@ -109,7 +118,11 @@ export class DefaultRestService implements IRest {
             record: any = this._resource.get(id);
 
         this._response.status(201);
-        this._response.json(this._Model.mapFrom(record, id).serialise());
+        this._response.json(Transformer.to({
+            data: this._Model.mapFrom(record, id).serialise(),
+            id: id,
+            resourceName: this._resourceName
+        }));
     }
 
     put(id: string, item: any): void {
@@ -125,7 +138,11 @@ export class DefaultRestService implements IRest {
 
         DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
 
-        this._response.json(this._Model.mapFrom(record, id).serialise());
+        this._response.json(Transformer.to({
+            data: this._Model.mapFrom(record, id).serialise(),
+            id: id,
+            resourceName: this._resourceName
+        }));
     }
 
     options(id?: string): void {
@@ -135,6 +152,10 @@ export class DefaultRestService implements IRest {
             DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
         }
 
-        this._response.json(this._Model._fields);
+        this._response.json(Transformer.to({
+            data: this._Model._fields,
+            id: id,
+            resourceName: this._resourceName
+        }));
     }
 }

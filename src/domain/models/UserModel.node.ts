@@ -12,7 +12,6 @@ import {Child} from '../annotations/Child.node';
 @Child(PersonModel, 'person')
 @Map('User', {
     email: 'email',
-    id: 'id',
     password: 'password',
     username: 'username'
 })

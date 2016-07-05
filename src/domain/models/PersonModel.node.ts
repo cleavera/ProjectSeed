@@ -15,7 +15,6 @@ import {GENDER} from '../constants/gender.node';
 @Description('People')
 @Map('Person', {
     age: 'age',
-    id: 'id',
     name: 'fullName'
 })
 export class PersonModel extends DefaultModel {

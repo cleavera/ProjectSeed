@@ -6,13 +6,14 @@ import {IResponse} from '../interfaces/IResponse';
 import {IRest} from '../interfaces/IRest';
 import {IRouter} from '../interfaces/IRouter';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
-import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
-import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
-import {Json} from '../classes/Json.node';
 import {DefaultModel} from '../models/DefaultModel.node';
+import {InvalidJsonError} from '../errors/InvalidJsonError.node';
+import {Json} from '../classes/Json.node';
+import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
 import {RequestNotJSON} from '../errors/RequestNotJSON.node';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
+import {Transformer} from '../services/Transformer.node';
 
 export class Api implements IRouter {
     private _modelList: any;
@@ -179,10 +180,12 @@ export class Api implements IRouter {
     /* tslint:disable variable-name */
     private static put(restService: IRest, Model: any, body: string, id: string): any {
         /* tslint:enable */
-        let model: IModel;
+        let model: IModel,
+            data: any;
 
         try {
-            model = Model.deserialise(body);
+            data = Transformer.from(body);
+            model = Model.deserialise(data.data);
         } catch (e) {
             throw new InvalidJsonError(body);
         }
@@ -197,10 +200,12 @@ export class Api implements IRouter {
     /* tslint:disable variable-name */
     private static post(restService: IRest, Model: any, body: string): void {
         /* tslint:enable */
-        let model: IModel;
+        let model: IModel,
+            data: any;
 
         try {
-            model = Model.deserialise(body);
+            data = Transformer.from(body);
+            model = Model.deserialise(data.data);
         } catch (e) {
             throw new InvalidJsonError(body);
         }

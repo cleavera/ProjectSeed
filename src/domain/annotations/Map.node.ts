@@ -36,7 +36,7 @@ export function Map(table: string, map: any): ClassDecorator {
         model.prototype.serialise = function(): any {
             let data: any = {};
 
-            Object.keys(model._fields).forEach(field => {
+            Object.keys(map).forEach(field => {
                 data[field] = this[field];
             });
 
