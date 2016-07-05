@@ -11,4 +11,5 @@
 * Authentication
 * Implement JSON api standard
 * Require application/json
-* Allow headers 
+* Allow headers
+* Pagination
