@@ -10,6 +10,5 @@
     * Will it also need a custom resource?
 * Authentication
 * Implement JSON api standard
-* Require application/json
 * Allow headers
 * Pagination

@@ -14,6 +14,24 @@ import {InternalServerError} from '../errors/InternalServerError.node';
 export class Server implements IRouter {
     private _api: IRouter;
 
+    private static handleError(e: any, response: IResponse, request: { url: string }): void {
+        if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
+            Log.info(e.name + ' at ' + request.url);
+            response.status(e.statusCode);
+            response.json(e.serialise());
+        } else {
+            let error: IServerError = new InternalServerError(e.stackTrace);
+
+            Log.warn(e, e.name + ' at ' + request.url);
+            response.status(error.statusCode);
+            response.json(error.serialise());
+        }
+
+        if (e instanceof InvalidJsonError) {
+            Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
+        }
+    }
+
     constructor(serverPort: number) {
         try {
             this._api = new Api();
@@ -26,31 +44,24 @@ export class Server implements IRouter {
         }
 
         let server: http.Server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
-            Request.fromRequest(req).then(request => {
-                let response: IResponse = new Response(res);
+            let response: IResponse = new Response(res);
 
-                try {
-                    this.route(request, response);
-                } catch (e) {
-                    if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
-                        Log.info(e.name + ' at ' + request.url);
-                        response.status(e.statusCode);
-                        response.json(e.serialise());
-                    } else {
-                        let error: IServerError = new InternalServerError(e.stackTrace);
-
-                        Log.warn(e, e.name + ' at ' + request.url);
-                        response.status(error.statusCode);
-                        response.json(error.serialise());
+            Request.fromRequest(req).then(
+                request => {
+                    try {
+                        this.route(request, response);
+                    } catch (e) {
+                        Server.handleError(e, response, req);
                     }
 
-                    if (e instanceof InvalidJsonError) {
-                        Log.info(e.name + ' at ' + request.url + ':\n' + e.json);
-                    }
+                    res.end();
+                },
+                e => {
+                    Server.handleError(e, response, req);
+
+                    res.end();
                 }
-
-                res.end();
-            });
+            );
         });
 
         server.listen(serverPort, () => {

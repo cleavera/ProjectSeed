@@ -30,9 +30,7 @@ export function Map(table: string, map: any): ClassDecorator {
         };
 
         model.deserialise = function(data: string): any {
-            let deserialisedData: any = JSON.parse(data);
-
-            return new model(deserialisedData);
+            return new model(data);
         };
 
         model.prototype.serialise = function(): any {

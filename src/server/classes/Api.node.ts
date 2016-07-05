@@ -13,6 +13,7 @@ import {Json} from '../classes/Json.node';
 import {ModelBundle} from '../models/ModelBundle.node';
 import {DefaultModel} from '../models/DefaultModel.node';
 import {IIteratorResult} from '../interfaces/IIteratorResult';
+import {RequestNotJSON} from '../errors/RequestNotJSON.node';
 
 export class Api implements IRouter {
     private _resourceList: Array<string>;
@@ -49,6 +50,10 @@ export class Api implements IRouter {
     }
 
     route(request: IRequest, response: IResponse): void {
+        if (!request.isJSON) {
+            throw new RequestNotJSON();
+        }
+
         let context: IRoutingContext = this.getContext(request, response);
 
         this.appendHeaders(response, context.Model);
@@ -67,8 +72,8 @@ export class Api implements IRouter {
             return this.post(context.restService, context.Model, request.body);
         } else if (request.isOptions) {
             return this.options(context.restService);
-        } else if (context.restService[request.type]) {
-            return context.restService[request.type]();
+        } else if (context.restService[request.method.toLowerCase()]) {
+            return context.restService[request.method.toLowerCase()]();
         }
 
         throw new MethodNotImplementedError();

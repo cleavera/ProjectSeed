@@ -9,6 +9,8 @@ export interface IRequest {
 
     method: string;
 
+    isJSON: boolean;
+
     isPost: boolean;
 
     isPut: boolean;

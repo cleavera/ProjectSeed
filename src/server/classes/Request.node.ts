@@ -3,6 +3,7 @@ import {Url} from './Url.node';
 import {IRequest} from '../interfaces/IRequest';
 import {IUrl} from '../interfaces/IUrl';
 import * as http from 'http';
+import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 
 export class Request implements IRequest {
     url: IUrl;
@@ -13,14 +14,20 @@ export class Request implements IRequest {
 
     method: string;
 
+    headers: any;
+
     private _baseRequest: any;
 
     constructor(request: http.IncomingMessage, body: string) {
         this.url = new Url(request.url);
         this.body = body;
+        this.method = request.method;
+        this.headers = request.headers;
         this._baseRequest = request;
-        this.type = this._baseRequest.method.toLowerCase();
-        this.method = this._baseRequest.method;
+    }
+
+    get isJSON(): boolean {
+        return !this.body || this.headers['content-type'] === 'application/json';
     }
 
     get isGet(): boolean {
@@ -50,10 +57,14 @@ export class Request implements IRequest {
             body += chunk.toString();
         });
 
-        return new Promise<Request>(resolve => {
+        return new Promise<Request>((resolve, reject) => {
             request.on('end', () => {
                 if (request.headers['content-type'] === 'application/json' && body) {
-                    resolve(new Request(request, JSON.parse(body)));
+                    try {
+                        resolve(new Request(request, JSON.parse(body)));
+                    } catch (e) {
+                        reject(new InvalidJsonError(body));
+                    }
                 } else {
                     resolve(new Request(request, body));
                 }
