@@ -1,29 +1,27 @@
 import * as fs from 'fs';
-import {IRouter} from '../interfaces/IRouter';
+import {IIteratorResult} from '../interfaces/IIteratorResult';
+import {IModel} from '../interfaces/IModel';
 import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
-import {IModel} from '../interfaces/IModel';
 import {IRest} from '../interfaces/IRest';
+import {IRouter} from '../interfaces/IRouter';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
 import {Json} from '../classes/Json.node';
-import {ModelBundle} from '../models/ModelBundle.node';
 import {DefaultModel} from '../models/DefaultModel.node';
-import {IIteratorResult} from '../interfaces/IIteratorResult';
 import {RequestNotJSON} from '../errors/RequestNotJSON.node';
-import {IRoot} from '../interfaces/IRoot';
 
 export class Api implements IRouter {
-    private _resourceList: Array<string>;
-
     private _modelList: any;
 
-    private _root: IRoot;
+    private _Root: any;
 
-    constructor(root: IRoot) {
+    /* tslint:disable:variable-name */
+    constructor(Root: any) {
+        /* tslint:enable */
         fs.mkdir('./data/', (err) => {
             if (err && err.code !== 'EEXIST') {
                 throw new DatabaseError('', 'Error creating directory: ./data/', err);
@@ -36,17 +34,10 @@ export class Api implements IRouter {
             }
         });
 
-        this._modelList = new ModelBundle();
-        this._resourceList = Object.keys(this._modelList);
-        this._root = root;
+        this._modelList = Root._children;
+        this._Root = Root;
 
-        this._resourceList.forEach(resourceName => {
-            let tableName: string = this._modelList[resourceName]._map.table;
-
-            if (!Json.tableExists('./data/' + tableName + '.json')) {
-                Json.create('./data/' + tableName + '.json');
-            }
-        });
+        Api.createTables(Root);
 
         if (!Json.tableExists('./data/private/association.json')) {
             Json.create('./data/private/association.json');
@@ -61,7 +52,7 @@ export class Api implements IRouter {
         let context: IRoutingContext = this.getContext(request, response);
 
         if (!context) {
-            return response.json(this._root);
+            return response.json(new (this._Root));
         }
 
         Api.appendHeaders(response, context.Model);
@@ -138,6 +129,36 @@ export class Api implements IRouter {
 
         return context;
     }
+
+    /* tslint:disable variable-name */
+    private static createTables(Root: any) {
+        let tables: string[] = [];
+
+        let recursiveSearch = function(RootModel: any) {
+            let childResources = Object.keys(RootModel._children);
+
+            childResources.forEach(child => {
+                let Model: any = RootModel._children[child];
+
+                if (Model._map && Model._map.table && tables.indexOf(Model._map.table) === -1) {
+                    tables.push(Model._map.table);
+                }
+
+                if (Model._children) {
+                    recursiveSearch(Model);
+                }
+            });
+        };
+
+        recursiveSearch(Root);
+
+        tables.forEach(table => {
+            if (!Json.tableExists('./data/' + table + '.json')) {
+                Json.create('./data/' + table + '.json');
+            }
+        });
+    }
+    /* tslint:enable */
 
     /* tslint:disable variable-name */
     private static appendHeaders(response: IResponse, Model: any): void {

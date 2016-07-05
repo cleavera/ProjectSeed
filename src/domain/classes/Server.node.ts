@@ -1,7 +1,7 @@
 import * as http from 'http';
-import {IRouter} from '../interfaces/IRouter';
-import {IResponse} from '../interfaces/IResponse';
 import {IRequest} from '../interfaces/IRequest';
+import {IResponse} from '../interfaces/IResponse';
+import {IRouter} from '../interfaces/IRouter';
 import {IServerError} from '../interfaces/IServerError';
 import {Api} from './Api.node';
 import {Log} from '../services/Log.node';
@@ -10,7 +10,6 @@ import {Response} from './Response.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
 import {InternalServerError} from '../errors/InternalServerError.node';
-import {IRoot} from '../interfaces/IRoot';
 
 export class Server implements IRouter {
     private _api: IRouter;
@@ -32,16 +31,17 @@ export class Server implements IRouter {
             Log.info(e.name + ' at ' + url + ':\n' + e.json);
         }
     }
-
-    constructor(serverPort: number, root: IRoot) {
+    /* tslint:disable:variable-name */
+    constructor(Root: any) {
+        /* tslint:enable */
         try {
-            this._api = new Api(root);
+            this._api = new Api(Root);
         } catch (e) {
             if (e instanceof DatabaseError) {
                 Log.error(e, 'There was a ' + e.name + ' whilst instantiating.', 'Table: ' + e.table, e.message, e.underlyingError);
             }
 
-            throw new Error();
+            throw e;
         }
 
         let server: http.Server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
@@ -65,8 +65,8 @@ export class Server implements IRouter {
             );
         });
 
-        server.listen(serverPort, () => {
-            Log.info((new Date()) + ' Server is listening on port ' + serverPort);
+        server.listen(Root.port, () => {
+            Log.info((new Date()) + ' Server is listening on port ' + Root.port);
         });
     }
 

@@ -1,9 +1,9 @@
 /// <reference path="../typings/main.d.ts" />
 import {Server} from './domain/classes/Server.node';
-import {apiRoot} from './ApiRoot.node';
+import {ApiRoot} from './ApiRoot.node';
 
 /* tslint:disable:no-unused-expression */
-new Server(1337, apiRoot);
+new Server(ApiRoot);
 /* tslint:disable */
 
 (() => {
