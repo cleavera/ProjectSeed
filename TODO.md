@@ -5,6 +5,5 @@
     * Will these only be available on options requests or when you fetch the individual resource as well
         * Will have to split out the model and meta if so
 * Authentication
-* Implement JSON api standard
 * Pagination
 * Child model limits (e.g. max 5)
