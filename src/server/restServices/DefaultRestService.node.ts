@@ -21,18 +21,18 @@ export class DefaultRestService implements IRest {
     private _context: IRoutingContext;
 
     /* tslint:disable variable-name */
-    constructor(request: IRequest, response: IResponse, ModelClass: typeof DefaultModel, resourceName: string, context: IRoutingContext) {
+    constructor(request: IRequest, response: IResponse, context: IRoutingContext, parentContext?: IRoutingContext) {
         /* tslint:enable */
         this._request = request;
         this._response = response;
-        this._Model = ModelClass;
-        this._resourceName = resourceName;
+        this._Model = context.Model;
+        this._resourceName = context.resourceName;
         this._context = context;
 
         try {
-            this._resource = new ModelClass.resource(resourceName);
+            this._resource = new this._Model.resource(this._resourceName, parentContext);
         } catch (e) {
-            throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+            throw new ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
         }
     }
 

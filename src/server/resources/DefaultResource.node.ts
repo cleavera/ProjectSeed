@@ -13,8 +13,11 @@ export class DefaultResource implements IRest {
 
     private _resourceName: string;
 
-    constructor(resourceName: string) {
+    private _parentContext: IRoutingContext;
+
+    constructor(resourceName: string, parentContext?: IRoutingContext) {
         this._resourceName = resourceName;
+        this._parentContext = parentContext;
 
         try {
             this._resource = new Json('./data/' + resourceName + '.json');
@@ -25,11 +28,11 @@ export class DefaultResource implements IRest {
         this._data = this._resource.read();
     }
 
-    get(id?: string, parentContext?: IRoutingContext): any {
+    get(id?: string): any {
         let data: any;
 
-        if (parentContext) {
-            data = Association.filter({ id: id, resourceName: this._resourceName }, parentContext, this._data);
+        if (this._parentContext) {
+            data = Association.filter({ id: id, resourceName: this._resourceName }, this._parentContext, this._data);
         } else {
             data = this._data;
         }
@@ -45,25 +48,25 @@ export class DefaultResource implements IRest {
         }
     }
 
-    post(item: any, parentContext?: IRoutingContext): string {
+    post(item: any): string {
         let id: string = Guid.generate();
 
         this._data[id] = item;
         this._resource.save(this._data);
 
-        if (parentContext) {
-            Association.addAssociation({ id: id, resourceName: this._resourceName }, parentContext);
+        if (this._parentContext) {
+            Association.addAssociation({ id: id, resourceName: this._resourceName }, this._parentContext);
         }
 
         return id;
     }
 
-    put(id: string, item: any, parentContext?: IRoutingContext): any {
+    put(id: string, item: any): any {
         this._data[id] = item;
         this._resource.save(this._data);
 
-        if (parentContext) {
-            Association.addAssociation({id: id, resourceName: this._resourceName}, parentContext);
+        if (this._parentContext) {
+            Association.addAssociation({id: id, resourceName: this._resourceName}, this._parentContext);
         }
 
         return this._data[id];

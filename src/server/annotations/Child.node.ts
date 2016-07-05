@@ -1,11 +1,11 @@
-export function Child(childModel: any): ClassDecorator {
+export function Child(childModel: any, alias: string): ClassDecorator {
     'use strict';
 
     return function(model: any): void {
         if (!model._children) {
-            model._children = [];
+            model._children = {};
         }
 
-        model._children.push(childModel);
+        model._children[alias.toLowerCase()] = childModel;
     };
 }

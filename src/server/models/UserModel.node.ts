@@ -6,7 +6,10 @@ import {Required} from '../annotations/Required.node';
 import {String} from '../annotations/String.node';
 import {Guid} from '../annotations/Guid.node';
 import {DefaultResource} from '../resources/DefaultResource.node';
+import {PersonModel} from './PersonModel.node';
+import {Child} from '../annotations/Child.node';
 
+@Child(PersonModel, 'person')
 @Map('User', {
     email: 'email',
     id: 'id',

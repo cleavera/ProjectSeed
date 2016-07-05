@@ -13,6 +13,8 @@ export class DefaultModel implements IModel, ISerialisable {
 
     static _map: any;
 
+    static _children: any;
+
     static primaryKey: any;
 
     static description: string;

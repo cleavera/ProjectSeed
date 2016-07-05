@@ -50,7 +50,7 @@ export class Url implements IUrl {
 
         if (this._pointer < this.parts.length) {
             return {
-                done: false,
+                done: this._pointer >= this.parts.length,
                 value: this.current
             };
         }

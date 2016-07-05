@@ -12,6 +12,7 @@ import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.nod
 import {Json} from '../classes/Json.node';
 import {ModelBundle} from '../models/ModelBundle.node';
 import {DefaultModel} from '../models/DefaultModel.node';
+import {IIteratorResult} from '../interfaces/IIteratorResult';
 
 export class Api implements IRouter {
     private _resourceList: Array<string>;
@@ -74,34 +75,55 @@ export class Api implements IRouter {
     }
 
     private getContext(request: IRequest, response: IResponse): IRoutingContext {
-        /* tslint:disable:variable-name */
-        let resourceName: string = request.url.next().value || '',
-            Model: typeof DefaultModel = this._modelList[resourceName.toLowerCase()];
-        /* tslint:enable */
+        let parentContext: IRoutingContext,
+            context: IRoutingContext = null,
+            done: boolean;
 
-        if (!resourceName || this._resourceList.indexOf(resourceName.toLowerCase()) === -1 || !Model) {
-            throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
-        }
+        while (!done) {
+            let nextUrlPart: IIteratorResult = request.url.next();
 
-        let restService: IRest;
+            if (nextUrlPart.done) {
+               done = true;
+               break;
+            }
 
-        try {
-            /* tslint:disable:comment-format */
-            //noinspection TypeScriptValidateTypes
-            restService = new Model.restService(request, response, Model, resourceName);
+            parentContext = context;
+
+            /* tslint:disable:variable-name */
+            let resourceName: string = nextUrlPart.value || '',
+                Model: typeof DefaultModel;
             /* tslint:enable */
-        } catch (e) {
-            throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+
+            if (parentContext) {
+                Model = parentContext.Model._children[resourceName.toLowerCase()];
+            } else {
+                Model = this._modelList[resourceName.toLowerCase()];
+            }
+
+            if (!resourceName || !Model) {
+                throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+            }
+
+            let id: string = request.url.next().value;
+
+            context = {
+                Model: Model,
+                id: id,
+                resourceName: resourceName
+            };
+
+            let restService: IRest;
+
+            try {
+                restService = new Model.restService(request, response, context, parentContext);
+            } catch (e) {
+                throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
+            }
+
+            context.restService = restService;
         }
 
-        let id: string = request.url.next().value;
-
-        return {
-            Model: Model,
-            id: id,
-            resourceName: resourceName,
-            restService: restService
-        };
+        return context;
     }
 
     /* tslint:disable variable-name */
