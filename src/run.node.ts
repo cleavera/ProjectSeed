@@ -4,7 +4,7 @@ import {ApiRoot} from './ApiRoot.node';
 
 /* tslint:disable:no-unused-expression */
 new Server(ApiRoot);
-/* tslint:disable */
+/* tslint:enable */
 
 (() => {
     'use strict';

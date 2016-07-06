@@ -31,9 +31,8 @@ export class Server implements IRouter {
             Log.info(e.name + ' at ' + url + ':\n' + e.json);
         }
     }
-    /* tslint:disable:variable-name */
+
     constructor(Root: any) {
-        /* tslint:enable */
         try {
             this._api = new Api(Root);
         } catch (e) {

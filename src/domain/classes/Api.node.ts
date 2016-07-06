@@ -20,9 +20,85 @@ export class Api implements IRouter {
 
     private _Root: any;
 
-    /* tslint:disable:variable-name */
+    private static createTables(Root: any): void {
+        let tables: string[] = [];
+
+        let recursiveSearch: (RootModel: any) => void = function(RootModel: any): void {
+            let childResources: string[] = Object.keys(RootModel._children);
+
+            childResources.forEach(child => {
+                let Model: any = RootModel._children[child];
+
+                if (Model._map && Model._map.table && tables.indexOf(Model._map.table) === -1) {
+                    tables.push(Model._map.table);
+                }
+
+                if (Model._children) {
+                    recursiveSearch(Model);
+                }
+            });
+        };
+
+        recursiveSearch(Root);
+
+        tables.forEach(table => {
+            if (!Json.tableExists('./data/' + table + '.json')) {
+                Json.create('./data/' + table + '.json');
+            }
+        });
+    }
+
+    private static appendHeaders(response: IResponse, Model: any): void {
+        if (Model.description) {
+            response.addHeader('description', Model.description);
+        }
+    }
+
+    private static get(restService: IRest, id: string): any {
+        if (!restService.get) {
+            throw new MethodNotImplementedError();
+        }
+
+        return restService.get(id);
+    }
+
+    private static put(restService: IRest, Model: any, body: string, id: string): any {
+        let model: IModel,
+            data: any;
+
+        try {
+            data = Transformer.from(body);
+            model = Model.deserialise(data.data);
+        } catch (e) {
+            throw new InvalidJsonError(body);
+        }
+
+        return restService.put(id, model);
+    }
+
+    private static remove(restService: IRest, id: string): any {
+        return restService.remove(id);
+    }
+
+    private static post(restService: IRest, Model: any, body: string): void {
+        let model: IModel,
+            data: any;
+
+        try {
+            data = Transformer.from(body);
+            model = Model.deserialise(data.data);
+        } catch (e) {
+            throw new InvalidJsonError(body);
+        }
+
+        return restService.post(model);
+    }
+
+    private static options(restService: IRest, id?: string): void {
+        return restService.options(id);
+    }
+
     constructor(Root: any) {
-        /* tslint:enable */
         fs.mkdir('./data/', (err) => {
             if (err && err.code !== 'EEXIST') {
                 throw new DatabaseError('', 'Error creating directory: ./data/', err);
@@ -88,16 +164,14 @@ export class Api implements IRouter {
             let nextUrlPart: IIteratorResult = request.url.next();
 
             if (nextUrlPart.done) {
-               done = true;
-               break;
+                done = true;
+                break;
             }
 
             parentContext = context;
 
-            /* tslint:disable:variable-name */
             let resourceName: string = nextUrlPart.value || '',
                 Model: typeof DefaultModel;
-            /* tslint:enable */
 
             if (parentContext) {
                 Model = parentContext.Model._children[resourceName.toLowerCase()];
@@ -130,91 +204,5 @@ export class Api implements IRouter {
         }
 
         return context;
-    }
-
-    /* tslint:disable variable-name */
-    private static createTables(Root: any) {
-        let tables: string[] = [];
-
-        let recursiveSearch = function(RootModel: any) {
-            let childResources = Object.keys(RootModel._children);
-
-            childResources.forEach(child => {
-                let Model: any = RootModel._children[child];
-
-                if (Model._map && Model._map.table && tables.indexOf(Model._map.table) === -1) {
-                    tables.push(Model._map.table);
-                }
-
-                if (Model._children) {
-                    recursiveSearch(Model);
-                }
-            });
-        };
-
-        recursiveSearch(Root);
-
-        tables.forEach(table => {
-            if (!Json.tableExists('./data/' + table + '.json')) {
-                Json.create('./data/' + table + '.json');
-            }
-        });
-    }
-    /* tslint:enable */
-
-    /* tslint:disable variable-name */
-    private static appendHeaders(response: IResponse, Model: any): void {
-        /* tslint:enable */
-        if (Model.description) {
-            response.addHeader('description', Model.description);
-        }
-    }
-
-    private static get(restService: IRest, id: string): any {
-        if (!restService.get) {
-            throw new MethodNotImplementedError();
-        }
-
-        return restService.get(id);
-    }
-
-    /* tslint:disable variable-name */
-    private static put(restService: IRest, Model: any, body: string, id: string): any {
-        /* tslint:enable */
-        let model: IModel,
-            data: any;
-
-        try {
-            data = Transformer.from(body);
-            model = Model.deserialise(data.data);
-        } catch (e) {
-            throw new InvalidJsonError(body);
-        }
-
-        return restService.put(id, model);
-    }
-
-    private static remove(restService: IRest, id: string): any {
-        return restService.remove(id);
-    }
-
-    /* tslint:disable variable-name */
-    private static post(restService: IRest, Model: any, body: string): void {
-        /* tslint:enable */
-        let model: IModel,
-            data: any;
-
-        try {
-            data = Transformer.from(body);
-            model = Model.deserialise(data.data);
-        } catch (e) {
-            throw new InvalidJsonError(body);
-        }
-
-        return restService.post(model);
-    }
-
-    private static options(restService: IRest, id?: string): void {
-        return restService.options(id);
     }
 }

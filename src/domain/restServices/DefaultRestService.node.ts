@@ -21,22 +21,6 @@ export class DefaultRestService implements IRest {
 
     private _context: IRoutingContext;
 
-    /* tslint:disable variable-name */
-    constructor(request: IRequest, response: IResponse, context: IRoutingContext) {
-        /* tslint:enable */
-        this._request = request;
-        this._response = response;
-        this._Model = context.Model;
-        this._resourceName = context.resourceName;
-        this._context = context;
-
-        try {
-            this._resource = new this._Model.resource(this._resourceName, context.parent);
-        } catch (e) {
-            throw new ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
-        }
-    }
-
     private static _appendAllowHeader(response: IResponse, get: boolean, post: boolean, put: boolean, remove: boolean, options: boolean): void {
         let allow: string[] = [];
 
@@ -61,6 +45,20 @@ export class DefaultRestService implements IRest {
         }
 
         response.addHeader('Allow', allow.join(', '));
+    }
+
+    constructor(request: IRequest, response: IResponse, context: IRoutingContext) {
+        this._request = request;
+        this._response = response;
+        this._Model = context.Model;
+        this._resourceName = context.resourceName;
+        this._context = context;
+
+        try {
+            this._resource = new this._Model.resource(this._resourceName, context.parent);
+        } catch (e) {
+            throw new ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
+        }
     }
 
     get(id?: string): void {

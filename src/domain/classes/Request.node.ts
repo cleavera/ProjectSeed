@@ -18,6 +18,28 @@ export class Request implements IRequest {
 
     private _baseRequest: any;
 
+    static fromRequest(request: http.IncomingMessage): Promise<Request> {
+        let body: string = '';
+
+        request.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        return new Promise<Request>((resolve, reject) => {
+            request.on('end', () => {
+                if (request.headers['content-type'] === 'application/json' && body) {
+                    try {
+                        resolve(new Request(request, JSON.parse(body)));
+                    } catch (e) {
+                        reject(new InvalidJsonError(body));
+                    }
+                } else {
+                    resolve(new Request(request, body));
+                }
+            });
+        });
+    }
+
     constructor(request: http.IncomingMessage, body: string) {
         this.url = new Url(request.url);
         this.body = body;
@@ -48,27 +70,5 @@ export class Request implements IRequest {
 
     get isOptions(): boolean {
         return this._baseRequest.method.toLowerCase() === 'options';
-    }
-
-    static fromRequest(request: http.IncomingMessage): Promise<Request> {
-        let body: string = '';
-
-        request.on('data', chunk => {
-            body += chunk.toString();
-        });
-
-        return new Promise<Request>((resolve, reject) => {
-            request.on('end', () => {
-                if (request.headers['content-type'] === 'application/json' && body) {
-                    try {
-                        resolve(new Request(request, JSON.parse(body)));
-                    } catch (e) {
-                        reject(new InvalidJsonError(body));
-                    }
-                } else {
-                    resolve(new Request(request, body));
-                }
-            });
-        });
     }
 }
