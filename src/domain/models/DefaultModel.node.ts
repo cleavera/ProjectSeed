@@ -74,10 +74,18 @@ export class DefaultModel implements IModel, ISerialisable {
     }
 
     generateLinks(context: IRoutingContext): any {
-        return {
+        let links: any = {
             self: {
                 href: context.generateUrl()
             }
         };
+
+        if (context.parent) {
+            links.parent = {
+                href: context.parent.generateUrl()
+            };
+        }
+
+        return links;
     }
 }
