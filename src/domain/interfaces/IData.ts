@@ -4,4 +4,6 @@ export interface IData {
     id: string;
 
     resourceName: string;
+
+    links?: any;
 }

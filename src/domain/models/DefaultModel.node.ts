@@ -1,4 +1,5 @@
 import {IModel} from '../interfaces/IModel';
+import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ISerialisable} from '../interfaces/ISerialisable';
 import {DefaultResource} from '../resources/DefaultResource.node';
 import {DefaultRestService} from '../restServices/DefaultRestService.node';
@@ -70,5 +71,13 @@ export class DefaultModel implements IModel, ISerialisable {
         };
 
         DecorateField.getterSetter(model, field, null, setter);
+    }
+
+    generateLinks(context: IRoutingContext): any {
+        return {
+            self: {
+                href: context.generateUrl()
+            }
+        };
     }
 }

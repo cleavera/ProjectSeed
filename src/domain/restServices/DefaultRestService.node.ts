@@ -1,13 +1,14 @@
+import {IModel} from '../interfaces/IModel';
 import {IRest} from '../interfaces/IRest';
 import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
-import {ResourceValidationError} from '../errors/ResourceValidationError.node';
+import {Context} from '../classes/Context.node';
 import {DefaultModel} from '../models/DefaultModel.node';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
+import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {Transformer} from '../services/Transformer.node';
-import {Context} from "../classes/Context.node";
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;
@@ -73,9 +74,11 @@ export class DefaultRestService implements IRest {
         }
 
         if (id) {
+            let model: IModel = this._Model.mapFrom(data, id);
             out = Transformer.to({
-                data: this._Model.mapFrom(data, id).serialise(),
+                data: model.serialise(),
                 id: id,
+                links: model.generateLinks(this._context),
                 resourceName: this._resourceName
             });
 
@@ -85,9 +88,13 @@ export class DefaultRestService implements IRest {
 
             for (let dataId in data) {
                 if (data.hasOwnProperty(dataId)) {
+                    let model: IModel = this._Model.mapFrom(data[dataId], dataId),
+                        context: IRoutingContext = new Context(this._resourceName, dataId, this._Model, this, this._context.parent);
+
                     out.push(Transformer.to({
-                        data: this._Model.mapFrom(data[dataId], dataId).serialise(),
+                        data: model.serialise(),
                         id: dataId,
+                        links: model.generateLinks(context),
                         resourceName: this._resourceName
                     }));
                 }
@@ -115,13 +122,15 @@ export class DefaultRestService implements IRest {
 
         let id: string = this._resource.post(item.mapTo()),
             record: any = this._resource.get(id),
-            context: IRoutingContext = new Context(this._resourceName, id, null, null, this._context.parent);
+            context: IRoutingContext = new Context(this._resourceName, id, null, null, this._context.parent),
+            model: IModel = this._Model.mapFrom(record, id);
 
         this._response.addHeader('Location', context.generateUrl());
         this._response.status(201);
         this._response.json(Transformer.to({
-            data: this._Model.mapFrom(record, id).serialise(),
+            data: model.serialise(),
             id: id,
+            links: model.generateLinks(context),
             resourceName: this._resourceName
         }));
     }
@@ -135,20 +144,34 @@ export class DefaultRestService implements IRest {
             throw new ResourceValidationError(item._errors);
         }
 
-        let record: any = this._resource.put(id, item.mapTo());
+        let record: any = this._resource.put(id, item.mapTo()),
+            model: IModel = this._Model.mapFrom(record, id);
 
         DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
 
         this._response.json(Transformer.to({
-            data: this._Model.mapFrom(record, id).serialise(),
+            data: model.serialise(),
             id: id,
+            links: model.generateLinks(this._context),
             resourceName: this._resourceName
         }));
     }
 
     options(id?: string): void {
+        let links: any;
+
         if (id) {
+            let data: any;
+
             DefaultRestService._appendAllowHeader(this._response, true, false, true, true, true);
+
+            try {
+                data = this._resource.get(id, this._context);
+            } catch (e) {
+                throw new ResourceNotFoundRoutingError(this._request.url.toString(), this._resourceName);
+            }
+
+            links = this._Model.mapFrom(data, id).generateLinks(this._context);
         } else {
             DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
         }
@@ -156,6 +179,7 @@ export class DefaultRestService implements IRest {
         this._response.json(Transformer.to({
             data: this._Model._fields,
             id: id,
+            links: links,
             resourceName: this._resourceName
         }));
     }

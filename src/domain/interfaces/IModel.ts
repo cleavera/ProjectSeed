@@ -1,3 +1,5 @@
+import {IRoutingContext} from './IRoutingContext';
+
 export interface IModel {
     _errors: any;
 
@@ -6,4 +8,6 @@ export interface IModel {
     serialise: Function;
 
     isValid: boolean;
+
+    generateLinks(context: IRoutingContext): any;
 }

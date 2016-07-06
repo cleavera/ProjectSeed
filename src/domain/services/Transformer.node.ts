@@ -5,6 +5,7 @@ export class Transformer {
         return {
             attributes: data.data,
             id: data.id,
+            links: data.links,
             type: data.resourceName
         };
     }
