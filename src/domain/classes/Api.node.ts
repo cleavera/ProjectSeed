@@ -14,6 +14,7 @@ import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.nod
 import {RequestNotJSON} from '../errors/RequestNotJSON.node';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {Transformer} from '../services/Transformer.node';
+import {Context} from './Context.node';
 
 export class Api implements IRouter {
     private _modelList: any;
@@ -185,12 +186,7 @@ export class Api implements IRouter {
 
             let id: string = request.url.next().value;
 
-            context = {
-                Model: Model,
-                id: id,
-                parent: parentContext,
-                resourceName: resourceName
-            };
+            context = new Context(id, resourceName, Model, null, parentContext);
 
             let restService: IRest;
 

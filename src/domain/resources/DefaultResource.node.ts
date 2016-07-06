@@ -1,10 +1,11 @@
 import {IRest} from '../interfaces/IRest';
 import {IResource} from '../interfaces/IResource';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {Json} from '../classes/Json.node';
-import {Guid} from '../services/Guid.node';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {Association} from '../classes/Association.node';
+import {Context} from '../classes/Context.node';
+import {Guid} from '../services/Guid.node';
+import {Json} from '../classes/Json.node';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 
 export class DefaultResource implements IRest {
     private _data: any;
@@ -32,7 +33,7 @@ export class DefaultResource implements IRest {
         let data: any;
 
         if (this._parentContext) {
-            data = Association.filter({ id: id, resourceName: this._resourceName }, this._parentContext, this._data);
+            data = Association.filter(new Context(id, this._resourceName), this._parentContext, this._data);
         } else {
             data = this._data;
         }
@@ -55,7 +56,7 @@ export class DefaultResource implements IRest {
         this._resource.save(this._data);
 
         if (this._parentContext) {
-            Association.addAssociation({ id: id, resourceName: this._resourceName }, this._parentContext);
+            Association.addAssociation(new Context(id, this._resourceName), this._parentContext);
         }
 
         return id;
@@ -66,7 +67,7 @@ export class DefaultResource implements IRest {
         this._resource.save(this._data);
 
         if (this._parentContext) {
-            Association.addAssociation({id: id, resourceName: this._resourceName}, this._parentContext);
+            Association.addAssociation(new Context(id, this._resourceName), this._parentContext);
         }
 
         return this._data[id];
@@ -76,7 +77,7 @@ export class DefaultResource implements IRest {
         delete this._data[id];
         this._resource.save(this._data);
 
-        Association.removeAssociation({ id: id, resourceName: this._resourceName });
+        Association.removeAssociation(new Context(id, this._resourceName));
 
         return {};
     }
