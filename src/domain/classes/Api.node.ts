@@ -6,6 +6,7 @@ import {IResponse} from '../interfaces/IResponse';
 import {IRest} from '../interfaces/IRest';
 import {IRouter} from '../interfaces/IRouter';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
+import {Context} from './Context.node';
 import {DatabaseError} from '../errors/DatabaseError.node';
 import {DefaultModel} from '../models/DefaultModel.node';
 import {InvalidJsonError} from '../errors/InvalidJsonError.node';
@@ -14,7 +15,6 @@ import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.nod
 import {RequestNotJSON} from '../errors/RequestNotJSON.node';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
 import {Transformer} from '../services/Transformer.node';
-import {Context} from './Context.node';
 
 export class Api implements IRouter {
     private _modelList: any;
@@ -130,7 +130,13 @@ export class Api implements IRouter {
         let context: IRoutingContext = this.getContext(request, response);
 
         if (!context) {
-            return response.json(new (this._Root));
+            let root: any = new this._Root();
+
+            return response.json(Transformer.to({
+                data: root,
+                links: root.generateLinks(),
+                resourceName: 'apiInfo'
+            }));
         }
 
         Api.appendHeaders(response, context.Model);

@@ -1,7 +1,7 @@
 export interface IData {
     data: any;
 
-    id: string;
+    id?: string;
 
     resourceName: string;
 
