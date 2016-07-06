@@ -114,13 +114,14 @@ export class Api implements IRouter {
             context = {
                 Model: Model,
                 id: id,
+                parent: parentContext,
                 resourceName: resourceName
             };
 
             let restService: IRest;
 
             try {
-                restService = new Model.restService(request, response, context, parentContext);
+                restService = new Model.restService(request, response, context);
             } catch (e) {
                 throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
             }

@@ -22,7 +22,7 @@ export class DefaultRestService implements IRest {
     private _context: IRoutingContext;
 
     /* tslint:disable variable-name */
-    constructor(request: IRequest, response: IResponse, context: IRoutingContext, parentContext?: IRoutingContext) {
+    constructor(request: IRequest, response: IResponse, context: IRoutingContext) {
         /* tslint:enable */
         this._request = request;
         this._response = response;
@@ -31,7 +31,7 @@ export class DefaultRestService implements IRest {
         this._context = context;
 
         try {
-            this._resource = new this._Model.resource(this._resourceName, parentContext);
+            this._resource = new this._Model.resource(this._resourceName, context.parent);
         } catch (e) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
         }

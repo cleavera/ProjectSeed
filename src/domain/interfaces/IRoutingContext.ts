@@ -9,4 +9,6 @@ export interface IRoutingContext {
     resourceName: string;
 
     restService?: IRest;
+
+    parent?: IRoutingContext;
 }
