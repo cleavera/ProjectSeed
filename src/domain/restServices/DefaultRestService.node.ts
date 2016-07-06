@@ -7,6 +7,7 @@ import {ResourceValidationError} from '../errors/ResourceValidationError.node';
 import {DefaultModel} from '../models/DefaultModel.node';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
 import {Transformer} from '../services/Transformer.node';
+import {Context} from "../classes/Context.node";
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;
@@ -113,8 +114,10 @@ export class DefaultRestService implements IRest {
         }
 
         let id: string = this._resource.post(item.mapTo()),
-            record: any = this._resource.get(id);
+            record: any = this._resource.get(id),
+            context: IRoutingContext = new Context(this._resourceName, id, null, null, this._context.parent);
 
+        this._response.addHeader('Location', context.generateUrl());
         this._response.status(201);
         this._response.json(Transformer.to({
             data: this._Model.mapFrom(record, id).serialise(),

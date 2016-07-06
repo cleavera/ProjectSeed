@@ -13,11 +13,31 @@ export class Context implements IRoutingContext {
 
     restService: IRest;
 
-    constructor(id: string, resourceName: string, Model?: typeof DefaultModel, restService?: IRest, parent?: IRoutingContext) {
+    constructor(resourceName: string, id?: string, Model?: typeof DefaultModel, restService?: IRest, parent?: IRoutingContext) {
         this.id = id;
         this.resourceName = resourceName;
         this.Model = Model;
         this.restService = restService;
         this.parent = parent;
+    }
+
+    generateUrl(): string {
+        let recursiveSearch: (context: IRoutingContext) => string = function (context: IRoutingContext): string {
+            let url: string = '';
+
+            if (context.parent) {
+                url = recursiveSearch(context.parent);
+            }
+
+            url += '/' + context.resourceName;
+
+            if (context.id) {
+                url += '/' + context.id;
+            }
+
+            return url;
+        };
+
+        return recursiveSearch(this);
     }
 }

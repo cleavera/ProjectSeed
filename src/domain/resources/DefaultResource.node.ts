@@ -33,7 +33,7 @@ export class DefaultResource implements IRest {
         let data: any;
 
         if (this._parentContext) {
-            data = Association.filter(new Context(id, this._resourceName), this._parentContext, this._data);
+            data = Association.filter(new Context(this._resourceName, id), this._parentContext, this._data);
         } else {
             data = this._data;
         }
@@ -42,7 +42,7 @@ export class DefaultResource implements IRest {
             if (data[id]) {
                 return data[id];
             } else {
-                throw new ResourceNotFoundRoutingError(id, this._resourceName);
+                throw new ResourceNotFoundRoutingError(this._resourceName, id);
             }
         } else {
             return data;
@@ -56,7 +56,7 @@ export class DefaultResource implements IRest {
         this._resource.save(this._data);
 
         if (this._parentContext) {
-            Association.addAssociation(new Context(id, this._resourceName), this._parentContext);
+            Association.addAssociation(new Context(this._resourceName, id), this._parentContext);
         }
 
         return id;
@@ -67,7 +67,7 @@ export class DefaultResource implements IRest {
         this._resource.save(this._data);
 
         if (this._parentContext) {
-            Association.addAssociation(new Context(id, this._resourceName), this._parentContext);
+            Association.addAssociation(new Context(this._resourceName, id), this._parentContext);
         }
 
         return this._data[id];
@@ -77,7 +77,7 @@ export class DefaultResource implements IRest {
         delete this._data[id];
         this._resource.save(this._data);
 
-        Association.removeAssociation(new Context(id, this._resourceName));
+        Association.removeAssociation(new Context(this._resourceName, id));
 
         return {};
     }

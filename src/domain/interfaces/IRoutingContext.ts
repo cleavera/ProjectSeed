@@ -2,13 +2,15 @@ import {IRest} from './IRest';
 import {DefaultModel} from '../models/DefaultModel.node';
 
 export interface IRoutingContext {
+    resourceName: string;
+
+    id?: string;
+
     Model?: typeof DefaultModel;
 
-    id: string;
-
-    resourceName: string;
+    parent?: IRoutingContext;
 
     restService?: IRest;
 
-    parent?: IRoutingContext;
+    generateUrl(): string;
 }
