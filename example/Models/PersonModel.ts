@@ -1,16 +1,6 @@
-import {Decimal} from '../../src/annotations/Decimal';
 import {DefaultModel} from '../../src/classes/DefaultModel';
-import {Description} from '../../src/annotations/Description';
-import {GENDER} from '../../src/constants/Gender';
-import {Guid} from '../../src/annotations/Guid';
-import {Integer} from '../../src/annotations/Integer';
-import {Map} from '../../src/annotations/Map';
-import {MaxLength} from '../../src/annotations/MaxLength';
-import {NumberRange} from '../../src/annotations/NumberRange';
-import {Options} from '../../src/annotations/Options';
-import {PrimaryKey} from '../../src/annotations/PrimaryKey';
-import {Required} from '../../src/annotations/Required';
-import {String} from '../../src/annotations/String';
+import {GENDER} from '../Constants/Gender';
+import {Decimal, Description, Guid, Integer, Map, MaxLength, NumberRange, Options, PrimaryKey, Required, String} from '../../src/packages/Annotations';
 
 @Description('People')
 @Map('Person', {

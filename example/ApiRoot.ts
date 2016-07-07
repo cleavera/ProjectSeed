@@ -1,4 +1,4 @@
-import {Child} from '../src/annotations/Child';
+import {Child} from '../src/packages/Annotations';
 import {PersonModel} from './Models/PersonModel';
 import {UserModel} from './Models/UserModel';
 
