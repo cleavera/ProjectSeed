@@ -1,5 +1,5 @@
 import {Decimal} from '../../src/annotations/Decimal';
-import {DefaultModel} from '../../src/models/DefaultModel';
+import {DefaultModel} from '../../src/classes/DefaultModel';
 import {Description} from '../../src/annotations/Description';
 import {GENDER} from '../../src/constants/Gender';
 import {Guid} from '../../src/annotations/Guid';

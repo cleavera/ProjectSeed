@@ -8,7 +8,7 @@ import {IRouter} from '../interfaces/IRouter';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {Context} from './Context';
 import {DatabaseError} from '../errors/DatabaseError';
-import {DefaultModel} from '../models/DefaultModel';
+import {DefaultModel} from './DefaultModel';
 import {InvalidJsonError} from '../errors/InvalidJsonError';
 import {Json} from './Json';
 import {MethodNotImplementedError} from '../errors/MethodNotImplementedError';

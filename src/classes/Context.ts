@@ -1,6 +1,6 @@
 import {IRest} from '../interfaces/IRest';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {DefaultModel} from '../models/DefaultModel';
+import {DefaultModel} from './DefaultModel';
 
 export class Context implements IRoutingContext {
     id: string;

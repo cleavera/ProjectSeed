@@ -1,4 +1,4 @@
-import {DefaultModel} from '../models/DefaultModel';
+import {DefaultModel} from '../classes/DefaultModel';
 
 export interface IRoot {
     port: number;

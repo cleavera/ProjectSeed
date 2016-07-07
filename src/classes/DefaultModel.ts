@@ -1,8 +1,8 @@
 import {IModel} from '../interfaces/IModel';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ISerialisable} from '../interfaces/ISerialisable';
-import {DefaultResource} from '../resources/DefaultResource';
-import {DefaultRestService} from '../restServices/DefaultRestService';
+import {DefaultResource} from './DefaultResource';
+import {DefaultRestService} from './DefaultRestService';
 import {DecorateField} from '../services/DecorateField';
 
 export class DefaultModel implements IModel, ISerialisable {

@@ -1,6 +1,6 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {DefaultModel} from '../models/DefaultModel';
+import {DefaultModel} from '../classes/DefaultModel';
 import {DecorateField} from '../services/DecorateField';
 
 export function MaxLength(length: number): PropertyDecorator {
