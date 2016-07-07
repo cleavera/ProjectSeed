@@ -1,5 +1,5 @@
 {
-  "name": "node-domain-modelling",
+  "name": "node-domain-modeller",
   "version": "0.1.0",
   "description": "A domain modelling library for easily creating domains and persistance",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cleavera/ProjectSeed.git"
+    "url": "https://github.com/cleavera/node-domain-modeller.git"
   },
   "author": "Anthony Cleaver",
   "license": "ISC",
