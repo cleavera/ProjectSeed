@@ -1,5 +1,5 @@
 /// <reference path="../typings/main.d.ts" />
-import {Server} from '../src/domain/classes/Server.node';
+import {Server} from '../src/classes/Server.node';
 import {ApiRoot} from './ApiRoot';
 
 /* tslint:disable:no-unused-expression */

@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/main.d.ts" />
 import {Url} from './Url.node';
 import {IRequest} from '../interfaces/IRequest';
 import {IUrl} from '../interfaces/IUrl';
