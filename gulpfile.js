@@ -5,7 +5,7 @@ gulp.task('~compile:node', function() {
     return gulp.src('src/**/*.node.ts')
         .pipe(ts({
             module: "commonjs",
-            target: "es5",
+            target: "ES6",
             experimentalDecorators: true
         }))
         .pipe(gulp.dest('build'));
