@@ -1,5 +1,4 @@
 #TODO
-* Separate out the domain modelling logic into a library
 * Authentication
 * Role based authentication (can forbid from specific resources)
 * Pagination
