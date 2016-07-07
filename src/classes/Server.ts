@@ -1,3 +1,5 @@
+/// <reference path="../../typings/main.d.ts" />
+
 import * as http from 'http';
 import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';

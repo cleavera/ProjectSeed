@@ -1,4 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
 import {Server} from '../src/packages/Classes';
 import {ApiRoot} from './ApiRoot';
 
