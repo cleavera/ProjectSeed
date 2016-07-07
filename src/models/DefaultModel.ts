@@ -1,9 +1,9 @@
 import {IModel} from '../interfaces/IModel';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
 import {ISerialisable} from '../interfaces/ISerialisable';
-import {DefaultResource} from '../resources/DefaultResource.node';
-import {DefaultRestService} from '../restServices/DefaultRestService.node';
-import {DecorateField} from '../services/DecorateField.node';
+import {DefaultResource} from '../resources/DefaultResource';
+import {DefaultRestService} from '../restServices/DefaultRestService';
+import {DecorateField} from '../services/DecorateField';
 
 export class DefaultModel implements IModel, ISerialisable {
     static resource: typeof DefaultResource = DefaultResource;

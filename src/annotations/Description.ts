@@ -1,4 +1,4 @@
-import {DecorateField} from '../services/DecorateField.node';
+import {DecorateField} from '../services/DecorateField';
 
 export function Description(description: string): any {
     'use strict';

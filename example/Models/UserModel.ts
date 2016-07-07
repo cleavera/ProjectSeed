@@ -1,12 +1,12 @@
-import {Child} from '../../src/annotations/Child.node';
-import {DefaultModel} from '../../src/models/DefaultModel.node';
-import {DefaultResource} from '../../src/resources/DefaultResource.node';
-import {Guid} from '../../src/annotations/Guid.node';
-import {Map} from '../../src/annotations/Map.node';
+import {Child} from '../../src/annotations/Child';
+import {DefaultModel} from '../../src/models/DefaultModel';
+import {DefaultResource} from '../../src/resources/DefaultResource';
+import {Guid} from '../../src/annotations/Guid';
+import {Map} from '../../src/annotations/Map';
 import {PersonModel} from './PersonModel';
-import {PrimaryKey} from '../../src/annotations/PrimaryKey.node';
-import {Required} from '../../src/annotations/Required.node';
-import {String} from '../../src/annotations/String.node';
+import {PrimaryKey} from '../../src/annotations/PrimaryKey';
+import {Required} from '../../src/annotations/Required';
+import {String} from '../../src/annotations/String';
 import {UserResource} from '../Resources/UserResource';
 
 @Child(PersonModel, 'person')

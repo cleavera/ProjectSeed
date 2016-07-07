@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import {IResource} from '../interfaces/IResource';
-import {DatabaseError} from '../errors/DatabaseError.node';
+import {DatabaseError} from '../errors/DatabaseError';
 
 export class Json implements IResource {
     private _path: string;

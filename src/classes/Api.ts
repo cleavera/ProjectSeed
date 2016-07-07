@@ -6,15 +6,15 @@ import {IResponse} from '../interfaces/IResponse';
 import {IRest} from '../interfaces/IRest';
 import {IRouter} from '../interfaces/IRouter';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {Context} from './Context.node.ts';
-import {DatabaseError} from '../errors/DatabaseError.node';
-import {DefaultModel} from '../models/DefaultModel.node';
-import {InvalidJsonError} from '../errors/InvalidJsonError.node';
-import {Json} from './Json.node.ts';
-import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
-import {RequestNotJSON} from '../errors/RequestNotJSON.node';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
-import {Transformer} from '../services/Transformer.node';
+import {Context} from './Context';
+import {DatabaseError} from '../errors/DatabaseError';
+import {DefaultModel} from '../models/DefaultModel';
+import {InvalidJsonError} from '../errors/InvalidJsonError';
+import {Json} from './Json';
+import {MethodNotImplementedError} from '../errors/MethodNotImplementedError';
+import {RequestNotJSON} from '../errors/RequestNotJSON';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError';
+import {Transformer} from '../services/Transformer';
 
 export class Api implements IRouter {
     private _modelList: any;

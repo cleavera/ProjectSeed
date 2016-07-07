@@ -1,4 +1,4 @@
-import {Child} from '../src/annotations/Child.node';
+import {Child} from '../src/annotations/Child';
 import {PersonModel} from './Models/PersonModel';
 import {UserModel} from './Models/UserModel';
 

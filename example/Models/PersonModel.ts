@@ -1,16 +1,16 @@
-import {Decimal} from '../../src/annotations/Decimal.node';
-import {DefaultModel} from '../../src/models/DefaultModel.node';
-import {Description} from '../../src/annotations/Description.node';
-import {GENDER} from '../../src/constants/Gender.node';
-import {Guid} from '../../src/annotations/Guid.node';
-import {Integer} from '../../src/annotations/Integer.node';
-import {Map} from '../../src/annotations/Map.node';
-import {MaxLength} from '../../src/annotations/MaxLength.node';
-import {NumberRange} from '../../src/annotations/NumberRange.node';
-import {Options} from '../../src/annotations/Options.node';
-import {PrimaryKey} from '../../src/annotations/PrimaryKey.node';
-import {Required} from '../../src/annotations/Required.node';
-import {String} from '../../src/annotations/String.node';
+import {Decimal} from '../../src/annotations/Decimal';
+import {DefaultModel} from '../../src/models/DefaultModel';
+import {Description} from '../../src/annotations/Description';
+import {GENDER} from '../../src/constants/Gender';
+import {Guid} from '../../src/annotations/Guid';
+import {Integer} from '../../src/annotations/Integer';
+import {Map} from '../../src/annotations/Map';
+import {MaxLength} from '../../src/annotations/MaxLength';
+import {NumberRange} from '../../src/annotations/NumberRange';
+import {Options} from '../../src/annotations/Options';
+import {PrimaryKey} from '../../src/annotations/PrimaryKey';
+import {Required} from '../../src/annotations/Required';
+import {String} from '../../src/annotations/String';
 
 @Description('People')
 @Map('Person', {

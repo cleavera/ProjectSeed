@@ -3,13 +3,13 @@ import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
 import {IRouter} from '../interfaces/IRouter';
 import {IServerError} from '../interfaces/IServerError';
-import {Api} from './Api.node';
-import {Log} from '../services/Log.node';
-import {Request} from './Request.node';
-import {Response} from './Response.node';
-import {DatabaseError} from '../errors/DatabaseError.node';
-import {InvalidJsonError} from '../errors/InvalidJsonError.node';
-import {InternalServerError} from '../errors/InternalServerError.node';
+import {Api} from './Api';
+import {Log} from '../services/Log';
+import {Request} from './Request';
+import {Response} from './Response';
+import {DatabaseError} from '../errors/DatabaseError';
+import {InvalidJsonError} from '../errors/InvalidJsonError';
+import {InternalServerError} from '../errors/InternalServerError';
 
 export class Server implements IRouter {
     private _api: IRouter;

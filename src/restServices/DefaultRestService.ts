@@ -3,12 +3,12 @@ import {IRest} from '../interfaces/IRest';
 import {IRequest} from '../interfaces/IRequest';
 import {IResponse} from '../interfaces/IResponse';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {Context} from '../classes/Context.node';
-import {DefaultModel} from '../models/DefaultModel.node';
-import {MethodNotImplementedError} from '../errors/MethodNotImplementedError.node';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
-import {ResourceValidationError} from '../errors/ResourceValidationError.node';
-import {Transformer} from '../services/Transformer.node';
+import {Context} from '../classes/Context';
+import {DefaultModel} from '../models/DefaultModel';
+import {MethodNotImplementedError} from '../errors/MethodNotImplementedError';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError';
+import {ResourceValidationError} from '../errors/ResourceValidationError';
+import {Transformer} from '../services/Transformer';
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;

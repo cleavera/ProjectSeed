@@ -1,11 +1,11 @@
 import {IRest} from '../interfaces/IRest';
 import {IResource} from '../interfaces/IResource';
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {Association} from '../classes/Association.node';
-import {Context} from '../classes/Context.node';
-import {Guid} from '../services/Guid.node';
-import {Json} from '../classes/Json.node';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError.node';
+import {Association} from '../classes/Association';
+import {Context} from '../classes/Context';
+import {Guid} from '../services/Guid';
+import {Json} from '../classes/Json';
+import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError';
 
 export class DefaultResource implements IRest {
     private _data: any;

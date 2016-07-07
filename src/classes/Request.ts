@@ -1,8 +1,8 @@
-import {Url} from './Url.node';
+import {Url} from './Url';
 import {IRequest} from '../interfaces/IRequest';
 import {IUrl} from '../interfaces/IUrl';
 import * as http from 'http';
-import {InvalidJsonError} from '../errors/InvalidJsonError.node';
+import {InvalidJsonError} from '../errors/InvalidJsonError';
 
 export class Request implements IRequest {
     url: IUrl;

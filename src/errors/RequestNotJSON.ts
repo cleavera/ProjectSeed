@@ -1,4 +1,4 @@
-import {ServerError} from './ServerError.node';
+import {ServerError} from './ServerError';
 
 export class RequestNotJSON extends ServerError {
     name: string = 'RequestNotJSON';

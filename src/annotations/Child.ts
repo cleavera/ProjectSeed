@@ -1,6 +1,6 @@
 import {IRoutingContext} from '../interfaces/IRoutingContext';
-import {Context} from '../classes/Context.node';
-import {noop} from '../services/noop.node';
+import {Context} from '../classes/Context';
+import {noop} from '../services/noop';
 
 export function Child(childModel: any, alias: string): ClassDecorator {
     'use strict';

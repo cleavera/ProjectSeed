@@ -1,4 +1,4 @@
-import {ServerError} from './ServerError.node';
+import {ServerError} from './ServerError';
 
 export class ResourceNotFoundRoutingError extends ServerError {
     name: string = 'ResourceNotFoundRoutingError';

@@ -1,7 +1,7 @@
 import {IModel} from '../interfaces/IModel';
 import {IValidator} from '../interfaces/IValidator';
-import {DefaultModel} from '../models/DefaultModel.node';
-import {DecorateField} from '../services/DecorateField.node';
+import {DefaultModel} from '../models/DefaultModel';
+import {DecorateField} from '../services/DecorateField';
 
 export function Decimal(decimalPlaces?: number): PropertyDecorator {
     'use strict';

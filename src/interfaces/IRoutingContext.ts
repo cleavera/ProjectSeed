@@ -1,5 +1,5 @@
 import {IRest} from './IRest';
-import {DefaultModel} from '../models/DefaultModel.node';
+import {DefaultModel} from '../models/DefaultModel';
 
 export interface IRoutingContext {
     resourceName: string;

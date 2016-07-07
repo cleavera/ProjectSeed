@@ -1,4 +1,4 @@
-import {DefaultResource} from '../../src/resources/DefaultResource.node';
+import {DefaultResource} from '../../src/resources/DefaultResource';
 
 export class UserResource extends DefaultResource {
     private static _stripPasswordField(item: any): void {
