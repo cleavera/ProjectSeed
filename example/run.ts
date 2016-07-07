@@ -1,6 +1,6 @@
 /// <reference path="../typings/main.d.ts" />
-import {Server} from './domain/classes/Server.node';
-import {ApiRoot} from './ApiRoot.node';
+import {Server} from '../src/domain/classes/Server.node';
+import {ApiRoot} from './ApiRoot';
 
 /* tslint:disable:no-unused-expression */
 new Server(ApiRoot);

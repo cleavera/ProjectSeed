@@ -1,6 +1,6 @@
-import {Child} from './domain/annotations/Child.node';
-import {PersonModel} from './domain/models/PersonModel.node';
-import {UserModel} from './domain/models/UserModel.node';
+import {Child} from '../src/domain/annotations/Child.node';
+import {PersonModel} from './Models/PersonModel';
+import {UserModel} from './Models/UserModel';
 
 @Child(PersonModel, 'person')
 @Child(UserModel, 'user')
