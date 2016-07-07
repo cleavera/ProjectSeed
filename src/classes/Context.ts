@@ -1,5 +1,4 @@
-import {IRest} from '../interfaces/IRest';
-import {IRoutingContext} from '../interfaces/IRoutingContext';
+import {IRest, IRoutingContext} from '../packages/Interfaces';
 import {DefaultModel} from './DefaultModel';
 
 export class Context implements IRoutingContext {

@@ -1,4 +1,4 @@
-import {IServerError} from '../interfaces/IServerError';
+import {IServerError} from '../packages/Interfaces';
 
 export class ServerError implements IServerError {
     stack: string;

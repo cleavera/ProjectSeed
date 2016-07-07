@@ -1,4 +1,4 @@
-import {IData} from '../interfaces/IData';
+import {IData} from '../packages/Interfaces';
 
 export class Transformer {
     static to(data: IData): any {

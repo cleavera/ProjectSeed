@@ -1,7 +1,6 @@
-import {IModel} from '../interfaces/IModel';
-import {IValidator} from '../interfaces/IValidator';
-import {DefaultModel} from '../classes/DefaultModel';
-import {DecorateField} from '../services/DecorateField';
+import {IModel, IValidator} from '../packages/Interfaces';
+import {DefaultModel} from '../packages/Classes';
+import {DecorateField} from '../packages/Helpers';
 import * as uuid from 'node-uuid';
 
 export function Guid(target: IModel, key: string): void {

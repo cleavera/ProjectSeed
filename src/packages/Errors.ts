@@ -5,6 +5,7 @@ import {MethodNotImplementedError} from '../errors/MethodNotImplementedError';
 import {RequestNotJSON} from '../errors/RequestNotJSON';
 import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError';
 import {ResourceValidationError} from '../errors/ResourceValidationError';
+import {ServerError} from '../errors/ServerError';
 
 export {
     DatabaseError,
@@ -13,5 +14,6 @@ export {
     MethodNotImplementedError,
     RequestNotJSON,
     ResourceNotFoundRoutingError,
-    ResourceValidationError
+    ResourceValidationError,
+    ServerError
 }

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as http from 'http';
-import {IResponse} from '../interfaces/IResponse';
+import {IResponse} from '../packages/Interfaces';
 
 export class Response implements IResponse {
     private _baseResponse: http.ServerResponse;

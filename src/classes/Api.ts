@@ -1,20 +1,10 @@
 import * as fs from 'fs';
-import {IIteratorResult} from '../interfaces/IIteratorResult';
-import {IModel} from '../interfaces/IModel';
-import {IRequest} from '../interfaces/IRequest';
-import {IResponse} from '../interfaces/IResponse';
-import {IRest} from '../interfaces/IRest';
-import {IRouter} from '../interfaces/IRouter';
-import {IRoutingContext} from '../interfaces/IRoutingContext';
+import {IIteratorResult, IModel, IRequest, IResponse, IRest, IRouter, IRoutingContext} from '../packages/Interfaces';
+import {DatabaseError, InvalidJsonError, MethodNotImplementedError, RequestNotJSON, ResourceNotFoundRoutingError} from '../packages/Errors';
+import {Transformer} from '../packages/Helpers';
 import {Context} from './Context';
-import {DatabaseError} from '../errors/DatabaseError';
 import {DefaultModel} from './DefaultModel';
-import {InvalidJsonError} from '../errors/InvalidJsonError';
 import {Json} from './Json';
-import {MethodNotImplementedError} from '../errors/MethodNotImplementedError';
-import {RequestNotJSON} from '../errors/RequestNotJSON';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError';
-import {Transformer} from '../services/Transformer';
 
 export class Api implements IRouter {
     private _modelList: any;

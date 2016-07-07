@@ -1,6 +1,6 @@
-import {IRoutingContext} from '../interfaces/IRoutingContext';
+import {IRoutingContext} from '../packages/Interfaces';
+import {ServerError} from '../packages/Errors';
 import {Json} from './Json';
-import {ServerError} from '../errors/ServerError';
 
 interface IAssociation {
     parent: string;

@@ -1,5 +1,4 @@
-import {IUrl} from '../interfaces/IUrl';
-import {IIteratorResult} from '../interfaces/IIteratorResult';
+import {IIteratorResult, IUrl} from '../packages/Interfaces';
 
 export class Url implements IUrl {
     url: string;

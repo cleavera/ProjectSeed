@@ -1,17 +1,12 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import * as http from 'http';
-import {IRequest} from '../interfaces/IRequest';
-import {IResponse} from '../interfaces/IResponse';
-import {IRouter} from '../interfaces/IRouter';
-import {IServerError} from '../interfaces/IServerError';
+import {IRequest, IResponse, IRouter, IServerError} from '../packages/Interfaces';
+import {DatabaseError, InvalidJsonError, InternalServerError} from '../packages/Errors';
+import {Log} from '../packages/Helpers';
 import {Api} from './Api';
-import {Log} from '../services/Log';
 import {Request} from './Request';
 import {Response} from './Response';
-import {DatabaseError} from '../errors/DatabaseError';
-import {InvalidJsonError} from '../errors/InvalidJsonError';
-import {InternalServerError} from '../errors/InternalServerError';
 
 export class Server implements IRouter {
     private _api: IRouter;

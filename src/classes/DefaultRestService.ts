@@ -1,14 +1,8 @@
-import {IModel} from '../interfaces/IModel';
-import {IRest} from '../interfaces/IRest';
-import {IRequest} from '../interfaces/IRequest';
-import {IResponse} from '../interfaces/IResponse';
-import {IRoutingContext} from '../interfaces/IRoutingContext';
+import {IModel, IRequest, IResponse, IRest, IRoutingContext} from '../packages/Interfaces';
+import {MethodNotImplementedError, ResourceNotFoundRoutingError, ResourceValidationError} from '../packages/Errors';
+import {Transformer} from '../packages/Helpers';
 import {Context} from './Context';
 import {DefaultModel} from './DefaultModel';
-import {MethodNotImplementedError} from '../errors/MethodNotImplementedError';
-import {ResourceNotFoundRoutingError} from '../errors/ResourceNotFoundRoutingError';
-import {ResourceValidationError} from '../errors/ResourceValidationError';
-import {Transformer} from '../services/Transformer';
 
 export class DefaultRestService implements IRest {
     private _request: IRequest;
