@@ -1,6 +1,6 @@
-import {DefaultModel} from '../../src/classes/DefaultModel';
-import {GENDER} from '../Constants/Gender';
+import {DefaultModel} from '../../src/packages/Classes';
 import {Decimal, Description, Guid, Integer, Map, MaxLength, NumberRange, Options, PrimaryKey, Required, String} from '../../src/packages/Annotations';
+import {GENDER} from '../Constants/Gender';
 
 @Description('People')
 @Map('Person', {

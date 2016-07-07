@@ -1,8 +1,7 @@
-import {DefaultModel} from '../../src/classes/DefaultModel';
-import {DefaultResource} from '../../src/classes/DefaultResource';
+import {DefaultModel, DefaultResource} from '../../src/packages/Classes';
+import {Child, Guid, Map, PrimaryKey, Required, String} from '../../src/packages/Annotations';
 import {UserResource} from '../Resources/UserResource';
 import {PersonModel} from './PersonModel';
-import {Child, Guid, Map, PrimaryKey, Required, String} from '../../src/packages/Annotations';
 
 @Child(PersonModel, 'person')
 @Map('User', {

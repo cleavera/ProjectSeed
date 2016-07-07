@@ -1,4 +1,4 @@
-import {DefaultResource} from '../../src/classes/DefaultResource';
+import {DefaultResource} from '../../src/packages/Classes';
 
 export class UserResource extends DefaultResource {
     private static _stripPasswordField(item: any): void {
