@@ -43,7 +43,7 @@ export class DefaultRestService implements IRest {
         response.addHeader('Allow', allow.join(', '));
     }
 
-    constructor(request: IRequest, response: IResponse, context: IRoutingContext) {
+    constructor(request: IRequest, response: IResponse, context: IRoutingContext, Root: any) {
         this._request = request;
         this._response = response;
         this._Model = context.Model;
@@ -51,7 +51,7 @@ export class DefaultRestService implements IRest {
         this._context = context;
 
         try {
-            this._resource = new this._Model.resource(this._resourceName, context.parent);
+            this._resource = new this._Model.resource(this._resourceName, Root, context.parent);
         } catch (e) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
         }

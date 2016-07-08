@@ -7,8 +7,8 @@ export class UserResource extends DefaultResource {
         }
     }
 
-    constructor() {
-        super('User');
+    constructor(_: any, Root: any) {
+        super('User', Root);
     }
 
     get(id?: string): any {

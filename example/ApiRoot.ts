@@ -7,6 +7,8 @@ import {UserModel} from './Models/UserModel';
 export class ApiRoot {
     static port: number = 1337;
 
+    static dataLocation: string = './data';
+
     description: string = 'An example api root';
 
     name: string = 'MyTestRoot';

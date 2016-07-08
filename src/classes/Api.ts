@@ -33,8 +33,8 @@ export class Api implements IRouter {
         recursiveSearch(Root);
 
         tables.forEach(table => {
-            if (!Json.tableExists('./data/' + table + '.json')) {
-                Json.create('./data/' + table + '.json');
+            if (!Json.tableExists(Root.dataLocation + '/' + table + '.json')) {
+                Json.create(Root.dataLocation + '/' + table + '.json');
             }
         });
     }
@@ -90,15 +90,15 @@ export class Api implements IRouter {
     }
 
     constructor(Root: any) {
-        fs.mkdir('./data/', (err) => {
+        fs.mkdir(Root.dataLocation + '/', (err) => {
             if (err && err.code !== 'EEXIST') {
-                throw new DatabaseError('', 'Error creating directory: ./data/', err);
+                throw new DatabaseError('', 'Error creating directory: ' + Root.dataLocation + '/', err);
             }
         });
 
-        fs.mkdir('./data/private/', (err) => {
+        fs.mkdir(Root.dataLocation + '/private/', (err) => {
             if (err && err.code !== 'EEXIST') {
-                throw new DatabaseError('', 'Error creating directory: ./data/private/', err);
+                throw new DatabaseError('', 'Error creating directory: ' + Root.dataLocation + '/private/', err);
             }
         });
 
@@ -107,8 +107,8 @@ export class Api implements IRouter {
 
         Api.createTables(Root);
 
-        if (!Json.tableExists('./data/private/association.json')) {
-            Json.create('./data/private/association.json');
+        if (!Json.tableExists(Root.dataLocation + '/private/association.json')) {
+            Json.create(Root.dataLocation + '/private/association.json');
         }
     }
 
@@ -187,7 +187,7 @@ export class Api implements IRouter {
             let restService: IRest;
 
             try {
-                restService = new Model.restService(request, response, context);
+                restService = new Model.restService(request, response, context, this._Root);
             } catch (e) {
                 throw new ResourceNotFoundRoutingError(request.url.toString(), resourceName);
             }

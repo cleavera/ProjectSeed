@@ -14,12 +14,12 @@ export class DefaultResource implements IRest {
 
     private _parentContext: IRoutingContext;
 
-    constructor(resourceName: string, parentContext?: IRoutingContext) {
+    constructor(resourceName: string, Root: any, parentContext?: IRoutingContext) {
         this._resourceName = resourceName;
         this._parentContext = parentContext;
 
         try {
-            this._resource = new Json('./data/' + resourceName + '.json');
+            this._resource = new Json(Root.dataLocation + '/' + resourceName + '.json');
         } catch (e) {
             throw new ResourceNotFoundRoutingError(resourceName, resourceName);
         }
