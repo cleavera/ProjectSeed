@@ -7,3 +7,4 @@
 * Remove only the association between two records without removing the record.
 * Unit test
 * Broadcast domain events
+* CORs support
