@@ -2,6 +2,7 @@
   "name": "node-typescript-domain-modeller",
   "version": "0.1.0",
   "description": "A domain modelling library for easily creating domains and persistance, written in typescript",
+  "main": "src/packages",
   "scripts": {
     "runExample": "ts-node example/run.ts",
     "lint": "tslint src/**/*.ts || exit 0",
