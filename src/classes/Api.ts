@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import {IIteratorResult, IModel, IRequest, IResponse, IRest, IRouter, IRoutingContext} from '../packages/Interfaces';
-import {DatabaseError, InvalidJsonError, MethodNotImplementedError, RequestNotJSON, ResourceNotFoundRoutingError} from '../packages/Errors';
+import {IAuthoriser, IIteratorResult, IModel, IRequest, IResponse, IRest, IRouter, IRoutingContext} from '../packages/Interfaces';
+import {AuthorisationError, DatabaseError, InvalidJsonError, MethodNotImplementedError, RequestNotJSON, ResourceNotFoundRoutingError} from '../packages/Errors';
 import {Transformer} from '../packages/Helpers';
 import {Context} from './Context';
 import {DefaultModel} from './DefaultModel';
@@ -10,6 +10,8 @@ export class Api implements IRouter {
     private _modelList: any;
 
     private _Root: any;
+
+    private _Auth: IAuthoriser;
 
     private static createTables(Root: any): void {
         let tables: string[] = [];
@@ -104,6 +106,7 @@ export class Api implements IRouter {
 
         this._modelList = Root._children;
         this._Root = Root;
+        this._Auth = new Root.authoriser();
 
         Api.createTables(Root);
 
@@ -115,6 +118,10 @@ export class Api implements IRouter {
     route(request: IRequest, response: IResponse): void {
         if (!request.isJSON) {
             throw new RequestNotJSON();
+        }
+
+        if (this._Auth && !this._Auth.authorise(request)) {
+            throw new AuthorisationError();
         }
 
         let context: IRoutingContext = this.getContext(request, response);

@@ -1,3 +1,4 @@
+import {IAuthoriser} from '../interfaces/IAuthoriser';
 import {IData} from '../interfaces/IData';
 import {IIteratorResult} from '../interfaces/IIteratorResult';
 import {IModel} from '../interfaces/IModel';
@@ -14,6 +15,7 @@ import {IUrl} from '../interfaces/IUrl';
 import {IValidator} from '../interfaces/IValidator';
 
 export {
+    IAuthoriser,
     IData,
     IIteratorResult,
     IModel,

@@ -1,3 +1,4 @@
+import {AuthorisationError} from '../errors/AuthorisationError';
 import {DatabaseError} from '../errors/DatabaseError';
 import {InternalServerError} from '../errors/InternalServerError';
 import {InvalidJsonError} from '../errors/InvalidJsonError';
@@ -8,6 +9,7 @@ import {ResourceValidationError} from '../errors/ResourceValidationError';
 import {ServerError} from '../errors/ServerError';
 
 export {
+    AuthorisationError,
     DatabaseError,
     InternalServerError,
     InvalidJsonError,

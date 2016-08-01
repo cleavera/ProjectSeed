@@ -1,5 +1,4 @@
 #TODO
-* Authentication
 * Role based authentication (can forbid from specific resources)
 * Pagination
 * Child model limits (e.g. max 5)

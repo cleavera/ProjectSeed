@@ -1,6 +1,8 @@
 import {IUrl} from './IUrl';
 
 export interface IRequest {
+    headers: any;
+
     url: IUrl;
 
     body: any;
