@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import {IAuthoriser, IIteratorResult, IModel, IRequest, IResponse, IRest, IRouter, IRoutingContext} from '../packages/Interfaces';
-import {AuthorisationError, DatabaseError, InvalidJsonError, MethodNotImplementedError, RequestNotJSON, ResourceNotFoundRoutingError} from '../packages/Errors';
+import {AuthorisationError, DatabaseError, InvalidJsonError, MethodNotImplementedError, RequestNotJSONError, ResourceNotFoundRoutingError} from '../packages/Errors';
 import {Transformer} from '../packages/Helpers';
 import {Context} from './Context';
 import {DefaultModel} from './DefaultModel';
@@ -117,7 +117,7 @@ export class Api implements IRouter {
 
     route(request: IRequest, response: IResponse): void {
         if (!request.isJSON) {
-            throw new RequestNotJSON();
+            throw new RequestNotJSONError();
         }
 
         if (this._Auth && !this._Auth.authorise(request)) {
