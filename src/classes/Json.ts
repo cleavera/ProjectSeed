@@ -14,8 +14,8 @@ export class Json implements IResource {
         }
     }
 
-    static create(path: string): void {
-        fs.writeFile(path, '{}', (err) => {
+    static create(path: string, defaultContent: string = '{}'): void {
+        fs.writeFile(path, defaultContent, (err) => {
             throw new DatabaseError(path, 'Error creating table', err);
         });
     }

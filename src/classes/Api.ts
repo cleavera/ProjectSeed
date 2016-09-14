@@ -114,7 +114,7 @@ export class Api implements IRouter {
         Api.createTables(Root);
 
         if (!Json.tableExists(Root.dataLocation + '/private/association.json')) {
-            Json.create(Root.dataLocation + '/private/association.json');
+            Json.create(Root.dataLocation + '/private/association.json', '[]');
         }
     }
 
