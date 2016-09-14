@@ -106,7 +106,10 @@ export class Api implements IRouter {
 
         this._modelList = Root._children;
         this._Root = Root;
-        this._Auth = new Root.authoriser();
+
+        if(Root.authoriser) {
+            this._Auth = new Root.authoriser();
+        }
 
         Api.createTables(Root);
 
