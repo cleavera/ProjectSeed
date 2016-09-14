@@ -10,12 +10,12 @@ interface IAssociation {
 }
 
 export class Association {
-    static removeAssociation(context: IRoutingContext, parentContext?: IRoutingContext): void {
+    static removeAssociation(context: IRoutingContext, Root: any, parentContext?: IRoutingContext): void {
         if (!context && !parentContext) {
             return;
         }
 
-        let associations: IAssociation[] = this._getAssociations();
+        let associations: IAssociation[] = this._getAssociations(Root);
 
         let currentAssociations: IAssociation[] = associations.filter(association => {
             let isCorrectParentContext: boolean = parentContext
@@ -37,11 +37,11 @@ export class Association {
             associations.splice(associations.indexOf(association));
         });
 
-        new Json('./data/private/association.json').save(associations);
+        new Json(Root.dataLocation + '/private/association.json').save(associations);
     }
 
-    static addAssociation(context: IRoutingContext, parentContext: IRoutingContext): void {
-        let associations: IAssociation[] = this._getAssociations();
+    static addAssociation(context: IRoutingContext, parentContext: IRoutingContext, Root: any): void {
+        let associations: IAssociation[] = this._getAssociations(Root);
 
         let currentAssociations: IAssociation[] = associations.filter(association => {
             let isCorrectParentContext: boolean = association.parent === parentContext.resourceName && association.parentId === parentContext.id;
@@ -55,11 +55,11 @@ export class Association {
 
         associations.push({ child: context.resourceName, childId: context.id, parent: parentContext.resourceName, parentId: parentContext.id });
 
-        new Json('./data/private/association.json').save(associations);
+        new Json(Root.dataLocation + '/private/association.json').save(associations);
     }
 
-    static filter(context: IRoutingContext, parentContext: IRoutingContext, data: any): any {
-        let associations: IAssociation[] = this._getAssociations(),
+    static filter(context: IRoutingContext, parentContext: IRoutingContext, data: any, Root: any): any {
+        let associations: IAssociation[] = this._getAssociations(Root),
             ids: string[] = Object.keys(data),
             out: any = {};
 
@@ -74,9 +74,9 @@ export class Association {
         return out;
     }
 
-    private static _getAssociations(): IAssociation[] {
+    private static _getAssociations(Root: any): IAssociation[] {
         try {
-            return new Json('./data/private/association.json').read();
+            return new Json(Root.dataLocation + '/private/association.json').read();
         } catch (e) {
             throw new ServerError();
         }
