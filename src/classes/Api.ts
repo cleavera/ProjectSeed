@@ -41,7 +41,11 @@ export class Api implements IRouter {
         });
     }
 
-    private static appendHeaders(response: IResponse, Model: any): void {
+    private static appendHeaders(response: IResponse, Model: any, Root: any): void {
+        if (Root.cors) {
+            response.addHeader('Access-Control-Allow-Origin', Root.cors === true ? '*' : Root.cors);
+        }
+
         if (Model.description) {
             response.addHeader('description', Model.description);
         }
@@ -132,6 +136,8 @@ export class Api implements IRouter {
         if (!context) {
             let root: any = new this._Root();
 
+            Api.appendHeaders(response, {}, this._Root);
+
             return response.json(Transformer.to({
                 data: root,
                 links: root.generateLinks(),
@@ -139,7 +145,7 @@ export class Api implements IRouter {
             }));
         }
 
-        Api.appendHeaders(response, context.Model);
+        Api.appendHeaders(response, context.Model, this._Root);
 
         if (request.isGet) {
             return Api.get(context.restService, context.id);
