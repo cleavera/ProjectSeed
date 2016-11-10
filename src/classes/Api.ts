@@ -141,7 +141,7 @@ export class Api implements IRouter {
 
             return response.json(Transformer.to({
                 data: root,
-                links: root.generateLinks(),
+                links: this._Root.generateLinks(),
                 resourceName: 'apiInfo'
             }));
         }

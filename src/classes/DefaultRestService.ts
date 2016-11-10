@@ -72,7 +72,7 @@ export class DefaultRestService implements IRest {
             out = Transformer.to({
                 data: model.serialise(),
                 id: id,
-                links: model.generateLinks(this._context),
+                links: this._Model.generateLinks(this._context),
                 resourceName: this._resourceName
             });
 
@@ -88,7 +88,7 @@ export class DefaultRestService implements IRest {
                     out.push(Transformer.to({
                         data: model.serialise(),
                         id: dataId,
-                        links: model.generateLinks(context),
+                        links: this._Model.generateLinks(context),
                         resourceName: this._resourceName
                     }));
                 }
@@ -124,7 +124,7 @@ export class DefaultRestService implements IRest {
         this._response.json(Transformer.to({
             data: model.serialise(),
             id: id,
-            links: model.generateLinks(context),
+            links: this._Model.generateLinks(context),
             resourceName: this._resourceName
         }));
     }
@@ -146,7 +146,7 @@ export class DefaultRestService implements IRest {
         this._response.json(Transformer.to({
             data: model.serialise(),
             id: id,
-            links: model.generateLinks(this._context),
+            links: this._Model.generateLinks(this._context),
             resourceName: this._resourceName
         }));
     }
@@ -165,7 +165,7 @@ export class DefaultRestService implements IRest {
                 throw new ResourceNotFoundRoutingError(this._request.url.toString(), this._resourceName);
             }
 
-            links = this._Model.mapFrom(data, id).generateLinks(this._context);
+            links = this._Model.generateLinks(this._context);
         } else {
             DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
         }

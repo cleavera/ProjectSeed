@@ -71,7 +71,7 @@ export class DefaultModel implements IModel, ISerialisable {
         DecorateField.getterSetter(model, field, null, setter);
     }
 
-    generateLinks(context: IRoutingContext): any {
+    static generateLinks(context: IRoutingContext): any {
         let links: any = {
             self: {
                 href: context.generateUrl()
