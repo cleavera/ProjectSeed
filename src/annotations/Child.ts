@@ -14,13 +14,15 @@ export function Child(childModel: any, alias: string): ClassDecorator {
             model.generateLinks = function(context: IRoutingContext): any {
                 let links: any = oldFunction.apply(this, arguments) || {};
 
-                Object.keys(model._children).forEach(child => {
-                    let childContext: IRoutingContext = new Context(child, null, model._children[child], null, context);
+                if (context.id) {
+                    Object.keys(model._children).forEach(child => {
+                        let childContext: IRoutingContext = new Context(child, null, model._children[child], null, context);
 
-                    links[child] = {
-                        href: childContext.generateUrl()
-                    };
-                });
+                        links[child] = {
+                            href: childContext.generateUrl()
+                        };
+                    });
+                }
 
                 return links;
             };

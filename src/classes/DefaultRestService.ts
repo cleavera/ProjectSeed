@@ -152,7 +152,7 @@ export class DefaultRestService implements IRest {
     }
 
     options(id?: string): void {
-        let links: any;
+        let links: any = this._Model.generateLinks(this._context);
 
         if (id) {
             let data: any;
@@ -164,8 +164,6 @@ export class DefaultRestService implements IRest {
             } catch (e) {
                 throw new ResourceNotFoundRoutingError(this._request.url.toString(), this._resourceName);
             }
-
-            links = this._Model.generateLinks(this._context);
         } else {
             DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
         }
