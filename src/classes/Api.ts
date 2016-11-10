@@ -44,6 +44,7 @@ export class Api implements IRouter {
     private static appendHeaders(response: IResponse, Model: any, Root: any): void {
         if (Root.cors) {
             response.addHeader('Access-Control-Allow-Origin', Root.cors === true ? '*' : Root.cors);
+            response.addHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
         }
 
         if (Model.description) {
