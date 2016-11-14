@@ -8,6 +8,7 @@ import {Map} from '../annotations/Map';
 import {MaxLength} from '../annotations/MaxLength';
 import {NumberRange} from '../annotations/NumberRange';
 import {Options} from '../annotations/Options';
+import {OrderBy} from '../annotations/OrderBy';
 import {PrimaryKey} from '../annotations/PrimaryKey';
 import {Readonly} from '../annotations/Readonly';
 import {Required} from '../annotations/Required';
@@ -24,6 +25,7 @@ export {
     MaxLength,
     NumberRange,
     Options,
+    OrderBy,
     PrimaryKey,
     Readonly,
     Required,
