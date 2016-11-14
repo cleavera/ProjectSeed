@@ -94,6 +94,10 @@ export class DefaultRestService implements IRest {
                 }
             }
 
+            if (this._Model._orderBy) {
+                this._Model._orderBy(out);
+            }
+
             DefaultRestService._appendAllowHeader(this._response, true, true, false, false, true);
         }
 

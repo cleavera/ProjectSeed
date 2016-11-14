@@ -22,6 +22,8 @@ export class DefaultModel implements IModel, ISerialisable {
 
     static deserialise: Function;
 
+    static _orderBy: Function;
+
     _errors: any;
 
     mapTo: Function;

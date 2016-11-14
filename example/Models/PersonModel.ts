@@ -1,12 +1,14 @@
 import {DefaultModel} from '../../src/packages/Classes';
 import {Decimal, Description, Guid, Integer, Map, MaxLength, NumberRange, Options, PrimaryKey, Required, String} from '../../src/packages/Annotations';
 import {GENDER} from '../Constants/Gender';
+import {OrderBy} from "../../src/annotations/OrderBy";
 
 @Description('People')
 @Map('Person', {
     age: 'age',
     name: 'fullName'
 })
+@OrderBy('age')
 export class PersonModel extends DefaultModel {
     @Guid
     @PrimaryKey
