@@ -4,6 +4,7 @@ import {Decimal} from '../annotations/Decimal';
 import {Description} from '../annotations/Description';
 import {Guid} from '../annotations/Guid';
 import {Integer} from '../annotations/Integer';
+import {Label} from '../annotations/Label';
 import {Map} from '../annotations/Map';
 import {MaxLength} from '../annotations/MaxLength';
 import {NumberRange} from '../annotations/NumberRange';
@@ -21,6 +22,7 @@ export {
     Description,
     Guid,
     Integer,
+    Label,
     Map,
     MaxLength,
     NumberRange,

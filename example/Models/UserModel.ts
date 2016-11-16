@@ -1,5 +1,5 @@
 import {DefaultModel, DefaultResource} from '../../src/packages/Classes';
-import {Child, Guid, Map, PrimaryKey, Required, String} from '../../src/packages/Annotations';
+import {Child, Guid, Label, Map, PrimaryKey, Required, String} from '../../src/packages/Annotations';
 import {UserResource} from '../Resources/UserResource';
 import {PersonModel} from './PersonModel';
 
@@ -18,6 +18,7 @@ export class UserModel extends DefaultModel {
 
     @Required
     @String
+    @Label
     username: string;
 
     @Required

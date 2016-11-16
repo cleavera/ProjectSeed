@@ -1,5 +1,5 @@
 import {DefaultModel} from '../../src/packages/Classes';
-import {Decimal, Description, Guid, Integer, Map, MaxLength, NumberRange, Options, OrderBy, PrimaryKey, Required, String} from '../../src/packages/Annotations';
+import {Decimal, Description, Guid, Integer, Label, Map, MaxLength, NumberRange, Options, OrderBy, PrimaryKey, Required, String} from '../../src/packages/Annotations';
 import {GENDER} from '../Constants/Gender';
 
 @Description('People')
@@ -15,6 +15,7 @@ export class PersonModel extends DefaultModel {
 
     @String
     @Required
+    @Label
     @MaxLength(20)
     @Description('The name of the person')
     name: string;
