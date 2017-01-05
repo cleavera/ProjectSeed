@@ -12,7 +12,7 @@ export class ApiRoot {
 
     static authoriser: any = Auth;
 
-    static cors: string|boolean = 'localhost:4200';
+    static cors: string|boolean = 'http://localhost:4200';
 
     description: string = 'An example api root';
 

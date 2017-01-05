@@ -1,5 +1,7 @@
 import {IAuthoriser} from '../interfaces/IAuthoriser';
 import {IData} from '../interfaces/IData';
+import {IEvent} from '../interfaces/IEvent';
+import {IEventManager} from '../interfaces/IEventManager';
 import {IIteratorResult} from '../interfaces/IIteratorResult';
 import {IModel} from '../interfaces/IModel';
 import {IRequest} from '../interfaces/IRequest';
@@ -17,6 +19,8 @@ import {IValidator} from '../interfaces/IValidator';
 export {
     IAuthoriser,
     IData,
+    IEvent,
+    IEventManager,
     IIteratorResult,
     IModel,
     IRequest,

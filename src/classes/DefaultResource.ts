@@ -1,9 +1,12 @@
-import {IRest, IResource, IRoutingContext} from '../packages/Interfaces';
+import {IEventManager, IRest, IResource, IRoutingContext} from '../packages/Interfaces';
 import {Guid} from '../packages/Helpers';
 import {ResourceNotFoundRoutingError} from '../packages/Errors';
 import {Association} from './Association';
 import {Context} from './Context';
 import {Json} from './Json';
+import {ResourceCreatedEvent} from '../events/ResourceCreatedEvent';
+import {ResourceDeletedEvent} from '../events/ResourceDeletedEvent';
+import {ResourceUpdatedEvent} from '../events/ResourceUpdatedEvent';
 
 export class DefaultResource implements IRest {
     private _data: any;
@@ -14,12 +17,15 @@ export class DefaultResource implements IRest {
 
     private _resourceName: string;
 
+    private _eventManger: IEventManager;
+
     private _parentContext: IRoutingContext;
 
-    constructor(resourceName: string, Root: any, parentContext?: IRoutingContext) {
+    constructor(resourceName: string, Root: any, eventManager: IEventManager, parentContext?: IRoutingContext) {
         this._resourceName = resourceName;
         this._parentContext = parentContext;
         this._Root = Root;
+        this._eventManger = eventManager;
 
         try {
             this._resource = new Json(Root.dataLocation + '/' + resourceName + '.json');
@@ -56,9 +62,13 @@ export class DefaultResource implements IRest {
         this._data[id] = item;
         this._resource.save(this._data);
 
+        let context = new Context(this._resourceName, id, null, null, this._parentContext);
+
         if (this._parentContext) {
-            Association.addAssociation(new Context(this._resourceName, id), this._parentContext, this._Root);
+            Association.addAssociation(context, this._parentContext, this._Root);
         }
+
+        this._eventManger.emit(new ResourceCreatedEvent(context));
 
         return id;
     }
@@ -67,9 +77,13 @@ export class DefaultResource implements IRest {
         this._data[id] = item;
         this._resource.save(this._data);
 
+        let context = new Context(this._resourceName, id, null, null, this._parentContext);
+
         if (this._parentContext) {
-            Association.addAssociation(new Context(this._resourceName, id), this._parentContext, this._Root);
+            Association.addAssociation(context, this._parentContext, this._Root);
         }
+
+        this._eventManger.emit(new ResourceUpdatedEvent(context));
 
         return this._data[id];
     }
@@ -78,7 +92,11 @@ export class DefaultResource implements IRest {
         delete this._data[id];
         this._resource.save(this._data);
 
-        Association.removeAssociation(new Context(this._resourceName, id), this._Root);
+        let context = new Context(this._resourceName, id, null, null, this._parentContext);
+
+        Association.removeAssociation(context, this._Root);
+
+        this._eventManger.emit(new ResourceDeletedEvent(context));
 
         return {};
     }

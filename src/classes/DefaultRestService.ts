@@ -1,4 +1,4 @@
-import {IModel, IRequest, IResponse, IRest, IRoutingContext} from '../packages/Interfaces';
+import {IEventManager, IModel, IRequest, IResponse, IRest, IRoutingContext} from '../packages/Interfaces';
 import {MethodNotImplementedError, ResourceNotFoundRoutingError, ResourceValidationError} from '../packages/Errors';
 import {Transformer} from '../packages/Helpers';
 import {Context} from './Context';
@@ -43,7 +43,7 @@ export class DefaultRestService implements IRest {
         response.addHeader('Allow', allow.join(', '));
     }
 
-    constructor(request: IRequest, response: IResponse, context: IRoutingContext, Root: any) {
+    constructor(request: IRequest, response: IResponse, context: IRoutingContext, Root: any, eventManager: IEventManager) {
         this._request = request;
         this._response = response;
         this._Model = context.Model;
@@ -51,7 +51,7 @@ export class DefaultRestService implements IRest {
         this._context = context;
 
         try {
-            this._resource = new this._Model.resource(this._resourceName, Root, context.parent);
+            this._resource = new this._Model.resource(this._resourceName, Root, eventManager, context.parent);
         } catch (e) {
             throw new ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
         }

@@ -1,4 +1,5 @@
 import {DefaultResource} from '../../src/packages/Classes';
+import {IEventManager} from '../../src/packages/Interfaces';
 
 export class UserResource extends DefaultResource {
     private static _stripPasswordField(item: any): void {
@@ -7,8 +8,8 @@ export class UserResource extends DefaultResource {
         }
     }
 
-    constructor(_: any, Root: any) {
-        super('User', Root);
+    constructor(_: any, Root: any, eventManager: IEventManager) {
+        super('User', Root, eventManager);
     }
 
     get(id?: string): any {
