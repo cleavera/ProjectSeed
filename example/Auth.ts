@@ -1,4 +1,4 @@
-import {IAuthoriser, IRequest} from '../src/packages/Interfaces';
+import {IAuthoriser, IRequest} from '../dist/packages/Interfaces';
 
 export class Auth implements IAuthoriser {
     authorise(request: IRequest): boolean {

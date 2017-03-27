@@ -1,5 +1,5 @@
-import {DefaultModel, DefaultResource} from '../../src/packages/Classes';
-import {Child, Guid, Label, Map, PrimaryKey, Required, String} from '../../src/packages/Annotations';
+import {DefaultModel, DefaultResource} from '../../dist/packages/Classes';
+import {Child, Guid, Label, Map, PrimaryKey, Required, String} from '../../dist/packages/Annotations';
 import {UserResource} from '../Resources/UserResource';
 import {PersonModel} from './PersonModel';
 

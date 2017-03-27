@@ -1,5 +1,5 @@
-import {DefaultResource} from '../../src/packages/Classes';
-import {IEventManager} from '../../src/packages/Interfaces';
+import {DefaultResource} from '../../dist/packages/Classes';
+import {IEventManager} from '../../dist/packages/Interfaces';
 
 export class UserResource extends DefaultResource {
     private static _stripPasswordField(item: any): void {

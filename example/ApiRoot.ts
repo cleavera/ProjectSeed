@@ -1,4 +1,4 @@
-import {Child} from '../src/packages/Annotations';
+import {Child} from '../dist/packages/Annotations';
 import {PersonModel} from './Models/PersonModel';
 import {UserModel} from './Models/UserModel';
 import {Auth} from './Auth';

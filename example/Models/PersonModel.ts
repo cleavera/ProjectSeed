@@ -1,5 +1,5 @@
-import {DefaultModel} from '../../src/packages/Classes';
-import {Decimal, Description, Guid, Integer, Label, Map, MaxLength, NumberRange, Options, OrderBy, PrimaryKey, Required, String} from '../../src/packages/Annotations';
+import {DefaultModel} from '../../dist/packages/Classes';
+import {Decimal, Description, Guid, Integer, Label, Map, MaxLength, NumberRange, Options, OrderBy, PrimaryKey, Required, String} from '../../dist/packages/Annotations';
 import {GENDER} from '../Constants/Gender';
 
 @Description('People')

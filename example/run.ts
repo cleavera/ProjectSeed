@@ -1,4 +1,4 @@
-import {Server} from '../src/packages/Classes';
+import {Server} from '../dist/packages/Classes';
 import {ApiRoot} from './ApiRoot';
 
 /* tslint:disable:no-unused-expression */

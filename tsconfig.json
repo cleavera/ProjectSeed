@@ -2,6 +2,17 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "commonjs",
-        "experimentalDecorators": true
-    }
+        "outDir": "dist",
+        "rootDir": "./src",
+        "sourceMap": false,
+        "declaration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node"
+    },
+    "exclude": [
+        "typings",
+        "node_modules",
+        "example",
+        "dist"
+    ]
 }

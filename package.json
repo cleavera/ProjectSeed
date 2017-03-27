@@ -4,7 +4,8 @@
   "description": "A domain modelling library for easily creating domains and persistance, written in typescript",
   "main": "src/packages",
   "scripts": {
-    "runExample": "ts-node example/run.ts",
+    "compile": "tsc",
+    "runExample": "ts-node --project example example/run.ts",
     "lint": "tslint src/**/*.ts || exit 0",
     "test": "echo \"Error: no test specified, must write tests\" && exit 1"
   },
