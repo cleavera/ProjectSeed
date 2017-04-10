@@ -20,13 +20,13 @@ export class Association {
         let currentAssociations: IAssociation[] = associations.filter(association => {
             let isCorrectParentContext: boolean = parentContext
                 ? (
-                    association.parent === parentContext.Model._map.table
+                    association.parent === parentContext.resourceName
                     && association.parentId === parentContext.id
                 ) : true;
 
             let isCorrectChildContext: boolean = context
                 ? (
-                    association.child === context.Model._map.table
+                    association.child === context.resourceName
                     && association.childId === context.id
                 ) : true;
 
@@ -44,16 +44,16 @@ export class Association {
         let associations: IAssociation[] = this._getAssociations(Root);
 
         let currentAssociations: IAssociation[] = associations.filter(association => {
-            let isCorrectParentContext: boolean = association.parent === parentContext.Model._map.table && association.parentId === parentContext.id;
+            let isCorrectParentContext: boolean = association.parent === parentContext.resourceName && association.parentId === parentContext.id;
 
-            return isCorrectParentContext && association.child === context.Model._map.table && association.childId === context.id;
+            return isCorrectParentContext && association.child === context.resourceName && association.childId === context.id;
         });
 
         if (currentAssociations.length) {
             return;
         }
 
-        associations.push({ child: context.Model._map.table, childId: context.id, parent: parentContext.Model._map.table, parentId: parentContext.id });
+        associations.push({ child: context.resourceName, childId: context.id, parent: parentContext.resourceName, parentId: parentContext.id });
 
         new Json(Root.dataLocation + '/private/association.json').save(associations);
     }
@@ -64,9 +64,9 @@ export class Association {
             out: any = {};
 
         associations.forEach(association => {
-            let isCorrectParentContext: boolean = association.parent === parentContext.Model._map.table && association.parentId === parentContext.id;
+            let isCorrectParentContext: boolean = association.parent === parentContext.resourceName && association.parentId === parentContext.id;
 
-            if (isCorrectParentContext && association.child === context.Model._map.table && ids.indexOf(association.childId) > -1 ) {
+            if (isCorrectParentContext && association.child === context.resourceName && ids.indexOf(association.childId) > -1 ) {
                 out[association.childId] = data[association.childId];
             }
         });
