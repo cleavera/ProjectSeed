@@ -155,7 +155,7 @@ class Api {
                 throw new Errors_1.ResourceNotFoundRoutingError(request.url.toString(), resourceName);
             }
             let id = request.url.next().value;
-            context = new Context_1.Context(resourceName, id, Model, null, parentContext);
+            context = new Context_1.Context(Model._map.table, id, Model, null, parentContext);
             let restService;
             try {
                 restService = new Model.restService(request, response, context, this._Root, this._eventManager);
