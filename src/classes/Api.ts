@@ -205,7 +205,7 @@ export class Api implements IRouter {
 
             let id: string = request.url.next().value;
 
-            context = new Context(Model._map.table, id, Model, null, parentContext);
+            context = new Context(resourceName, id, Model, null, parentContext);
 
             let restService: IRest;
 
