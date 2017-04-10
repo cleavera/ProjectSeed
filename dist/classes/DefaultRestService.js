@@ -10,7 +10,7 @@ class DefaultRestService {
         this._resourceName = context.resourceName;
         this._context = context;
         try {
-            this._resource = new this._Model.resource(this._resourceName, Root, eventManager, context.parent);
+            this._resource = new this._Model.resource(this._Model._map.table, Root, eventManager, context.parent);
         }
         catch (e) {
             throw new Errors_1.ResourceNotFoundRoutingError(request.url.toString(), this._resourceName);
