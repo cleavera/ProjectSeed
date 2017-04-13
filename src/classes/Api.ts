@@ -134,7 +134,7 @@ export class Api implements IRouter {
             throw new RequestNotJSONError();
         }
 
-        if (this._Auth && !this._Auth.authorise(request)) {
+        if (!request.isOptions && this._Auth && !this._Auth.authorise(request)) {
             throw new AuthorisationError();
         }
 

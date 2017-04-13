@@ -98,7 +98,7 @@ class Api {
         if (!request.isJSON) {
             throw new Errors_1.RequestNotJSONError();
         }
-        if (this._Auth && !this._Auth.authorise(request)) {
+        if (!request.isOptions && this._Auth && !this._Auth.authorise(request)) {
             throw new Errors_1.AuthorisationError();
         }
         let context = this.getContext(request, response);
