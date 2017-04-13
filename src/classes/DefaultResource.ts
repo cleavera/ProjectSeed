@@ -9,17 +9,17 @@ import {ResourceDeletedEvent} from '../events/ResourceDeletedEvent';
 import {ResourceUpdatedEvent} from '../events/ResourceUpdatedEvent';
 
 export class DefaultResource implements IRest {
-    private _data: any;
+    protected _data: any;
 
-    private _Root: any;
+    protected _Root: any;
 
-    private _resource: IResource;
+    protected _resource: IResource;
 
-    private _resourceName: string;
+    protected _resourceName: string;
 
-    private _eventManger: IEventManager;
+    protected _eventManger: IEventManager;
 
-    private _parentContext: IRoutingContext;
+    protected _parentContext: IRoutingContext;
 
     constructor(resourceName: string, Root: any, eventManager: IEventManager, parentContext?: IRoutingContext) {
         this._resourceName = resourceName;

@@ -5,19 +5,19 @@ import {Context} from './Context';
 import {DefaultModel} from './DefaultModel';
 
 export class DefaultRestService implements IRest {
-    private _request: IRequest;
+    protected _request: IRequest;
 
-    private _response: IResponse;
+    protected _response: IResponse;
 
-    private _Model: typeof DefaultModel;
+    protected _Model: typeof DefaultModel;
 
-    private _resource: IRest;
+    protected _resource: IRest;
 
-    private _resourceName: string;
+    protected _resourceName: string;
 
-    private _context: IRoutingContext;
+    protected _context: IRoutingContext;
 
-    private static _appendAllowHeader(response: IResponse, get: boolean, post: boolean, put: boolean, remove: boolean, options: boolean): void {
+    protected static _appendAllowHeader(response: IResponse, get: boolean, post: boolean, put: boolean, remove: boolean, options: boolean): void {
         let allow: string[] = [];
 
         if (get) {
