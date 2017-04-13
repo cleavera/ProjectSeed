@@ -21,7 +21,7 @@ class Api {
         this._Root = Root;
         this._eventManager = new EventManager_1.EventManager();
         if (Root.authoriser) {
-            this._Auth = new Root.authoriser();
+            this._Auth = new Root.authoriser(Root, this._eventManager);
         }
         Api.createTables(Root);
         if (!Json_1.Json.tableExists(Root.dataLocation + '/private/association.json')) {

@@ -119,7 +119,7 @@ export class Api implements IRouter {
         this._eventManager = new EventManager();
 
         if(Root.authoriser) {
-            this._Auth = new Root.authoriser();
+            this._Auth = new Root.authoriser(Root, this._eventManager);
         }
 
         Api.createTables(Root);
