@@ -11,7 +11,18 @@ import {Response} from './Response';
 export class Server implements IRouter {
     private _api: IRouter;
 
-    private static handleError(e: any, response: IResponse, url: string): void {
+    private static appendHeaders(response: IResponse, Root: any): void {
+        if (Root.cors) {
+            response.addHeader('Access-Control-Allow-Origin', Root.cors === true ? '*' : Root.cors);
+            response.addHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
+            response.addHeader('Access-Control-Expose-Headers', 'description, allow, date, location');
+            response.addHeader('Access-Control-Allow-Headers', 'content-type');
+        }
+    }
+
+    private static handleError(e: any, response: IResponse, url: string, Root: any): void {
+        this.appendHeaders(response, Root);
+
         if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
             Log.info(e.name + ' at ' + url);
             response.status(e.statusCode);
@@ -48,13 +59,13 @@ export class Server implements IRouter {
                     try {
                         this.route(request, response);
                     } catch (e) {
-                        Server.handleError(e, response, req.url);
+                        Server.handleError(e, response, req.url, Root);
                     }
 
                     res.end();
                 },
                 e => {
-                    Server.handleError(e, response, req.url);
+                    Server.handleError(e, response, req.url, Root);
 
                     res.end();
                 }

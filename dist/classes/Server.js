@@ -24,11 +24,11 @@ class Server {
                     this.route(request, response);
                 }
                 catch (e) {
-                    Server.handleError(e, response, req.url);
+                    Server.handleError(e, response, req.url, Root);
                 }
                 res.end();
             }, e => {
-                Server.handleError(e, response, req.url);
+                Server.handleError(e, response, req.url, Root);
                 res.end();
             });
         });
@@ -36,7 +36,16 @@ class Server {
             Helpers_1.Log.info((new Date()) + ' Server is listening on port ' + Root.port);
         });
     }
-    static handleError(e, response, url) {
+    static appendHeaders(response, Root) {
+        if (Root.cors) {
+            response.addHeader('Access-Control-Allow-Origin', Root.cors === true ? '*' : Root.cors);
+            response.addHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
+            response.addHeader('Access-Control-Expose-Headers', 'description, allow, date, location');
+            response.addHeader('Access-Control-Allow-Headers', 'content-type');
+        }
+    }
+    static handleError(e, response, url, Root) {
+        this.appendHeaders(response, Root);
         if (('name' in e) && ('statusCode' in e) && ('serialise' in e)) {
             Helpers_1.Log.info(e.name + ' at ' + url);
             response.status(e.statusCode);
