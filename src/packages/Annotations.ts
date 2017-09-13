@@ -2,6 +2,7 @@ import {Boolean} from '../annotations/Boolean';
 import {Child} from '../annotations/Child';
 import {Decimal} from '../annotations/Decimal';
 import {Description} from '../annotations/Description';
+import {ForeignKey} from '../annotations/ForeignKey';
 import {Guid} from '../annotations/Guid';
 import {Integer} from '../annotations/Integer';
 import {Json} from '../annotations/JSON';
@@ -22,6 +23,7 @@ export {
     Child,
     Decimal,
     Description,
+    ForeignKey,
     Guid,
     Integer,
     Json,
